@@ -7,6 +7,7 @@ requests>=2.31.0
 
 # NLP & Embeddings
 torch>=2.1.0
+torchvision>=0.16.0
 sentence-transformers>=2.3.0
 transformers>=4.38.0
 
