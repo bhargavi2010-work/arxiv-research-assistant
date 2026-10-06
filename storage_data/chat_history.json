@@ -1,0 +1,160 @@
+{
+  "rag-overview-101": {
+    "id": "rag-overview-101",
+    "title": "RAG and its applications",
+    "created_at": "2026-10-02 10:24:00",
+    "updated_at": "2026-10-02 10:24:00",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is RAG and why is it important in LLMs?",
+        "timestamp": "10:24 AM"
+      },
+      {
+        "role": "assistant",
+        "content": "Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with text generation. Instead of relying only on the knowledge stored in an LLM, RAG first retrieves relevant documents from an external knowledge source and then uses them to generate a more accurate and up-to-date response.\n\n**Why RAG is important in LLMs:**\n1. **Reduces hallucinations** by grounding responses in real documents.\n2. **Provides up-to-date information** (LLMs have knowledge cutoff).\n3. **Improves accuracy** for domain-specific queries.\n4. **Enables access to private or external knowledge bases**.",
+        "sources": [
+          {
+            "source_index": 1,
+            "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "year": 2020,
+            "arxiv_id": "2005.11401",
+            "arxiv_url": "https://arxiv.org/abs/2005.11401"
+          },
+          {
+            "source_index": 2,
+            "title": "RAG: A Survey",
+            "year": 2023,
+            "arxiv_id": "2312.10997",
+            "arxiv_url": "https://arxiv.org/abs/2312.10997"
+          },
+          {
+            "source_index": 3,
+            "title": "Self-RAG: Learning to Retrieve, Generate and Critique",
+            "year": 2023,
+            "arxiv_id": "2310.11511",
+            "arxiv_url": "https://arxiv.org/abs/2310.11511"
+          }
+        ],
+        "suggested_follow_ups": [
+          "How does Self-RAG differ from standard naive RAG?",
+          "What are the best vector databases for RAG indexing?",
+          "How do rerankers improve RAG retrieval precision?"
+        ],
+        "timestamp": "10:25 AM"
+      }
+    ]
+  },
+  "transformer-arch-102": {
+    "id": "transformer-arch-102",
+    "title": "Transformer Architecture",
+    "created_at": "2026-10-02 08:30:00",
+    "updated_at": "2026-10-02 08:30:00",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain the transformer architecture and its key components...",
+        "timestamp": "08:30 AM"
+      },
+      {
+        "role": "assistant",
+        "content": "The Transformer architecture, introduced by Vaswani et al. (2017) in *Attention Is All You Need*, completely replaces recurrent and convolutional operations with **multi-head self-attention** mechanisms and sinusoidal positional encodings.\n\n### Key Components:\n1. **Multi-Head Self-Attention:** Computes scaled dot-product attention over Queries, Keys, and Values simultaneously in multiple representation subspaces.\n2. **Feed-Forward Networks:** Position-wise two-layer dense networks applied to each token vector identically.\n3. **Positional Encodings:** Sinusoidal signals injected into input embeddings to provide token order information.\n4. **Residual Connections & Layer Normalization:** Stabilizes gradient flow across deep stacked layers.",
+        "sources": [
+          {
+            "source_index": 1,
+            "title": "Attention Is All You Need",
+            "year": 2017,
+            "arxiv_id": "1706.03762",
+            "arxiv_url": "https://arxiv.org/abs/1706.03762"
+          }
+        ],
+        "suggested_follow_ups": [
+          "Why is Scaled Dot-Product attention divided by sqrt(d_k)?",
+          "What is the role of Layer Normalization in Transformers?"
+        ],
+        "timestamp": "08:31 AM"
+      }
+    ]
+  },
+  "self-attn-103": {
+    "id": "self-attn-103",
+    "title": "Self-Attention Concept",
+    "created_at": "2026-10-01 14:00:00",
+    "updated_at": "2026-10-01 14:00:00",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is self-attention and how does it work?",
+        "timestamp": "02:00 PM"
+      },
+      {
+        "role": "assistant",
+        "content": "Self-attention (intra-attention) relates different positions of a single sequence to compute a representation of the sequence.\n\nFormally:\n$$\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V$$\n\nIt allows tokens in the sentence to dynamically weigh the importance of all other tokens regardless of their sequential distance, eliminating the vanishing gradient problem inherent in RNNs.",
+        "sources": [
+          {
+            "source_index": 1,
+            "title": "Attention Is All You Need",
+            "year": 2017,
+            "arxiv_id": "1706.03762",
+            "arxiv_url": "https://arxiv.org/abs/1706.03762"
+          }
+        ],
+        "timestamp": "02:01 PM"
+      }
+    ]
+  },
+  "cv-llm-104": {
+    "id": "cv-llm-104",
+    "title": "Computer Vision in LLMs",
+    "created_at": "2026-10-01 10:15:00",
+    "updated_at": "2026-10-01 10:15:00",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Latest research papers on computer vision and LLMs...",
+        "timestamp": "10:15 AM"
+      },
+      {
+        "role": "assistant",
+        "content": "Multimodal Large Language Models (MLLMs) integrate vision transformers (ViT) with autoregressive language decoders via cross-attention or projection projection matrices (e.g., LLaVA, Flamingo, CLIP).\n\nKey foundational papers include **CLIP** (Radford et al., 2021) and **Flamingo** (Alayrac et al., 2022).",
+        "sources": [
+          {
+            "source_index": 1,
+            "title": "Learning Transferable Visual Models From Natural Language Supervision",
+            "year": 2021,
+            "arxiv_id": "2103.00020",
+            "arxiv_url": "https://arxiv.org/abs/2103.00020"
+          }
+        ],
+        "timestamp": "10:16 AM"
+      }
+    ]
+  },
+  "ft-vs-rag-105": {
+    "id": "ft-vs-rag-105",
+    "title": "Fine-tuning vs RAG",
+    "created_at": "2026-09-30 16:45:00",
+    "updated_at": "2026-09-30 16:45:00",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What are the differences between fine-tuning and RAG?",
+        "timestamp": "04:45 PM"
+      },
+      {
+        "role": "assistant",
+        "content": "Fine-tuning modifies the internal weights of the model to specialize style, tone, or task format, but cannot easily keep pace with real-time changing facts.\n\nRAG keeps the LLM weights frozen and injects retrieved authoritative passages into the context window at inference time. This guarantees zero training cost for document updates, explicit citations, and transparent auditability.",
+        "sources": [
+          {
+            "source_index": 1,
+            "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "year": 2020,
+            "arxiv_id": "2005.11401",
+            "arxiv_url": "https://arxiv.org/abs/2005.11401"
+          }
+        ],
+        "timestamp": "04:46 PM"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+# Core Data & Utility
+pandas>=2.1.0
+pyarrow>=14.0.0
+pydantic>=2.5.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# NLP & Embeddings
+torch>=2.1.0
+sentence-transformers>=2.3.0
+transformers>=4.38.0
+
+# Vector Database
+chromadb>=0.4.22
+
+# Visualization
+networkx>=3.2.0
+plotly>=5.18.0
+matplotlib>=3.8.0
+
+# UI
+streamlit>=1.31.0
