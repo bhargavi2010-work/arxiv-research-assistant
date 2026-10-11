@@ -59,7 +59,7 @@ DEFAULT_MAX_NEW_TOKENS = int(os.getenv("DEFAULT_MAX_NEW_TOKENS", "512"))
 
 # Retrieval Settings
 DEFAULT_TOP_K = int(os.getenv("DEFAULT_TOP_K", "5"))
-DEFAULT_SIMILARITY_THRESHOLD = float(os.getenv("DEFAULT_SIMILARITY_THRESHOLD", "0.35"))
+DEFAULT_SIMILARITY_THRESHOLD = float(os.getenv("DEFAULT_SIMILARITY_THRESHOLD", "0.22"))
 
 # Storage Files
 SAVED_PAPERS_FILE = STORAGE_DIR / "saved_papers.json"

@@ -41,6 +41,12 @@ class RAGContextBuilder:
             if p.get("retrieval_similarity", 0.0) >= self.min_similarity_threshold
         ][:max_papers]
 
+        # Graceful tolerance for standard threshold mode
+        if not relevant_papers and retrieved_papers and self.min_similarity_threshold <= 0.30:
+            top_paper = retrieved_papers[0]
+            if top_paper.get("retrieval_similarity", 0.0) >= 0.18:
+                relevant_papers = [top_paper]
+
         if not relevant_papers:
             empty_msg = "Not enough relevant research context was found to answer this question reliably."
             return False, empty_msg, []

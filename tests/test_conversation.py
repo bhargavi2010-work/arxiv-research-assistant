@@ -42,6 +42,30 @@ class TestQueryContextualizer(unittest.TestCase):
         self.assertIn("Transformers", contextualized)
         self.assertIn("RNN", contextualized)
 
+    def test_paper_reference_resolution(self):
+        history = [
+            {"role": "user", "content": "What is RAG and why is it important in LLMs?"},
+            {
+                "role": "assistant",
+                "content": "RAG reduces hallucinations by grounding responses in real documents.",
+                "sources": [{"title": "Retrieval-Augmented Generation for Large Language Models: A Survey"}]
+            }
+        ]
+        follow_up = "what is hallucination related that paper"
+        contextualized = self.contextualizer.contextualize_query(follow_up, history)
+        self.assertIn("hallucination", contextualized.lower())
+        self.assertNotIn("related that paper", contextualized.lower())
+
+    def test_short_concept_followup_resolution(self):
+        history = [
+            {"role": "user", "content": "What is RAG and why is it important in LLMs?"},
+            {"role": "assistant", "content": "Reduces hallucinations by grounding responses."}
+        ]
+        follow_up = "what is hallucination ?"
+        contextualized = self.contextualizer.contextualize_query(follow_up, history)
+        self.assertIn("hallucination", contextualized.lower())
+        self.assertTrue("rag" in contextualized.lower() or "llm" in contextualized.lower())
+
 class TestConversationManager(unittest.TestCase):
     def setUp(self):
         self.temp_file = Path(tempfile.gettempdir()) / "test_chat_history.json"

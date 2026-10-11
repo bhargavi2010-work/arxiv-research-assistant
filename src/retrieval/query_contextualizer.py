@@ -14,7 +14,10 @@ class QueryContextualizer:
         r"\bit\b", r"\bits\b", r"\bthis\b", r"\bthat\b", r"\bthese\b",
         r"\bthose\b", r"\bthey\b", r"\bthem\b", r"\bthe model\b",
         r"\bthe architecture\b", r"\bthe method\b", r"\bthe technique\b",
-        r"\bthis approach\b"
+        r"\bthis approach\b", r"\bthat paper\b", r"\bthe paper\b",
+        r"\bthis paper\b", r"\brelated that\b", r"\brelated to that\b",
+        r"\bin that paper\b", r"\bfrom that paper\b", r"\baccording to that\b",
+        r"\bmentioned paper\b", r"\brelated that paper\b", r"\bin this context\b"
     ]
     
     FOLLOW_UP_STARTERS = [
@@ -22,7 +25,20 @@ class QueryContextualizer:
         "how is this different from", "how is it different from",
         "what about", "what are its", "what are their", "compare this with",
         "compare it with", "explain its", "can it", "why is self-attention",
-        "how does attention"
+        "how does attention", "what is", "what are", "explain", "define",
+        "tell me more about", "how does"
+    ]
+
+    PAPER_REFERENCE_PATTERNS = [
+        r"\brelated that paper\b",
+        r"\brelated to that paper\b",
+        r"\brelated that\b",
+        r"\brelated to that\b",
+        r"\bin that paper\b",
+        r"\bfrom that paper\b",
+        r"\baccording to that paper\b",
+        r"\bof that paper\b",
+        r"\bin this paper\b"
     ]
 
     def contextualize_query(
@@ -45,15 +61,15 @@ class QueryContextualizer:
 
         q_lower = clean_q.lower()
 
-        # Check if query contains pronouns or follow-up starters
+        # Check if query contains pronouns, paper references, or follow-up starters
         has_pronoun = any(re.search(pat, q_lower) for pat in self.PRONOUNS_AND_REFERENCES)
         has_starter = any(q_lower.startswith(starter) for starter in self.FOLLOW_UP_STARTERS)
-        is_short_followup = len(clean_q.split()) <= 6 and ("why" in q_lower or "how" in q_lower or "what about" in q_lower or "compare" in q_lower)
+        is_short_followup = len(clean_q.split()) <= 7
 
         if not (has_pronoun or has_starter or is_short_followup):
             return clean_q
 
-        # Extract the antecedent topic from recent user questions
+        # Extract the antecedent topic from recent user questions or assistant paper sources
         recent_topics = []
         for turn in reversed(conversation_history):
             if turn.get("role") == "user":
@@ -64,11 +80,24 @@ class QueryContextualizer:
                 if cleaned_u and len(cleaned_u) > 2:
                     recent_topics.append(cleaned_u)
                     break
+            elif turn.get("role") == "assistant" and turn.get("sources"):
+                # If assistant cited papers, use first paper title
+                first_src = turn["sources"][0]
+                if isinstance(first_src, dict) and first_src.get("title"):
+                    recent_topics.append(first_src["title"])
+                    break
 
         if not recent_topics:
             return clean_q
 
         antecedent = recent_topics[0]
+
+        # Clean out explicit paper reference tokens from query string
+        core_query = clean_q
+        for pat in self.PAPER_REFERENCE_PATTERNS:
+            core_query = re.sub(pat, "", core_query, flags=re.IGNORECASE).strip()
+        # Clean double spaces or trailing punctuation
+        core_query = re.sub(r"\s+", " ", core_query).strip(" ?.")
 
         # Reformulate query
         if "different from" in q_lower:
@@ -80,8 +109,8 @@ class QueryContextualizer:
             comp = clean_q.split("with")[-1].strip(" ?.")
             return f"Comparison between {antecedent} and {comp}"
 
-        # If it refers to subcomponent (e.g. "Why is self-attention important?")
-        if antecedent.lower() not in q_lower:
-            return f"{antecedent} {clean_q}"
+        # If antecedent is not already in the query, prepend/attach it
+        if antecedent.lower() not in core_query.lower():
+            return f"{antecedent} {core_query}".strip()
 
-        return clean_q
+        return core_query or clean_q

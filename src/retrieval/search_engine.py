@@ -68,8 +68,9 @@ class PaperSearchEngine:
             # Generate dense query embedding
             query_embedding = self.embedder.embed_query(clean_query)
             
-            # Semantic search in ChromaDB (retrieve a larger pool to allow post-filtering & sorting)
-            fetch_k = max(limit * 3, 20)
+            # Semantic search in ChromaDB (retrieve a larger pool to allow hybrid keyword re-ranking & post-filtering)
+            total_docs = self.chroma.count()
+            fetch_k = min(total_docs, max(limit * 6, 50)) if total_docs > 0 else 20
             results = self.chroma.query_similar(
                 query_embedding=query_embedding,
                 top_k=fetch_k,
@@ -78,21 +79,44 @@ class PaperSearchEngine:
                 year_max=year_max
             )
 
+        # Stopwords to exclude from keyword boost
+        STOPWORDS = {
+            "what", "is", "are", "why", "how", "the", "and", "for", "with", "from",
+            "that", "this", "these", "those", "about", "can", "does", "did", "have",
+            "has", "been", "explain", "tell", "paper", "papers", "into", "between",
+            "more", "some", "such", "than", "then", "there"
+        }
+
+        # Apply hybrid keyword boost for query terms appearing in title or abstract
+        if clean_query:
+            keywords = [w.lower() for w in re.findall(r"\b[a-zA-Z]{3,}\b", clean_query) if w.lower() not in STOPWORDS]
+            for r in results:
+                title_lower = r.get("title", "").lower()
+                abstract_lower = r.get("abstract", "").lower()
+                
+                title_matches = sum(1 for kw in keywords if kw in title_lower)
+                # Check stems for common suffixes (e.g. hallucination -> hallucinate)
+                abstract_matches = sum(
+                    1 for kw in keywords
+                    if kw in abstract_lower
+                    or (kw.endswith("ion") and kw[:-3] in abstract_lower)
+                    or (kw.endswith("ing") and kw[:-3] in abstract_lower)
+                    or (kw.endswith("s") and kw[:-1] in abstract_lower)
+                )
+
+                bonus = 0.0
+                if title_matches > 0:
+                    bonus += min(0.12 * title_matches, 0.25)
+                if abstract_matches > 0:
+                    bonus += min(0.10 * abstract_matches, 0.20)
+
+                if bonus > 0:
+                    r["retrieval_similarity"] = round(min(1.0, r["retrieval_similarity"] + bonus), 4)
+
         # Apply similarity threshold filter
         filtered_results = [
             r for r in results if r.get("retrieval_similarity", 0.0) >= similarity_threshold
         ]
-
-        # Apply keyword boost if query keywords appear directly in title
-        if clean_query:
-            keywords = [w.lower() for w in re.findall(r"\b\w{3,}\b", clean_query)]
-            for r in filtered_results:
-                title_lower = r.get("title", "").lower()
-                matches = sum(1 for kw in keywords if kw in title_lower)
-                # Boost similarity gently if title contains exact query terms
-                if matches > 0:
-                    bonus = min(0.08 * matches, 0.20)
-                    r["retrieval_similarity"] = round(min(1.0, r["retrieval_similarity"] + bonus), 4)
 
         # Sort results
         if sort_by == "Year (Newest)":

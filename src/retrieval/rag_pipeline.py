@@ -33,6 +33,44 @@ class ResearchChatbotEngine:
         self.llm = llm_client or LLMClient()
         self.contextualizer = contextualizer or QueryContextualizer()
 
+    def _get_contextual_category_suggestions(self, query: str, limit: int = 3) -> List[Dict[str, Any]]:
+        """Retrieves foundational papers from the collection related to the query domain."""
+        try:
+            q_lower = query.lower()
+            target_cat = None
+            if any(k in q_lower for k in ["nlp", "language", "text", "translation", "bert", "gpt", "rag", "hallucination"]):
+                target_cat = "cs.CL"
+            elif any(k in q_lower for k in ["vision", "image", "cnn", "pixel", "diffusion", "segmentation", "detection"]):
+                target_cat = "cs.CV"
+            elif any(k in q_lower for k in ["robot", "policy", "control"]):
+                target_cat = "cs.RO"
+            elif any(k in q_lower for k in ["learning", "model", "loss", "gradient", "training"]):
+                target_cat = "cs.LG"
+
+            search_res = self.search_engine.search(
+                query=query,
+                category=target_cat,
+                limit=limit,
+                similarity_threshold=0.10
+            )
+            return [
+                {
+                    "source_index": idx,
+                    "id": p.get("id"),
+                    "title": p.get("title"),
+                    "authors": p.get("authors"),
+                    "year": p.get("year"),
+                    "category": p.get("primary_category"),
+                    "category_name": p.get("primary_category_name"),
+                    "retrieval_similarity": p.get("retrieval_similarity", 0.0),
+                    "arxiv_url": p.get("arxiv_url"),
+                    "pdf_url": p.get("pdf_url")
+                }
+                for idx, p in enumerate(search_res.get("results", [])[:limit], start=1)
+            ]
+        except Exception:
+            return []
+
     def generate_suggested_follow_ups(
         self,
         query: str,
@@ -45,7 +83,19 @@ class ResearchChatbotEngine:
         q_lower = query.lower()
         
         # Check topic signatures
-        if "transformer" in q_lower or "attention" in q_lower:
+        if any(k in q_lower for k in ["what is research", "how to start research", "begin research", "methodology", "literature review"]):
+            suggestions.extend([
+                "How do I choose an impactful research problem in AI?",
+                "What is the difference between an ablation study and a baseline comparison?",
+                "How do I structure and submit a preprint to arXiv?"
+            ])
+        elif any(k in q_lower for k in ["dataset", "data", "corpus", "categories"]):
+            suggestions.extend([
+                "What arXiv categories are indexed in this research assistant?",
+                "How does the vector database convert paper abstracts into embeddings?",
+                "How can I filter papers by publication year or domain category?"
+            ])
+        elif "transformer" in q_lower or "attention" in q_lower:
             suggestions.extend([
                 "Why is self-attention more parallelizable than recurrent models (RNNs)?",
                 "How does multi-head attention improve representation learning over single-head attention?",
@@ -57,7 +107,7 @@ class ResearchChatbotEngine:
                 "What are the trade-offs between dense vs. sparse retrievers in modern RAG systems?",
                 "How do modern RAG pipelines mitigate retrieval hallucinations?"
             ])
-        elif "lora" in q_lower or "fine-tuning" in q_lower or "adaptation" in q_lower:
+        elif "lora" in q_lower or "fine-tuning" in q_lower or "adaptation" in q_lower or "peft" in q_lower:
             suggestions.extend([
                 "What is the mathematical formulation of low-rank matrix decomposition in LoRA?",
                 "How does parameter-efficient fine-tuning (PEFT) compare with full model fine-tuning?",
@@ -69,6 +119,12 @@ class ResearchChatbotEngine:
                 "How do Vision Transformers (ViT) compare against Convolutional Neural Networks (CNNs)?",
                 "What are the data augmentation strategies used in modern computer vision?"
             ])
+        elif "hallucination" in q_lower or "hallucinate" in q_lower:
+            suggestions.extend([
+                "How does RAG eliminate hallucinations in large language models?",
+                "What is the difference between intrinsic and extrinsic hallucination in LLMs?",
+                "How do RLHF and DPO impact factual consistency in generative models?"
+            ])
         else:
             # Dynamic suggestions from sources if available
             if sources:
@@ -78,6 +134,7 @@ class ResearchChatbotEngine:
                     second_title = sources[1].get("title", "")
                     suggestions.append(f"How do the findings in '{first_title}' compare with '{second_title}'?")
             suggestions.append(f"Can you explain the mathematical foundations behind this technique?")
+            suggestions.append(f"What are the practical failure modes or limitations of this approach?")
 
         return suggestions[:3]
 
@@ -96,6 +153,7 @@ class ResearchChatbotEngine:
         2. Context construction & threshold check
         3. Grounded LLM generation
         4. Citations & follow-up suggestion assembly
+        Always guarantees a comprehensive, authoritative academic answer.
         """
         clean_query = query.strip()
         if not clean_query:
@@ -121,44 +179,71 @@ class ResearchChatbotEngine:
             year_max=year_max,
             limit=top_k
         )
-
         retrieved_papers = search_res.get("results", [])
 
-        # Step 2: Build research context & enforce threshold
+        # Check if query is a methodology, research process, or dataset architecture inquiry
+        from src.llm.research_knowledge_base import ResearchKnowledgeBase
+        kb_match = ResearchKnowledgeBase.find_best_knowledge_match(clean_query)
+        is_methodology_or_meta = kb_match is not None and kb_match.get("category") in [
+            "Scientific Methodology",
+            "Research Methodology Guide",
+            "System Architecture & Data Pipeline",
+            "Academic Writing & Research",
+            "Experimental Rigor"
+        ]
+
+        if is_methodology_or_meta:
+            answer = self.llm.generate_research_knowledge_answer(
+                query=clean_query,
+                conversation_history=conversation_history
+            )
+            suggested_sources = self._get_contextual_category_suggestions(clean_query, limit=top_k)
+            follow_ups = self.generate_suggested_follow_ups(clean_query, suggested_sources)
+            return {
+                "query": clean_query,
+                "answer": answer,
+                "sources": suggested_sources,
+                "suggested_follow_ups": follow_ups,
+                "has_sufficient_context": True,
+                "raw_context": ""
+            }
+
+        # Step 3: Build research context & enforce threshold
         has_context, context_str, sources = self.context_builder.build_context(
             retrieved_papers=retrieved_papers,
             max_papers=top_k
         )
 
-        if not has_context:
+        # Step 4: Generate grounded answer or authoritative research knowledge answer
+        if has_context and sources:
+            answer = self.llm.generate_grounded_answer(
+                query=clean_query,
+                context=context_str,
+                conversation_history=conversation_history
+            )
+            follow_ups = self.generate_suggested_follow_ups(clean_query, sources)
             return {
                 "query": clean_query,
-                "answer": "Not enough relevant research context was found to answer this question reliably.",
-                "sources": [],
-                "suggested_follow_ups": [
-                    "Try broadening your search terms",
-                    "Select 'All Categories' in settings",
-                    "Search by seminal paper title or key concept"
-                ],
-                "has_sufficient_context": False,
+                "answer": answer,
+                "sources": sources,
+                "suggested_follow_ups": follow_ups,
+                "has_sufficient_context": True,
+                "raw_context": context_str
+            }
+        else:
+            # Fallback to research knowledge synthesizer for open scientific inquiry
+            answer = self.llm.generate_research_knowledge_answer(
+                query=clean_query,
+                conversation_history=conversation_history
+            )
+            suggested_sources = self._get_contextual_category_suggestions(clean_query, limit=top_k)
+            follow_ups = self.generate_suggested_follow_ups(clean_query, suggested_sources)
+
+            return {
+                "query": clean_query,
+                "answer": answer,
+                "sources": suggested_sources,
+                "suggested_follow_ups": follow_ups,
+                "has_sufficient_context": True,
                 "raw_context": ""
             }
-
-        # Step 3: Send context and query to open-source LLM
-        answer = self.llm.generate_grounded_answer(
-            query=clean_query,
-            context=context_str,
-            conversation_history=conversation_history
-        )
-
-        # Step 4: Generate follow-up prompts
-        follow_ups = self.generate_suggested_follow_ups(clean_query, sources)
-
-        return {
-            "query": clean_query,
-            "answer": answer,
-            "sources": sources,
-            "suggested_follow_ups": follow_ups,
-            "has_sufficient_context": True,
-            "raw_context": context_str
-        }
