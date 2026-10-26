@@ -11,7 +11,8 @@ from config.config import (
     CS_AI_CATEGORIES,
     DEFAULT_LLM_MODEL,
     DEFAULT_TEMPERATURE,
-    DEFAULT_TOP_K
+    DEFAULT_TOP_K,
+    LANGCHAIN_API_KEY
 )
 from src.vector_store.chroma_manager import ChromaManager
 from src.llm.llm_client import LLMClient
@@ -153,9 +154,10 @@ def render_settings_view(
 
         api_col1, api_col2 = st.columns([3, 1])
         with api_col1:
+            current_ls_key = os.environ.get("LANGCHAIN_API_KEY", LANGCHAIN_API_KEY)
             ls_api_key = st.text_input(
                 "LangSmith API Key",
-                value=os.getenv("LANGCHAIN_API_KEY", ""),
+                value=current_ls_key,
                 type="password",
                 help="Enter your free API key from smith.langchain.com to record live visual traces."
             )

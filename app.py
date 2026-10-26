@@ -1,6 +1,7 @@
 """
 ArXiv Research Assistant — AI-Powered Domain-Specific Scientific Research Chatbot
 Main Streamlit Application Entry Point.
+Updated for LangChain ReAct & LangSmith Observability.
 """
 
 import streamlit as st
