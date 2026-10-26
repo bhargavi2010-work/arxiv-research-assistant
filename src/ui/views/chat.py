@@ -84,23 +84,6 @@ def render_chat_view(
                 if sources:
                     render_sources_section(sources)
 
-                # AI Agent Reasoning & LangSmith Trace Expander (Syllabus Units 1 & 2)
-                agent_meta = msg.get("agent_metadata")
-                if agent_meta and isinstance(agent_meta, dict):
-                    st.markdown(f"""
-                        <details style="margin: 8px 0 12px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 12.5px;">
-                            <summary style="cursor: pointer; font-weight: 600; color: #2563eb;">
-                                AI Agent Reasoning & LangSmith Trace (Unit 1 & 2 Syllabus)
-                            </summary>
-                            <div style="margin-top: 8px; line-height: 1.6; color: #334155;">
-                                <div><b>Framework:</b> {agent_meta.get('agent_framework')}</div>
-                                <div><b>ReAct Thought:</b> {agent_meta.get('thought')}</div>
-                                <div><b>Selected Tool:</b> <code>{agent_meta.get('action')}</code></div>
-                                <div><b>Observability Status:</b> {'Traced in Project <code>arxiv-research-assistant</code>' if agent_meta.get('langsmith_traced') else 'Active (Local Trace Graph)'}</div>
-                            </div>
-                        </details>
-                    """, unsafe_allow_html=True)
-
                 # Assistant Actions Row (Only Copy & Retry Icons)
                 act_c1, act_c2, _ = st.columns([0.45, 0.45, 9.1])
                 with act_c1:
