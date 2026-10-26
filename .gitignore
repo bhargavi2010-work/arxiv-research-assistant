@@ -31,6 +31,10 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
+# Temporary scratch scripts
+scratch/
+
+
 # Large datasets (optional: keep sample data and small parquet tracked, ignore giant raw dumps)
 # data/raw/*.zip
 # data/raw/*.tar.gz

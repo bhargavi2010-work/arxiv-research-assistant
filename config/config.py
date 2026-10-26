@@ -64,3 +64,9 @@ DEFAULT_SIMILARITY_THRESHOLD = float(os.getenv("DEFAULT_SIMILARITY_THRESHOLD", "
 # Storage Files
 SAVED_PAPERS_FILE = STORAGE_DIR / "saved_papers.json"
 CHAT_HISTORY_FILE = STORAGE_DIR / "chat_history.json"
+
+# LangSmith Observability & Tracing (Unit 2 Syllabus)
+LANGCHAIN_TRACING_V2 = os.getenv("LANGCHAIN_TRACING_V2", "false").lower() in ("true", "1")
+LANGCHAIN_ENDPOINT = os.getenv("LANGCHAIN_ENDPOINT", "https://api.smith.langchain.com")
+LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY", "")
+LANGCHAIN_PROJECT = os.getenv("LANGCHAIN_PROJECT", "arxiv-research-assistant")

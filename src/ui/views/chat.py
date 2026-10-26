@@ -13,7 +13,8 @@ from src.ui.components import render_page_header, render_sources_section, render
 def render_chat_view(
     engine: ResearchChatbotEngine,
     conv_manager: ConversationManager,
-    current_conv_id: str
+    current_conv_id: str,
+    langchain_agent: Optional[Any] = None
 ):
     """Renders the main Research Chat interface."""
     render_page_header(
@@ -83,6 +84,23 @@ def render_chat_view(
                 if sources:
                     render_sources_section(sources)
 
+                # AI Agent Reasoning & LangSmith Trace Expander (Syllabus Units 1 & 2)
+                agent_meta = msg.get("agent_metadata")
+                if agent_meta and isinstance(agent_meta, dict):
+                    st.markdown(f"""
+                        <details style="margin: 8px 0 12px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 12.5px;">
+                            <summary style="cursor: pointer; font-weight: 600; color: #2563eb;">
+                                AI Agent Reasoning & LangSmith Trace (Unit 1 & 2 Syllabus)
+                            </summary>
+                            <div style="margin-top: 8px; line-height: 1.6; color: #334155;">
+                                <div><b>Framework:</b> {agent_meta.get('agent_framework')}</div>
+                                <div><b>ReAct Thought:</b> {agent_meta.get('thought')}</div>
+                                <div><b>Selected Tool:</b> <code>{agent_meta.get('action')}</code></div>
+                                <div><b>Observability Status:</b> {'Traced in Project <code>arxiv-research-assistant</code>' if agent_meta.get('langsmith_traced') else 'Active (Local Trace Graph)'}</div>
+                            </div>
+                        </details>
+                    """, unsafe_allow_html=True)
+
                 # Assistant Actions Row (Only Copy & Retry Icons)
                 act_c1, act_c2, _ = st.columns([0.45, 0.45, 9.1])
                 with act_c1:
@@ -117,18 +135,26 @@ def render_chat_view(
         # Save user message
         conv_manager.add_user_message(current_conv_id, active_query)
 
-        with st.spinner("Searching research papers & generating grounded explanation..."):
-            response = engine.answer_query(
-                query=active_query,
-                conversation_history=history,
-                top_k=st.session_state.get("settings_top_k", 5)
-            )
+        use_agent = st.session_state.get("use_langchain_agent", True)
+        with st.spinner("AI Agent analyzing query, selecting tools & generating grounded response..."):
+            if use_agent and langchain_agent is not None:
+                response = langchain_agent.run_agent_turn(
+                    query=active_query,
+                    conversation_history=history
+                )
+            else:
+                response = engine.answer_query(
+                    query=active_query,
+                    conversation_history=history,
+                    top_k=st.session_state.get("settings_top_k", 5)
+                )
 
         # Save assistant message
         conv_manager.add_assistant_message(
             conv_id=current_conv_id,
             content=response["answer"],
             sources=response["sources"],
-            suggested_follow_ups=response["suggested_follow_ups"]
+            suggested_follow_ups=response.get("suggested_follow_ups", []),
+            agent_metadata=response.get("agent_metadata")
         )
         st.rerun()

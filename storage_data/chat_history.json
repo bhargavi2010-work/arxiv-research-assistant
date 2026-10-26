@@ -295,5 +295,207 @@
         "timestamp": "04:46 PM"
       }
     ]
+  },
+  "c3e948c7": {
+    "id": "c3e948c7",
+    "title": "Deep Learning",
+    "created_at": "2026-10-26 11:53:12",
+    "updated_at": "2026-10-26 11:53:12",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is deep learning?",
+        "timestamp": "2026-10-26 11:53:12"
+      },
+      {
+        "role": "assistant",
+        "content": "Deep learning uses multi-layer neural networks.",
+        "sources": [
+          {
+            "title": "Deep Learning Review"
+          }
+        ],
+        "suggested_follow_ups": [],
+        "timestamp": "2026-10-26 11:53:12"
+      }
+    ]
+  },
+  "199d2fde": {
+    "id": "199d2fde",
+    "title": "Deep Learning",
+    "created_at": "2026-10-26 11:54:22",
+    "updated_at": "2026-10-26 18:30:41",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is deep learning?",
+        "timestamp": "2026-10-26 11:54:22"
+      },
+      {
+        "role": "assistant",
+        "content": "Deep learning uses multi-layer neural networks.",
+        "sources": [
+          {
+            "title": "Deep Learning Review"
+          }
+        ],
+        "suggested_follow_ups": [],
+        "timestamp": "2026-10-26 11:54:22"
+      },
+      {
+        "role": "user",
+        "content": "hello",
+        "timestamp": "2026-10-26 15:06:27"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nBased on research in Computer Vision ([1] Deep Residual Learning for Image Recognition, 2015), Deeper neural networks are more difficult to train. [1].\n\n### Technical Methodology & Findings\n- **Key Architecture / Approach**: We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. [1]\n- **Demonstrated Impact**: We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. [1]\n\n### Related Research Directions\n- **[2] BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018)**: Investigates Computation and Language (NLP) paradigms: \"We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers.\" [2].\n- **[3] Pretraining Latent Information Feedback Transformers with Teacher Supervision (2026)**: Investigates Computation and Language (NLP) paradigms: \"Transformer language models (LMs) are feed-forward: deep-layer representations are never fed back to shallower layers, and the only pathway for information to flow downward across generation steps is the decoded token.\" [3].\n\n### Summary\nIn summary, the retrieved research demonstrates that addressing **hello** relies on foundational advances described in [1], complemented by the extended techniques in the cited literature.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "1512.03385",
+            "title": "Deep Residual Learning for Image Recognition",
+            "authors": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun",
+            "year": 2015,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.9061,
+            "arxiv_url": "https://arxiv.org/abs/1512.03385",
+            "pdf_url": "https://arxiv.org/pdf/1512.03385.pdf"
+          },
+          {
+            "source_index": 2,
+            "id": "1810.04805",
+            "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+            "authors": "Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova",
+            "year": 2018,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.7181,
+            "arxiv_url": "https://arxiv.org/abs/1810.04805",
+            "pdf_url": "https://arxiv.org/pdf/1810.04805.pdf"
+          },
+          {
+            "source_index": 3,
+            "id": "2609.38149v1",
+            "title": "Pretraining Latent Information Feedback Transformers with Teacher Supervision",
+            "authors": "Dor Tirosh, Ido Amos, Mor Geva",
+            "year": 2026,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.6498,
+            "arxiv_url": "https://arxiv.org/abs/2609.38149v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38149v1.pdf"
+          },
+          {
+            "source_index": 4,
+            "id": "2609.38154v1",
+            "title": "LongLive-Plug: Once-for-All Distillation for Video Generation",
+            "authors": "Shuai Yang, Luozhou Wang, Wei Huang, ZhiFei Chen, Bohan Zhang, Xiao Fu, Qianli Ma, Chen-Hsuan Lin, Weian Mao, Bryan Chu, Song Han, Yukang Chen",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.4771,
+            "arxiv_url": "https://arxiv.org/abs/2609.38154v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38154v1.pdf"
+          },
+          {
+            "source_index": 5,
+            "id": "2609.38163v1",
+            "title": "Rethinking Representations for World-Action Modeling",
+            "authors": "Haoyi Jiang, Liu Liu, Xinjiang Wang, Zhihao Sun, Zequn Chen, Sen Wang, Xinjie Wang, Xia Chen, Jingfeng Yao, Weiheng Zhao, Shanglin Yuan, Zhizhong Su, Wei Sui, Wenyu Liu, Xinggang Wang",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.4638,
+            "arxiv_url": "https://arxiv.org/abs/2609.38163v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38163v1.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "What are the core technical limitations identified in 'Deep Residual Learning for Image Recognition'?",
+          "How do the findings in 'Deep Residual Learning for Image Recognition' compare with 'BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding'?",
+          "Can you explain the mathematical foundations behind this technique?"
+        ],
+        "timestamp": "2026-10-26 15:06:52"
+      },
+      {
+        "role": "user",
+        "content": "What are the core technical limitations identified in 'Deep Residual Learning for Image Recognition'?",
+        "timestamp": "2026-10-26 18:30:09"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nIn Computer Science and Artificial Intelligence research, **The core technical limitations identified in 'deep residual learning for image recognition'** is a foundational concept investigated across contemporary literature. In [[1] *Deep Residual Learning for Image Recognition* (2015)], the authors establish:\n> \"Deeper neural networks are more difficult to train.\" [1]\n\n### Technical Context & Findings\n- **Evidence in [1] *Deep Residual Learning for Image Recognition* (2015)**: We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. [1]\n- **Evidence in [1] *Deep Residual Learning for Image Recognition* (2015)**: We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. [1]\n\n### Summary\nIn summary, addressing **the core technical limitations identified in 'Deep Residual Learning for Image Recognition'** in generative models is the primary motivation behind the architectures described in [1], which substitute speculative generation with evidence-grounded document retrieval.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "1512.03385",
+            "title": "Deep Residual Learning for Image Recognition",
+            "authors": "Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun",
+            "year": 2015,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 1.0,
+            "arxiv_url": "https://arxiv.org/abs/1512.03385",
+            "pdf_url": "https://arxiv.org/pdf/1512.03385.pdf"
+          },
+          {
+            "source_index": 2,
+            "id": "2303.08774",
+            "title": "GPT-4 Technical Report",
+            "authors": "Josh Achiam, Steven Adler, Sam Altman",
+            "year": 2023,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.6162,
+            "arxiv_url": "https://arxiv.org/abs/2303.08774",
+            "pdf_url": "https://arxiv.org/pdf/2303.08774.pdf"
+          },
+          {
+            "source_index": 3,
+            "id": "2609.38165v1",
+            "title": "Cropland PAtteRNS: Parallel Dimensional Attention Networks and Attention to Dataset Disparity for Crop Segmentation in Satellite Imagery Time Series Data",
+            "authors": "Joseph Metcalfe, Sara Sharifzadeh, Fabio Caraffini",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.5812,
+            "arxiv_url": "https://arxiv.org/abs/2609.38165v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38165v1.pdf"
+          },
+          {
+            "source_index": 4,
+            "id": "2609.38170v1",
+            "title": "Adversarial Training for Pixel Diffusion",
+            "authors": "Xin Lin, Zhifei Zhang, Yuqian Zhou, Haitian Zheng, Zhe Lin, Ming-Hsuan Yang, Truong Nguyen",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.5652,
+            "arxiv_url": "https://arxiv.org/abs/2609.38170v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38170v1.pdf"
+          },
+          {
+            "source_index": 5,
+            "id": "2609.38157v1",
+            "title": "EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation",
+            "authors": "Kuan-Po Huang, Haohe Liu, Puyuan Peng, Haibin Wu, Zhaoheng Ni, Hung-yi Lee, Jinwon Lee, Neha Chachra",
+            "year": 2026,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.5602,
+            "arxiv_url": "https://arxiv.org/abs/2609.38157v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38157v1.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "What are the core technical limitations identified in 'Deep Residual Learning for Image Recognition'?",
+          "How do the findings in 'Deep Residual Learning for Image Recognition' compare with 'GPT-4 Technical Report'?",
+          "Can you explain the mathematical foundations behind this technique?"
+        ],
+        "timestamp": "2026-10-26 18:30:41"
+      }
+    ]
   }
 }

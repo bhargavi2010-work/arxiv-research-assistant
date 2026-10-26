@@ -29,6 +29,7 @@ from src.nlp.information_extractor import ScientificInfoExtractor
 from src.concept_graph.concept_visualizer import ConceptVisualizer
 from src.storage.chat_memory import ConversationManager
 from src.storage.saved_papers import SavedPapersManager
+from src.agents.langchain_agent import ArXivLangChainAgent
 
 # Import UI Views
 from src.ui.views.home import render_home_view
@@ -70,6 +71,12 @@ def get_cached_services():
     visualizer = ConceptVisualizer(search_engine=search_engine, extractor=extractor)
     conv_manager = ConversationManager()
     saved_manager = SavedPapersManager()
+    langchain_agent = ArXivLangChainAgent(
+        search_engine=search_engine,
+        summarizer=summarizer,
+        visualizer=visualizer,
+        llm_client=llm_client
+    )
 
     return {
         "chroma": chroma_mgr,
@@ -81,7 +88,8 @@ def get_cached_services():
         "summarizer": summarizer,
         "visualizer": visualizer,
         "conv_manager": conv_manager,
-        "saved_manager": saved_manager
+        "saved_manager": saved_manager,
+        "langchain_agent": langchain_agent
     }
 
 services = get_cached_services()
@@ -178,7 +186,8 @@ elif current_view == "Research Chat":
     render_chat_view(
         engine=services["rag_engine"],
         conv_manager=services["conv_manager"],
-        current_conv_id=st.session_state["active_conversation_id"]
+        current_conv_id=st.session_state["active_conversation_id"],
+        langchain_agent=services["langchain_agent"]
     )
 elif current_view == "Paper Search":
     render_search_view(
@@ -221,5 +230,6 @@ elif current_view == "Settings":
     render_settings_view(
         chroma_manager=services["chroma"],
         llm_client=services["llm_client"],
-        embedder=services["embedder"]
+        embedder=services["embedder"],
+        langchain_agent=services["langchain_agent"]
     )

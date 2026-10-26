@@ -83,9 +83,10 @@ class ConversationManager:
         conv_id: str,
         content: str,
         sources: Optional[List[Dict[str, Any]]] = None,
-        suggested_follow_ups: Optional[List[str]] = None
+        suggested_follow_ups: Optional[List[str]] = None,
+        agent_metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Appends assistant grounded answer and research sources."""
+        """Appends assistant grounded answer, research sources, and LangChain agent reasoning metadata."""
         if conv_id not in self._conversations:
             return
 
@@ -97,6 +98,7 @@ class ConversationManager:
             "content": content.strip(),
             "sources": sources or [],
             "suggested_follow_ups": suggested_follow_ups or [],
+            "agent_metadata": agent_metadata,
             "timestamp": now_str
         })
         conv["updated_at"] = now_str
