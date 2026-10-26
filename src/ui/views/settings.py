@@ -4,6 +4,7 @@ Matches Panel 8 (Settings) of the reference UI design, with dynamic model config
 and real-time knowledge base expansion capabilities.
 """
 
+import os
 import streamlit as st
 from typing import Optional, Any
 from config.config import (
