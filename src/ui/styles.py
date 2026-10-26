@@ -502,5 +502,89 @@ def get_custom_css() -> str:
         border-color: #94a3b8 !important;
         color: #0f172a !important;
     }
+
+    /* ========================================================
+       BOTTOM BAR & CHAT INPUT STYLING
+       Bottom Container: Crisp White (#ffffff)
+       Input Box: Sleek Dark Mode (#0f172a / #1e293b)
+       ======================================================== */
+    /* 1. Force the bottom container background from black to clean white */
+    footer,
+    [data-testid="stBottom"],
+    [data-testid="stBottom"] > div,
+    [data-testid="stBottomBlockContainer"],
+    .stChatFloatingInputContainer,
+    div[class*="stChatFloatingInputContainer"],
+    div[class*="stBottom"] {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        border-top: 1px solid #e2e8f0 !important;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03) !important;
+    }
+
+    /* 2. Chat Input Container */
+    [data-testid="stChatInput"] {
+        background-color: transparent !important;
+        background: transparent !important;
+        padding-bottom: 8px !important;
+    }
+
+    /* 3. The Input Box itself - Kept in Dark Mode */
+    [data-testid="stChatInput"] > div,
+    [data-testid="stChatInput"] div[data-baseweb="textarea"],
+    [data-testid="stChatInput"] div[data-baseweb="base-input"] {
+        background-color: #0f172a !important;
+        background: #0f172a !important;
+        border: 1px solid #334155 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12) !important;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+    }
+
+    [data-testid="stChatInput"] > div:focus-within,
+    [data-testid="stChatInput"] div[data-baseweb="base-input"]:focus-within {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+    }
+
+    /* 4. Textarea inside the Dark Input Box */
+    [data-testid="stChatInput"] textarea,
+    [data-testid="stChatInput"] input {
+        background-color: transparent !important;
+        background: transparent !important;
+        color: #f8fafc !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        caret-color: #38bdf8 !important;
+    }
+
+    [data-testid="stChatInput"] textarea::placeholder,
+    [data-testid="stChatInput"] input::placeholder {
+        color: #94a3b8 !important;
+        opacity: 0.9 !important;
+    }
+
+    /* 5. Submit / Send Arrow Button */
+    [data-testid="stChatInput"] button {
+        background-color: #1e293b !important;
+        background: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 8px !important;
+        color: #94a3b8 !important;
+        transition: all 0.15s ease !important;
+    }
+
+    [data-testid="stChatInput"] button:hover {
+        background-color: #2563eb !important;
+        background: #2563eb !important;
+        border-color: #2563eb !important;
+        color: #ffffff !important;
+    }
+
+    [data-testid="stChatInput"] button svg,
+    [data-testid="stChatInput"] button svg path {
+        fill: currentColor !important;
+        color: inherit !important;
+    }
     </style>
     """
