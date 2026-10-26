@@ -36,7 +36,7 @@ def render_concepts_view(
         search_clicked = st.button("Search", type="primary", use_container_width=True, key="concept_search_btn")
 
     target_concept = concept_query or "Transformer"
-    concept_data = visualizer.get_concept_data(target_concept)
+    concept_data = visualizer.get_concept_data(target_concept, search_engine=search_engine)
 
     # 3 Tabs matching Panel 6: Concept Graph, Related Papers, Concept Details
     tab_graph, tab_papers, tab_details = st.tabs(["Concept Graph", "Related Papers", "Concept Details"])

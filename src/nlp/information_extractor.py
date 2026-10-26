@@ -129,6 +129,65 @@ class ScientificInfoExtractor:
                 matched.append(canonical_name)
         return matched
 
+    def _extract_dynamic_entities(self, text: str) -> Dict[str, List[str]]:
+        """
+        Dynamically extracts open-vocabulary models, methods, tasks, and datasets
+        using syntactic patterns (e.g. noun phrases qualifying architecture, benchmark, task).
+        """
+        dynamic_models = []
+        dynamic_methods = []
+        dynamic_tasks = []
+        dynamic_datasets = []
+
+        # 1. Dynamic Models / Architectures
+        model_matches = re.findall(
+            r"\b([A-Z][a-zA-Z0-9\-_]+(?:\s+[A-Z][a-zA-Z0-9\-_]+)?)\s+(?:model|architecture|network|framework|backbone)\b",
+            text
+        )
+        for m in model_matches:
+            clean_m = m.strip()
+            if clean_m.lower() not in STOPWORDS and len(clean_m) > 2:
+                dynamic_models.append(clean_m)
+
+        # 2. Dynamic Tasks
+        task_matches = re.findall(
+            r"\b([a-zA-Z\-]+(?:\s+[a-zA-Z\-]+)?)\s+(?:task|benchmark|classification|generation|translation|retrieval|synthesis|detection|segmentation)\b",
+            text,
+            flags=re.IGNORECASE
+        )
+        for t in task_matches:
+            clean_t = t.strip().title()
+            if clean_t.lower() not in STOPWORDS and len(clean_t) > 3:
+                dynamic_tasks.append(clean_t)
+
+        # 3. Dynamic Datasets / Benchmarks
+        dataset_matches = re.findall(
+            r"\b([A-Z][a-zA-Z0-9\-_]+(?:\s+[A-Z0-9\-_]+)?)\s+(?:dataset|corpus|benchmark|suite|collection)\b",
+            text
+        )
+        for d in dataset_matches:
+            clean_d = d.strip()
+            if clean_d.lower() not in STOPWORDS and len(clean_d) > 2:
+                dynamic_datasets.append(clean_d)
+
+        # 4. Dynamic Methods / Mechanisms
+        method_matches = re.findall(
+            r"\b([a-zA-Z\-]+(?:\s+[a-zA-Z\-]+)?)\s+(?:mechanism|technique|algorithm|optimization|adaptation|loss|formulation)\b",
+            text,
+            flags=re.IGNORECASE
+        )
+        for meth in method_matches:
+            clean_meth = meth.strip().title()
+            if clean_meth.lower() not in STOPWORDS and len(clean_meth) > 3:
+                dynamic_methods.append(clean_meth)
+
+        return {
+            "models": list(dict.fromkeys(dynamic_models)),
+            "methods": list(dict.fromkeys(dynamic_methods)),
+            "tasks": list(dict.fromkeys(dynamic_tasks)),
+            "datasets": list(dict.fromkeys(dynamic_datasets))
+        }
+
     def extract_keywords(self, text: str, max_keywords: int = 8) -> List[str]:
         """Extracts key scientific phrases and significant words using frequency & heuristic scoring."""
         # Find 2-word scientific phrases (bigrams)
@@ -164,15 +223,27 @@ class ScientificInfoExtractor:
     def extract_all(self, title: str, abstract: str) -> Dict[str, Any]:
         """
         Runs comprehensive scientific information extraction across paper title and abstract.
+        Combines scientific entity taxonomies with dynamic syntactic pattern extraction.
         Returns:
             Dict containing models, methods, tasks, datasets, concepts, and keywords.
         """
         full_text = f"{title}. {abstract}"
         
-        models = self._match_entities(full_text, self._model_patterns)
-        methods = self._match_entities(full_text, self._method_patterns)
-        tasks = self._match_entities(full_text, self._task_patterns)
-        datasets = self._match_entities(full_text, self._dataset_patterns)
+        # Taxonomy matches
+        cat_models = self._match_entities(full_text, self._model_patterns)
+        cat_methods = self._match_entities(full_text, self._method_patterns)
+        cat_tasks = self._match_entities(full_text, self._task_patterns)
+        cat_datasets = self._match_entities(full_text, self._dataset_patterns)
+        
+        # Dynamic syntactic pattern matches
+        dynamic_entities = self._extract_dynamic_entities(full_text)
+
+        # Merge deduplicated
+        models = list(dict.fromkeys(cat_models + dynamic_entities["models"]))
+        methods = list(dict.fromkeys(cat_methods + dynamic_entities["methods"]))
+        tasks = list(dict.fromkeys(cat_tasks + dynamic_entities["tasks"]))
+        datasets = list(dict.fromkeys(cat_datasets + dynamic_entities["datasets"]))
+
         keywords = self.extract_keywords(full_text, max_keywords=8)
         
         # High-level key concepts union

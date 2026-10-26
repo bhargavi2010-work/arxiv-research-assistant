@@ -73,7 +73,9 @@ def render_history_view(
             st.markdown(f"""
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
                     <div style="display: flex; align-items: center; gap: 16px;">
-                        <div style="width: 42px; height: 42px; background: {bg}; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; color: {color}; flex-shrink: 0;">💬</div>
+                        <div style="width: 42px; height: 42px; background: {bg}; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: {color}; flex-shrink: 0;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
                         <div>
                             <div style="font-weight: 600; font-size: 15px; color: #0f172a;">{item['title']}</div>
                             <div style="font-size: 13px; color: #64748b; margin-top: 3px;">{item['snippet']}</div>
@@ -116,7 +118,9 @@ def render_history_view(
         st.markdown(f"""
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
                 <div style="display: flex; align-items: center; gap: 16px;">
-                    <div style="width: 42px; height: 42px; background: {bg}; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 19px; color: {color}; flex-shrink: 0;">💬</div>
+                    <div style="width: 42px; height: 42px; background: {bg}; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: {color}; flex-shrink: 0;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
                     <div>
                         <div style="font-weight: 600; font-size: 15px; color: #0f172a;">{title}</div>
                         <div style="font-size: 13px; color: #64748b; margin-top: 3px;">{snippet}</div>

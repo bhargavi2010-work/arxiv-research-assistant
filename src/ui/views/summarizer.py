@@ -72,7 +72,9 @@ def render_summarizer_view(
     st.markdown(f"""
         <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin: 16px 0 24px 0; display: flex; justify-content: space-between; align-items: center;">
             <div style="display: flex; align-items: center; gap: 14px;">
-                <div style="width: 42px; height: 42px; background: #faf5ff; border: 1px solid #f3e8ff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px;">📄</div>
+                <div style="width: 42px; height: 42px; background: #faf5ff; border: 1px solid #f3e8ff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #9333ea;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
                 <div>
                     <div style="font-weight: 700; font-size: 16px; color: #0f172a;">{current_paper.get('title')}</div>
                     <div style="font-size: 13px; color: #64748b;">{current_paper.get('authors', 'Unknown')} ({current_paper.get('year', 2024)})</div>

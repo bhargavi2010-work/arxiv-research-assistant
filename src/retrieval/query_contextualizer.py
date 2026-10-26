@@ -72,12 +72,17 @@ class QueryContextualizer:
         # Extract the antecedent topic from recent user questions or assistant paper sources
         recent_topics = []
         for turn in reversed(conversation_history):
+            u_text = turn.get("content", "").strip()
+            # DEFENSIVE: Ignore turn if it matches the current query
+            if u_text.lower() == clean_q.lower():
+                continue
+
             if turn.get("role") == "user":
-                u_text = turn.get("content", "")
-                # Extract key noun phrases or title words
-                cleaned_u = re.sub(r"^(what is|what are|explain|tell me about|how does|why is)\s+", "", u_text, flags=re.IGNORECASE)
+                # Extract key noun phrase or topic
+                cleaned_u = re.sub(r"^(what is|what are|explain|tell me about|how does|why is|define|how is|compare)\s+", "", u_text, flags=re.IGNORECASE)
+                cleaned_u = re.sub(r"^(a|an|the)\s+", "", cleaned_u.strip(), flags=re.IGNORECASE)
                 cleaned_u = cleaned_u.strip(" ?.")
-                if cleaned_u and len(cleaned_u) > 2:
+                if cleaned_u and len(cleaned_u) > 1:
                     recent_topics.append(cleaned_u)
                     break
             elif turn.get("role") == "assistant" and turn.get("sources"):
@@ -101,16 +106,39 @@ class QueryContextualizer:
 
         # Reformulate query
         if "different from" in q_lower:
-            # e.g., "How is this different from an RNN?" + "Transformer" -> "Difference between Transformer and RNN"
             comp = clean_q.split("different from")[-1].strip(" ?.")
+            comp = re.sub(r"^(a|an|the)\s+", "", comp.strip(), flags=re.IGNORECASE)
             return f"Difference between {antecedent} and {comp}"
 
-        if "compare" in q_lower:
+        if "compare" in q_lower and "with" in q_lower:
             comp = clean_q.split("with")[-1].strip(" ?.")
+            comp = re.sub(r"^(a|an|the)\s+", "", comp.strip(), flags=re.IGNORECASE)
             return f"Comparison between {antecedent} and {comp}"
 
-        # If antecedent is not already in the query, prepend/attach it
-        if antecedent.lower() not in core_query.lower():
-            return f"{antecedent} {core_query}".strip()
+        # Resolve explicit prepositional pronouns (e.g., "in it", "with it", "for it", "to it", "of it")
+        resolved_query = re.sub(
+            r"\b(in|for|of|with|to|from|about)\s+(it|this|that|these|those)\b",
+            rf"\1 {antecedent}",
+            core_query,
+            flags=re.IGNORECASE
+        )
 
-        return core_query or clean_q
+        # Resolve standalone pronouns (e.g., "its components", "does it use", "is it")
+        resolved_query = re.sub(
+            r"\b(its|their)\b",
+            f"{antecedent}'s",
+            resolved_query,
+            flags=re.IGNORECASE
+        )
+        resolved_query = re.sub(
+            r"\b(it|this|that)\b",
+            antecedent,
+            resolved_query,
+            flags=re.IGNORECASE
+        )
+
+        # If antecedent is still not in resolved query, prepend it
+        if antecedent.lower() not in resolved_query.lower():
+            resolved_query = f"{antecedent} {resolved_query}".strip()
+
+        return resolved_query or clean_q

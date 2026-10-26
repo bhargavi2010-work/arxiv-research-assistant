@@ -3,6 +3,7 @@ Concept Relationship Graph & Visualization Engine for ArXiv Research Assistant.
 Constructs semantic relationship graphs using NetworkX and renders interactive Plotly figures.
 """
 
+import re
 from typing import Dict, Any, List, Optional, Tuple
 import networkx as nx
 import plotly.graph_objects as go
@@ -12,7 +13,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(PROJECT_ROOT))
 
-# Academic domain knowledge bases for seminal AI/ML concepts
+from src.nlp.information_extractor import ScientificInfoExtractor
+
+# Curated reference taxonomies for foundational architectures
 CURATED_CONCEPT_KNOWLEDGE = {
     "Transformer": {
         "definition": "The Transformer is a neural network architecture based solely on attention mechanisms, replacing recurrence and convolutions for sequence modeling.",
@@ -23,8 +26,7 @@ CURATED_CONCEPT_KNOWLEDGE = {
             "Decoder": ["Masked Self-Attention", "Cross-Attention"],
             "Positional Encoding": ["Sinusoidal Embeddings", "Learnable Embeddings"]
         },
-        "related_concepts": ["BERT", "GPT", "Self-Attention", "Multi-Head Attention", "Encoder", "Decoder", "Positional Encoding"],
-        "primary_papers": ["1706.03762", "1810.04805", "2005.14165"]
+        "related_concepts": ["BERT", "GPT", "Self-Attention", "Multi-Head Attention", "Encoder", "Decoder", "Positional Encoding"]
     },
     "RAG": {
         "definition": "Retrieval-Augmented Generation (RAG) is a framework that combines external information retrieval with parametric language generation to reduce hallucination and incorporate up-to-date knowledge.",
@@ -35,8 +37,7 @@ CURATED_CONCEPT_KNOWLEDGE = {
             "Generator / LLM": ["Context Augmentation", "Instruction Tuning", "Hallucination Mitigation"],
             "Reranker": ["Cross-Encoder", "BM25 Hybrid Ranking"]
         },
-        "related_concepts": ["Retrieval-Augmented Generation", "Vector Search", "ChromaDB", "Dense Retrieval", "Hallucination Mitigation"],
-        "primary_papers": ["2005.11401", "2312.10997"]
+        "related_concepts": ["Retrieval-Augmented Generation", "Vector Search", "ChromaDB", "Dense Retrieval", "Hallucination Mitigation"]
     },
     "LLM": {
         "definition": "Large Language Models (LLMs) are autoregressive Transformer models parameterized with billions of weights trained on extensive text corpora for diverse NLP and reasoning tasks.",
@@ -47,8 +48,7 @@ CURATED_CONCEPT_KNOWLEDGE = {
             "Instruction Tuning": ["Prompt Engineering", "Chain of Thought", "Few-Shot Learning"],
             "Inference Optimization": ["KV Cache", "Quantization", "FlashAttention", "Speculative Decoding"]
         },
-        "related_concepts": ["Transformer", "GPT-4", "Prompt Engineering", "Fine-Tuning", "Quantization"],
-        "primary_papers": ["2005.14165", "2303.08774"]
+        "related_concepts": ["Transformer", "GPT-4", "Prompt Engineering", "Fine-Tuning", "Quantization"]
     },
     "CNN": {
         "definition": "Convolutional Neural Networks (CNNs) are specialized deep neural architectures employing convolutional filters with spatial invariance for visual perception and image processing.",
@@ -58,8 +58,7 @@ CURATED_CONCEPT_KNOWLEDGE = {
             "Residual Block": ["Skip Connection", "Identity Mapping", "Vanishing Gradient Mitigation"],
             "Pooling Layer": ["Max Pooling", "Global Average Pooling"]
         },
-        "related_concepts": ["ResNet", "Computer Vision", "Object Detection", "Image Classification"],
-        "primary_papers": ["1512.03385"]
+        "related_concepts": ["ResNet", "Computer Vision", "Object Detection", "Image Classification"]
     },
     "Reinforcement Learning": {
         "definition": "Reinforcement Learning (RL) is a machine learning paradigm where an autonomous agent learns optimal decision policies through environmental trial-and-error interactions and scalar reward signals.",
@@ -69,48 +68,147 @@ CURATED_CONCEPT_KNOWLEDGE = {
             "Value Function": ["Bellman Equation", "Temporal Difference", "Q-Learning"],
             "Reward Signal": ["Reward Modeling", "Human Preferences", "Exploration vs Exploitation"]
         },
-        "related_concepts": ["RLHF", "Policy Gradient", "Q-Learning", "Markov Decision Process"],
-        "primary_papers": ["2005.14165", "2303.08774"]
+        "related_concepts": ["RLHF", "Policy Gradient", "Q-Learning", "Markov Decision Process"]
     }
 }
 
 class ConceptVisualizer:
-    """Builds and visualizes scientific concept graphs with Plotly."""
+    """Builds and visualizes scientific concept graphs dynamically derived from indexed papers."""
 
-    def __init__(self):
-        pass
+    def __init__(self, search_engine=None, extractor=None):
+        self.search_engine = search_engine
+        self.extractor = extractor or ScientificInfoExtractor()
 
-    def get_concept_data(self, concept_query: str) -> Dict[str, Any]:
-        """Retrieves structured definition, components, and related papers for a concept."""
+    def get_concept_data(
+        self,
+        concept_query: str,
+        search_engine=None
+    ) -> Dict[str, Any]:
+        """
+        Derives structured definition, components, and real related paper IDs for a concept
+        dynamically from indexed papers in ChromaDB.
+        """
+        active_search = search_engine or self.search_engine
         query_clean = concept_query.strip()
         query_lower = query_clean.lower()
 
-        # Find best match in curated taxonomy
-        for key, data in CURATED_CONCEPT_KNOWLEDGE.items():
-            if key.lower() in query_lower or query_lower in key.lower():
-                return {
-                    "name": key,
-                    "definition": data["definition"],
-                    "primary_components": data["primary_components"],
-                    "sub_components": data["sub_components"],
-                    "related_concepts": data["related_concepts"],
-                    "paper_ids": data["primary_papers"]
-                }
+        # 1. Dynamically retrieve matching research papers from the vector store
+        retrieved_papers = []
+        if active_search is not None:
+            try:
+                res = active_search.search(query=query_clean, limit=5)
+                retrieved_papers = res.get("results", [])
+            except Exception:
+                retrieved_papers = []
 
-        # Dynamic fallback for arbitrary user-entered concepts
+        paper_ids = [str(p.get("id")) for p in retrieved_papers if p.get("id")]
+
+        # 2. Extract entities, methods, and tasks directly from the retrieved literature
+        extracted_models = []
+        extracted_methods = []
+        extracted_tasks = []
+        extracted_datasets = []
+        extracted_keywords = []
+
+        for p in retrieved_papers:
+            ext = self.extractor.extract_all(p.get("title", ""), p.get("abstract", ""))
+            extracted_models.extend(ext["models"])
+            extracted_methods.extend(ext["methods"])
+            extracted_tasks.extend(ext["tasks"])
+            extracted_datasets.extend(ext["datasets"])
+            extracted_keywords.extend(ext["keywords"])
+
+        extracted_models = list(dict.fromkeys(extracted_models))
+        extracted_methods = list(dict.fromkeys(extracted_methods))
+        extracted_tasks = list(dict.fromkeys(extracted_tasks))
+        extracted_datasets = list(dict.fromkeys(extracted_datasets))
+
+        # 3. Check if concept matches curated taxonomy
+        curated_match = None
+        for key, data in CURATED_CONCEPT_KNOWLEDGE.items():
+            if key.lower() == query_lower or (len(query_lower) >= 3 and key.lower() in query_lower):
+                curated_match = (key, data)
+                break
+
+        if curated_match:
+            key, data = curated_match
+            # Augment curated components with dynamic entities from retrieved papers
+            related_union = list(dict.fromkeys(data["related_concepts"] + extracted_models + extracted_methods))
+            return {
+                "name": key,
+                "definition": data["definition"],
+                "primary_components": data["primary_components"],
+                "sub_components": data["sub_components"],
+                "related_concepts": related_union[:8],
+                "paper_ids": paper_ids or ["Indexed in Corpus"]
+            }
+
+        # 4. Purely dynamic derivation from indexed ChromaDB papers for open-vocabulary concepts
+        if retrieved_papers:
+            lead_paper = retrieved_papers[0]
+            lead_title = lead_paper.get("title", query_clean.title())
+            lead_abstract = lead_paper.get("abstract", "")
+            first_sent = re.split(r"(?<=[.!?])\s+", lead_abstract)[0] if lead_abstract else ""
+
+            dynamic_def = (
+                f"{first_sent} (Grounded in indexed literature: '{lead_title}')."
+                if first_sent
+                else f"An advanced research concept in computer science and artificial intelligence explored in '{lead_title}'."
+            )
+
+            # Build components dynamically from actual extracted literature entities
+            primary_components = []
+            sub_components = {}
+
+            if extracted_methods:
+                primary_components.append("Methods & Mechanisms")
+                sub_components["Methods & Mechanisms"] = extracted_methods[:3]
+
+            if extracted_models:
+                other_models = [m for m in extracted_models if m.lower() != query_lower][:3]
+                if other_models:
+                    primary_components.append("Related Architectures")
+                    sub_components["Related Architectures"] = other_models
+
+            if extracted_tasks:
+                primary_components.append("Target Applications")
+                sub_components["Target Applications"] = extracted_tasks[:3]
+
+            if extracted_datasets:
+                primary_components.append("Evaluation Benchmarks")
+                sub_components["Evaluation Benchmarks"] = extracted_datasets[:3]
+
+            # If fewer than 2 components, derive from keywords
+            if len(primary_components) < 2 and extracted_keywords:
+                primary_components.append("Core Concepts")
+                sub_components["Core Concepts"] = extracted_keywords[:4]
+
+            related_concepts = list(dict.fromkeys(extracted_models + extracted_methods + extracted_tasks + extracted_keywords))[:8]
+
+            return {
+                "name": query_clean.title(),
+                "definition": dynamic_def,
+                "primary_components": primary_components or ["Algorithmic Design", "Empirical Evaluation"],
+                "sub_components": sub_components or {
+                    "Algorithmic Design": extracted_keywords[:2] or ["Mathematical Formulation"],
+                    "Empirical Evaluation": ["Experimental Benchmarking"]
+                },
+                "related_concepts": related_concepts or ["Computer Science", "Artificial Intelligence"],
+                "paper_ids": paper_ids
+            }
+
+        # 5. Open-domain fallback when no papers are in the local vector DB
         name_title = query_clean.title()
         return {
             "name": name_title,
-            "definition": f"{name_title} is an important concept in modern computer science and artificial intelligence research.",
-            "primary_components": ["Core Methodology", "Model Architecture", "Optimization", "Evaluation"],
+            "definition": f"{name_title} is a specialized topic in modern artificial intelligence and computer science research.",
+            "primary_components": ["Algorithmic Design", "Empirical Evaluation"],
             "sub_components": {
-                "Core Methodology": ["Mathematical Formulation", "Algorithmic Design"],
-                "Model Architecture": ["Input Representation", "Feature Extraction"],
-                "Optimization": ["Loss Function", "Gradient Optimization"],
-                "Evaluation": ["Benchmark Metrics", "Empirical Validation"]
+                "Algorithmic Design": ["Mathematical Formulation", "Architecture Implementation"],
+                "Empirical Evaluation": ["Benchmark Metrics", "Ablation Studies"]
             },
-            "related_concepts": ["Machine Learning", "Deep Learning", "Neural Networks", "Optimization"],
-            "paper_ids": ["1706.03762", "2005.11401"]
+            "related_concepts": ["Machine Learning", "Deep Learning", "Neural Networks"],
+            "paper_ids": []
         }
 
     def build_networkx_graph(self, concept_data: Dict[str, Any]) -> nx.Graph:

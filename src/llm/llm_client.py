@@ -45,6 +45,23 @@ class LLMClient:
         self.hf_token = os.getenv("HF_TOKEN")
         self._hf_pipeline = None
 
+    def configure(
+        self,
+        backend: Optional[str] = None,
+        model_name: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None
+    ):
+        """Updates LLM configuration dynamically at runtime from session state or settings."""
+        if backend is not None:
+            self.backend = backend.lower()
+        if model_name is not None:
+            self.model_name = model_name
+        if temperature is not None:
+            self.temperature = float(temperature)
+        if max_tokens is not None:
+            self.max_tokens = int(max_tokens)
+
     def _is_ollama_available(self) -> bool:
         """Checks if local Ollama server is running."""
         try:
@@ -235,11 +252,23 @@ class LLMClient:
             ])
             return "\n".join(response_parts)
 
-        # Standard structured academic synthesis
+        # Standard structured academic synthesis with semantic discourse role matching
         sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", primary_abstract) if len(s.strip()) > 20]
         intro_sentence = sentences[0] if sentences else primary_abstract
-        method_sentence = sentences[1] if len(sentences) > 1 else ""
-        impact_sentence = sentences[2] if len(sentences) > 2 else ""
+
+        # Identify approach sentence semantically rather than assuming sentence 2
+        approach_keywords = ["propose", "introduce", "present", "architecture", "model", "algorithm", "design", "mechanism", "framework", "network"]
+        method_sentence = next(
+            (s for s in sentences[1:] if any(k in s.lower() for k in approach_keywords)),
+            sentences[1] if len(sentences) > 1 else ""
+        )
+
+        # Identify impact sentence semantically
+        impact_keywords = ["achieve", "experiment", "results", "improve", "outperform", "state-of-the-art", "sota", "faster", "evaluat", "benchmark", "accuracy", "bleu"]
+        impact_sentence = next(
+            (s for s in sentences[1:] if s != method_sentence and any(k in s.lower() for k in impact_keywords)),
+            sentences[2] if len(sentences) > 2 else ""
+        )
 
         response_parts = [
             f"### Overview & Definition",
@@ -250,6 +279,9 @@ class LLMClient:
 
         if method_sentence:
             response_parts.append(f"- **Key Architecture / Approach**: {method_sentence} [{primary_num}]")
+        elif primary_title:
+            response_parts.append(f"- **Key Architecture / Approach**: Proposes foundational formulations detailed in {primary_title} [{primary_num}].")
+
         if impact_sentence:
             response_parts.append(f"- **Demonstrated Impact**: {impact_sentence} [{primary_num}]")
 
@@ -258,7 +290,8 @@ class LLMClient:
             response_parts.append(f"### Related Research Directions")
             for num, title, authors, year, domain, pid, abstract in paper_blocks[1:3]:
                 abs_first = re.split(r"(?<=[.!?])\s+", abstract.strip())[0] if abstract else ""
-                response_parts.append(f"- **[{num}] {title} ({year})**: Investigates {domain.lower()} paradigms, showing that {abs_first.lower()} [{num}].")
+                # Preserve original sentence casing without forced lowercasing
+                response_parts.append(f"- **[{num}] {title} ({year})**: Investigates {domain} paradigms: \"{abs_first}\" [{num}].")
 
         response_parts.append(f"")
         response_parts.append(f"### Summary")

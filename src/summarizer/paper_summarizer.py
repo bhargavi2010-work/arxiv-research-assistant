@@ -49,96 +49,118 @@ class PaperSummarizer:
                 "is_abstract_based": True
             }
 
-        # Canonical high-precision synthesis for reference landmark papers
-        if "attention is all you need" in title.lower() or paper_id == "1706.03762":
-            return {
-                "id": paper_id,
-                "title": title,
-                "authors": authors,
-                "year": year,
-                "primary_category": primary_cat,
-                "executive_summary": "Introduces the Transformer architecture solely based on attention mechanisms, achieving superior translation quality and speed.",
-                "problem": "Traditional sequence modeling approaches (RNNs, CNNs) are limited in capturing long-range dependencies and are less parallelizable.",
-                "approach": "The authors propose the Transformer architecture, which relies solely on self-attention mechanisms (no recurrence, no convolutions).",
-                "key_contributions": [
-                    "Introduces the Transformer model",
-                    "Uses multi-head self-attention",
-                    "Enables parallelization and better long-range modeling"
-                ],
-                "results": "Achieves state-of-the-art performance on English-German and English-French translation tasks with significantly lower training time.",
-                "extracted_models": ["Transformer", "Multi-Head Attention"],
-                "extracted_methods": ["Self-Attention", "Scaled Dot-Product", "Positional Encoding"],
-                "extracted_tasks": ["Machine Translation", "Sequence Transduction"],
-                "extracted_datasets": ["WMT 2014 English-to-German", "WMT 2014 English-to-French"],
-                "key_concepts": ["Transformer", "Self-Attention", "Multi-Head Attention", "Positional Encoding"],
-                "keywords": ["attention", "transformer", "neural machine translation", "deep learning"],
-                "is_abstract_based": True,
-                "disclaimer": "This structured summary is synthesized based on the canonical paper title, abstract, and published metadata provided by arXiv."
-            }
-
         # 1. NLP Information Extraction
         extracted_info = self.extractor.extract_all(title, abstract)
         sentences = self._split_into_sentences(abstract)
 
-        # 2. Discourse Analysis for Academic Structure
-        problem_sentences = []
-        approach_sentences = []
-        results_sentences = []
-        other_sentences = []
+        # 2. Check if active LLM can generate structured decomposition
+        llm_summary = None
+        if self.llm and (self.llm._is_ollama_available() or self.llm.hf_token or self.llm._hf_pipeline is not None):
+            try:
+                llm_prompt = f"""You are an expert scientific researcher. Analyze the following research paper abstract and extract a structured 4-part academic summary in valid JSON format.
+Title: {title}
+Abstract: {abstract}
 
-        problem_keywords = ["however", "problem", "challenge", "limited", "lack", "difficulty", "bottleneck", "recurrent", "expensive"]
-        approach_keywords = ["propose", "introduce", "present", "explore", "architecture", "framework", "model", "we show", "we design"]
-        results_keywords = ["achieve", "experiment", "results", "superior", "state-of-the-art", "performance", "improve", "faster", "evaluat", "benchmark"]
+Return a valid JSON object with EXACTLY these keys:
+{{
+  "problem": "1-2 sentences on the core challenge/limitation addressed",
+  "approach": "1-2 sentences explaining the proposed model/architecture/methodology",
+  "key_contributions": ["list", "of", "2-3", "concrete", "scientific", "contributions"],
+  "results": "1-2 sentences summarizing experimental findings, benchmarks, or efficiency gains"
+}}
+JSON:"""
+                raw_llm = self.llm.generate(llm_prompt)
+                if raw_llm:
+                    import json
+                    json_match = re.search(r"\{.*\}", raw_llm, re.DOTALL)
+                    if json_match:
+                        parsed = json.loads(json_match.group(0))
+                        if all(k in parsed for k in ["problem", "approach", "key_contributions", "results"]):
+                            llm_summary = parsed
+            except Exception:
+                llm_summary = None
 
-        for s in sentences:
-            s_lower = s.lower()
-            if any(k in s_lower for k in problem_keywords) and not any(k in s_lower for k in approach_keywords):
-                problem_sentences.append(s)
-            elif any(k in s_lower for k in approach_keywords):
-                approach_sentences.append(s)
-            elif any(k in s_lower for k in results_keywords):
-                results_sentences.append(s)
+        if llm_summary:
+            problem_text = llm_summary["problem"]
+            approach_text = llm_summary["approach"]
+            contributions = llm_summary["key_contributions"]
+            results_text = llm_summary["results"]
+        else:
+            # 3. Transparent NLP Discourse Parsing for Academic Structure
+            problem_sentences = []
+            approach_sentences = []
+            results_sentences = []
+            other_sentences = []
+
+            problem_keywords = [
+                "however", "problem", "challenge", "limited", "lack", "difficulty",
+                "bottleneck", "recurrent", "expensive", "complex", "struggle", "suffer",
+                "dominant sequence", "drawback", "computational cost"
+            ]
+            approach_keywords = [
+                "propose", "introduce", "present", "explore", "architecture",
+                "framework", "model", "we show", "we design", "dispensing with",
+                "based solely on", "we develop", "new simple"
+            ]
+            results_keywords = [
+                "achieve", "experiment", "results", "superior", "state-of-the-art",
+                "sota", "performance", "improve", "faster", "evaluat", "benchmark",
+                "less time to train", "more parallelizable", "outperform", "bleu", "accuracy"
+            ]
+
+            for s in sentences:
+                s_lower = s.lower()
+                is_approach = any(k in s_lower for k in approach_keywords)
+                is_problem = any(k in s_lower for k in problem_keywords) and not is_approach
+                is_results = any(k in s_lower for k in results_keywords)
+
+                if is_problem:
+                    problem_sentences.append(s)
+                elif is_approach:
+                    approach_sentences.append(s)
+                elif is_results:
+                    results_sentences.append(s)
+                else:
+                    other_sentences.append(s)
+
+            # Synthesize Problem
+            if problem_sentences:
+                problem_text = " ".join(problem_sentences)
+            elif sentences:
+                problem_text = sentences[0]
             else:
-                other_sentences.append(s)
+                problem_text = f"Addresses foundational challenges in {primary_cat.lower()} modeling."
 
-        # Synthesize sections
-        # 1. Problem
-        if problem_sentences:
-            problem_text = " ".join(problem_sentences)
-        elif len(sentences) > 0:
-            problem_text = f"Addresses foundational challenges in {primary_cat.lower()}, specifically concerning limitations in existing modeling architectures."
-        else:
-            problem_text = "Not explicitly delineated in the abstract."
+            # Synthesize Approach
+            if approach_sentences:
+                approach_text = " ".join(approach_sentences)
+            elif len(sentences) > 1:
+                approach_text = sentences[1]
+            else:
+                approach_text = f"Proposes algorithmic and architectural innovations detailed in '{title}'."
 
-        # 2. Methodology / Approach
-        if approach_sentences:
-            approach_text = " ".join(approach_sentences)
-        elif len(sentences) > 1:
-            approach_text = sentences[1]
-        else:
-            approach_text = f"Proposes algorithmic and architectural innovations detailed in '{title}'."
+            # Synthesize Key Contributions
+            contributions = []
+            if extracted_info["models"]:
+                contributions.append(f"Introduces or analyzes the {', '.join(extracted_info['models'])} architecture.")
+            if extracted_info["methods"]:
+                contributions.append(f"Applies core methods including {', '.join(extracted_info['methods'][:3])}.")
+            if extracted_info["tasks"]:
+                contributions.append(f"Demonstrates efficacy on scientific tasks such as {', '.join(extracted_info['tasks'][:2])}.")
+            if not contributions and approach_sentences:
+                contributions.append(approach_sentences[0])
+            if not contributions:
+                contributions.append(f"Presents novel experimental findings for {title}.")
 
-        # 3. Key Contributions
-        contributions = []
-        if extracted_info["models"]:
-            contributions.append(f"Introduces or scales the {', '.join(extracted_info['models'])} architecture.")
-        if extracted_info["methods"]:
-            contributions.append(f"Utilizes advanced methods including {', '.join(extracted_info['methods'][:3])}.")
-        if extracted_info["tasks"]:
-            contributions.append(f"Demonstrates efficacy on scientific tasks such as {', '.join(extracted_info['tasks'][:2])}.")
-        if not contributions and len(approach_sentences) > 0:
-            contributions.append(approach_sentences[0])
-        if not contributions:
-            contributions.append(f"Presents novel experimental findings for {title}.")
-
-        # 4. Results & Findings
-        if results_sentences:
-            results_text = " ".join(results_sentences)
-        else:
-            results_text = "Empirical evaluations in the paper confirm the theoretical and operational advantages described in the methodology."
+            # Synthesize Results (no fake generic filler)
+            if results_sentences:
+                results_text = " ".join(results_sentences)
+            else:
+                results_text = "Specific quantitative experimental results or benchmark metrics are not detailed in the abstract text."
 
         # Executive overview (1-2 sentences)
-        exec_summary = f"{title} ({year}) addresses limitations in existing methods by introducing {extracted_info['models'][0] if extracted_info['models'] else 'a novel framework'}. Evaluation demonstrates significant improvements on target research benchmarks."
+        primary_model = extracted_info['models'][0] if extracted_info['models'] else 'a novel framework'
+        exec_summary = f"{title} ({year}) addresses key challenges in {primary_cat.lower()} by proposing {primary_model}. The paper details architectural formulations and empirical findings on target benchmarks."
 
         return {
             "id": paper_id,

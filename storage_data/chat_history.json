@@ -3,7 +3,7 @@
     "id": "rag-overview-101",
     "title": "RAG and its applications",
     "created_at": "2026-10-02 10:24:00",
-    "updated_at": "2026-10-02 10:24:00",
+    "updated_at": "2026-10-26 10:40:55",
     "messages": [
       {
         "role": "user",
@@ -42,6 +42,145 @@
           "How do rerankers improve RAG retrieval precision?"
         ],
         "timestamp": "10:25 AM"
+      },
+      {
+        "role": "user",
+        "content": "Explain the Transformer architecture and its key components.",
+        "timestamp": "2026-10-11 14:22:22"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nBased on research in Computation and Language (NLP) ([1] BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, 2018), We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. [1].\n\n### Technical Methodology & Findings\n- **Key Architecture / Approach**: Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. [1]\n- **Demonstrated Impact**: As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. [1]\n\n### Summary\nIn summary, the retrieved research demonstrates that addressing **Explain the Transformer architecture and its key components.** relies on foundational advances described in [1], complemented by the extended techniques in the cited literature.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "1810.04805",
+            "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+            "authors": "Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova",
+            "year": 2018,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.3682,
+            "arxiv_url": "https://arxiv.org/abs/1810.04805",
+            "pdf_url": "https://arxiv.org/pdf/1810.04805.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "Why is self-attention more parallelizable than recurrent models (RNNs)?",
+          "How does multi-head attention improve representation learning over single-head attention?",
+          "What role do positional encodings play in Transformer architectures?"
+        ],
+        "timestamp": "2026-10-11 14:22:25"
+      },
+      {
+        "role": "user",
+        "content": "what is hallucination ?",
+        "timestamp": "2026-10-11 14:22:35"
+      },
+      {
+        "role": "assistant",
+        "content": "Not enough relevant research context was found to answer this question reliably.",
+        "sources": [],
+        "suggested_follow_ups": [
+          "Try broadening your search terms",
+          "Select 'All Categories' in settings",
+          "Search by seminal paper title or key concept"
+        ],
+        "timestamp": "2026-10-11 14:22:35"
+      },
+      {
+        "role": "user",
+        "content": "Attention ALL You need",
+        "timestamp": "2026-10-11 14:36:18"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nBased on research in Computation and Language (NLP) ([1] Attention Is All You Need, 2017), The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. [1].\n\n### Technical Methodology & Findings\n- **Key Architecture / Approach**: The best performing models also connect the encoder and decoder through an attention mechanism. [1]\n- **Demonstrated Impact**: We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. [1]\n\n### Related Research Directions\n- **[2] Cropland PAtteRNS: Parallel Dimensional Attention Networks and Attention to Dataset Disparity for Crop Segmentation in Satellite Imagery Time Series Data (2026)**: Investigates computer vision paradigms, showing that the landscape of satellite imagery time series datasets and boundary-pushing architectures for cropland segmentation has never been richer. [2].\n- **[3] LeapQuant: Efficient Linear Attention with Accurate Recurrent State Quantization (2026)**: Investigates machine learning paradigms, showing that recent llms increasingly adopt hybrid designs that replace standard attention with linear attention, such as gated deltanet (gdn) and kimi delta attention (kda). [3].\n\n### Summary\nIn summary, the retrieved research demonstrates that addressing **Attention ALL You need** relies on foundational advances described in [1], complemented by the extended techniques in the cited literature.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "1706.03762",
+            "title": "Attention Is All You Need",
+            "authors": "Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin",
+            "year": 2017,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.6654,
+            "arxiv_url": "https://arxiv.org/abs/1706.03762",
+            "pdf_url": "https://arxiv.org/pdf/1706.03762.pdf"
+          },
+          {
+            "source_index": 2,
+            "id": "2609.38165v1",
+            "title": "Cropland PAtteRNS: Parallel Dimensional Attention Networks and Attention to Dataset Disparity for Crop Segmentation in Satellite Imagery Time Series Data",
+            "authors": "Joseph Metcalfe, Sara Sharifzadeh, Fabio Caraffini",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.5027,
+            "arxiv_url": "https://arxiv.org/abs/2609.38165v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38165v1.pdf"
+          },
+          {
+            "source_index": 3,
+            "id": "2609.38166v1",
+            "title": "LeapQuant: Efficient Linear Attention with Accurate Recurrent State Quantization",
+            "authors": "Yi Pan, Haocheng Xi, Kan Zhu, Xingyang Li, Yibo Wu, Mayank Mishra, Hongtao Zhang, William X. Zheng, Baris Kasikci, Song Han, Kurt Keutzer, Rishabh Iyer, Ion Stoica",
+            "year": 2026,
+            "category": "cs.LG",
+            "category_name": "Machine Learning",
+            "retrieval_similarity": 0.4722,
+            "arxiv_url": "https://arxiv.org/abs/2609.38166v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38166v1.pdf"
+          },
+          {
+            "source_index": 4,
+            "id": "2609.38146v1",
+            "title": "LIFT: Layout-In-Future Video Generation under Large Viewpoint Change via On-Policy Self-Distillation",
+            "authors": "Shengxiang Ji, Boyang Wang, Haiyang Xu, Bingnan Li, Yucheng Mao, Zeyuan Chen, Xiaojun Shan, Xiang Zhang, Gang Hua, Jianwen Xie, Zezhou Cheng, Zhuowen Tu",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.3775,
+            "arxiv_url": "https://arxiv.org/abs/2609.38146v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38146v1.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "Why is self-attention more parallelizable than recurrent models (RNNs)?",
+          "How does multi-head attention improve representation learning over single-head attention?",
+          "What role do positional encodings play in Transformer architectures?"
+        ],
+        "timestamp": "2026-10-11 14:36:21"
+      },
+      {
+        "role": "user",
+        "content": "What is Hallucination in Paper ?",
+        "timestamp": "2026-10-26 10:40:52"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nIn Large Language Models (LLMs) and artificial intelligence, **Hallucination in paper** refers to the critical issue where a model generates statements that are factually unverified, contradictory, or fabricated. In [[1] *Retrieval-Augmented Generation for Large Language Models: A Survey* (2023)], the authors establish:\n> \"However, LLMs face critical challenges including hallucination, outdated domain knowledge, and unexplainable inference processes.\" [1]\n\n### Technical Context & Findings\n\n### Grounded Mitigation & Architecture\n- **External Knowledge Retrieval**: Retrieval-Augmented Generation (RAG) has emerged as an effective paradigm that retrieves external relevant documents to enhance the accuracy and reliability of LLMs. [1]\n- **Parametric vs. Non-Parametric Memory**: Rather than relying exclusively on fixed internal weights (parametric memory), grounding model responses in an external verified knowledge base eliminates unconstrained guesswork and substantially mitigates hallucinations [1].\n\n### Summary\nIn summary, addressing **Hallucination in Paper** in generative models is the primary motivation behind the architectures described in [1], which substitute speculative generation with evidence-grounded document retrieval.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "2312.10997",
+            "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+            "authors": "Yunfan Gao, Yun Xiong, Haofen Wang",
+            "year": 2023,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.2574,
+            "arxiv_url": "https://arxiv.org/abs/2312.10997",
+            "pdf_url": "https://arxiv.org/pdf/2312.10997.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "How does RAG eliminate hallucinations in large language models?",
+          "What is the difference between intrinsic and extrinsic hallucination in LLMs?",
+          "How do RLHF and DPO impact factual consistency in generative models?"
+        ],
+        "timestamp": "2026-10-26 10:40:55"
       }
     ]
   },

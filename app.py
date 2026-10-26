@@ -44,7 +44,7 @@ from src.ui.views.settings import render_settings_view
 # Page Configuration
 st.set_page_config(
     page_title="ArXiv Research Assistant",
-    page_icon="🎓",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -67,12 +67,14 @@ def get_cached_services():
     )
     extractor = ScientificInfoExtractor()
     summarizer = PaperSummarizer(llm_client=llm_client, extractor=extractor)
-    visualizer = ConceptVisualizer()
+    visualizer = ConceptVisualizer(search_engine=search_engine, extractor=extractor)
     conv_manager = ConversationManager()
     saved_manager = SavedPapersManager()
 
     return {
         "chroma": chroma_mgr,
+        "embedder": embedder,
+        "llm_client": llm_client,
         "search_engine": search_engine,
         "rag_engine": rag_engine,
         "extractor": extractor,
@@ -99,11 +101,11 @@ if "active_conversation_id" not in st.session_state:
 def navigate_to(view_name: str):
     st.session_state["nav_view"] = view_name
 
-# Sidebar Navigation (matching the attached reference image)
+# Sidebar Navigation
 with st.sidebar:
     st.markdown("""
         <div class="sidebar-brand">
-            <div class="sidebar-brand-icon">⚛️</div>
+            <div class="sidebar-brand-icon">AI</div>
             <div>
                 <div class="sidebar-brand-title">arXiv Research Assistant</div>
                 <div class="sidebar-brand-subtitle">AI for Scientific Discovery</div>
@@ -122,13 +124,13 @@ with st.sidebar:
     ]
 
     nav_icons = {
-        "Home": "🏠 Home",
-        "Research Chat": "💬 Research Chat",
-        "Paper Search": "🔍 Paper Search",
-        "Paper Summarizer": "📄 Paper Summarizer",
-        "Concept Explorer": "🌐 Concept Explorer",
-        "Chat History": "🕒 Chat History",
-        "Settings": "⚙️ Settings"
+        "Home": "Home",
+        "Research Chat": "Research Chat",
+        "Paper Search": "Paper Search",
+        "Paper Summarizer": "Paper Summarizer",
+        "Concept Explorer": "Concept Explorer",
+        "Chat History": "Chat History",
+        "Settings": "Settings"
     }
 
     # Ensure current view is valid
@@ -154,6 +156,18 @@ with st.sidebar:
             <b>Version:</b> 1.0.0
         </div>
     """, unsafe_allow_html=True)
+
+# Synchronize LLM Client with user session settings dynamically
+active_model_choice = st.session_state.get("settings_model_choice", "Qwen2.5-7B (Open Source)")
+active_temp = st.session_state.get("settings_temp", 0.7)
+
+from src.ui.views.settings import MODEL_CONFIG_MAP
+active_cfg = MODEL_CONFIG_MAP.get(active_model_choice, {"backend": "auto", "model_name": "Qwen/Qwen2.5-7B-Instruct"})
+services["llm_client"].configure(
+    backend=active_cfg["backend"],
+    model_name=active_cfg["model_name"],
+    temperature=active_temp
+)
 
 # Main Routing Switchboard
 current_view = st.session_state["nav_view"]
@@ -204,4 +218,8 @@ elif current_view == "Saved Papers":
         navigate_fn=navigate_to
     )
 elif current_view == "Settings":
-    render_settings_view(chroma_manager=services["chroma"])
+    render_settings_view(
+        chroma_manager=services["chroma"],
+        llm_client=services["llm_client"],
+        embedder=services["embedder"]
+    )

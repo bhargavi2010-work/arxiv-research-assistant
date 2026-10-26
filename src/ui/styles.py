@@ -475,6 +475,27 @@ def get_custom_css() -> str:
         border-bottom: 2px solid #2563eb !important;
     }
 
+    /* Text Input Boxes - Thin Framed Styling for clear visibility */
+    div[data-testid="stTextInput"] > div {
+        border: 1px solid #94a3b8 !important;
+        border-radius: 8px !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+    }
+    div[data-testid="stTextInput"] > div:focus-within {
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+    }
+    div[data-testid="stTextInput"] input {
+        background-color: transparent !important;
+        color: #0f172a !important;
+        font-size: 14px !important;
+    }
+    div[data-testid="stTextInput"] input::placeholder {
+        color: #64748b !important;
+    }
+
     /* Streamlit Button Overrides */
     div.stButton > button {
         border-radius: 8px;
@@ -507,9 +528,16 @@ def get_custom_css() -> str:
        BOTTOM BAR & CHAT INPUT STYLING
        Bottom Container: Crisp White (#ffffff)
        Input Box: Sleek Dark Mode (#0f172a / #1e293b)
+       Minimized bottom spacing
        ======================================================== */
+    footer {
+        display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
     /* 1. Force the bottom container background from black to clean white */
-    footer,
     [data-testid="stBottom"],
     [data-testid="stBottom"] > div,
     [data-testid="stBottomBlockContainer"],
@@ -520,13 +548,22 @@ def get_custom_css() -> str:
         background-color: #ffffff !important;
         border-top: 1px solid #e2e8f0 !important;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03) !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+    }
+
+    [data-testid="stBottomBlockContainer"] {
+        padding-top: 4px !important;
+        padding-bottom: 6px !important;
     }
 
     /* 2. Chat Input Container */
     [data-testid="stChatInput"] {
         background-color: transparent !important;
         background: transparent !important;
-        padding-bottom: 8px !important;
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+        margin-bottom: 0 !important;
     }
 
     /* 3. The Input Box itself - Kept in Dark Mode */

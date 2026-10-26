@@ -31,7 +31,9 @@ def render_chat_view(
     if not messages and not prefill_query:
         st.markdown("""
             <div class="state-card">
-                <div class="state-icon state-icon-empty">💬</div>
+                <div class="state-icon state-icon-empty">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
                 <div class="state-title">No messages yet</div>
                 <div class="state-desc">Start a conversation by asking a research question.</div>
             </div>
@@ -81,19 +83,19 @@ def render_chat_view(
                 if sources:
                     render_sources_section(sources)
 
-                # Feedback and Copy Actions Row (matching Panel 2)
-                act_c1, act_c2, act_c3, act_c4, _ = st.columns([0.6, 0.6, 0.6, 0.6, 7.5])
+                # Feedback and Copy Actions Row
+                act_c1, act_c2, act_c3, act_c4, _ = st.columns([1, 1.1, 1, 1.1, 5.8])
                 with act_c1:
-                    if st.button("📋", key=f"copy_{idx}", help="Copy response"):
+                    if st.button("Copy", key=f"copy_{idx}", help="Copy response"):
                         st.toast("Answer copied to clipboard!")
                 with act_c2:
-                    if st.button("👍", key=f"thumbup_{idx}", help="Good response"):
+                    if st.button("Helpful", key=f"thumbup_{idx}", help="Good response"):
                         st.toast("Feedback recorded!")
                 with act_c3:
-                    if st.button("👎", key=f"thumbdown_{idx}", help="Needs improvement"):
+                    if st.button("Issue", key=f"thumbdown_{idx}", help="Needs improvement"):
                         st.toast("Feedback recorded!")
                 with act_c4:
-                    if st.button("🔄", key=f"refresh_{idx}", help="Regenerate response"):
+                    if st.button("Retry", key=f"refresh_{idx}", help="Regenerate response"):
                         st.toast("Regenerating answer...")
 
                 # Suggested follow-ups
@@ -115,11 +117,11 @@ def render_chat_view(
     active_query = query_to_process or user_input
 
     if active_query:
+        # Get sliding window history for context BEFORE storing new message so antecedent is prior turn
+        history = conv_manager.get_sliding_window_messages(current_conv_id, max_turns=4)
+
         # Save user message
         conv_manager.add_user_message(current_conv_id, active_query)
-
-        # Get sliding window history for context
-        history = conv_manager.get_sliding_window_messages(current_conv_id, max_turns=3)
 
         with st.spinner("Searching research papers & generating grounded explanation..."):
             response = engine.answer_query(

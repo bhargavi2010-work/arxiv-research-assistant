@@ -31,16 +31,37 @@ class TestQueryContextualizer(unittest.TestCase):
         contextualized = self.contextualizer.contextualize_query(follow_up, history)
         self.assertIn("Transformer", contextualized)
         self.assertIn("self-attention", contextualized)
+        self.assertNotIn("in it", contextualized.lower())
 
     def test_comparison_resolution(self):
         history = [
-            {"role": "user", "content": "Explain Transformers"},
+            {"role": "user", "content": "What is a Transformer?"},
             {"role": "assistant", "content": "Transformers dispense with recurrence and convolutions."}
         ]
         follow_up = "How is this different from an RNN?"
         contextualized = self.contextualizer.contextualize_query(follow_up, history)
-        self.assertIn("Transformers", contextualized)
-        self.assertIn("RNN", contextualized)
+        self.assertEqual(contextualized, "Difference between Transformer and RNN")
+
+    def test_compare_with_resolution(self):
+        history = [
+            {"role": "user", "content": "What is a Transformer?"},
+            {"role": "assistant", "content": "The Transformer relies entirely on attention."}
+        ]
+        follow_up = "Compare it with LSTM"
+        contextualized = self.contextualizer.contextualize_query(follow_up, history)
+        self.assertEqual(contextualized, "Comparison between Transformer and LSTM")
+
+    def test_history_containing_current_turn_defensively_resolved(self):
+        # Even if history inadvertently includes the current turn as the last element:
+        follow_up = "How is this different from an RNN?"
+        history = [
+            {"role": "user", "content": "What is a Transformer?"},
+            {"role": "assistant", "content": "The Transformer relies entirely on attention."},
+            {"role": "user", "content": follow_up}  # Current turn present in history
+        ]
+        contextualized = self.contextualizer.contextualize_query(follow_up, history)
+        self.assertEqual(contextualized, "Difference between Transformer and RNN")
+        self.assertNotIn("How is this different", contextualized)
 
     def test_paper_reference_resolution(self):
         history = [

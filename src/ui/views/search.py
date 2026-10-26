@@ -98,7 +98,9 @@ def render_search_view(
     if not papers:
         st.markdown("""
             <div class="state-card">
-                <div class="state-icon state-icon-empty">🔍</div>
+                <div class="state-icon state-icon-empty">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
                 <div class="state-title">No papers found</div>
                 <div class="state-desc">Try adjusting your search terms or filters.</div>
             </div>
