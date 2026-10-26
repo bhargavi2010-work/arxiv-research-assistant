@@ -86,10 +86,10 @@ def render_chat_view(
                 # Assistant Actions Row (Only Copy & Retry Icons)
                 act_c1, act_c2, _ = st.columns([0.45, 0.45, 9.1])
                 with act_c1:
-                    if st.button("Copy", key=f"copy_{idx}", help="Copy response"):
+                    if st.button("", icon=":material/content_copy:", key=f"copy_{idx}", help="Copy response", type="tertiary"):
                         st.toast("Answer copied to clipboard!")
                 with act_c2:
-                    if st.button("Retry", key=f"refresh_{idx}", help="Regenerate response"):
+                    if st.button("", icon=":material/refresh:", key=f"refresh_{idx}", help="Regenerate response", type="tertiary"):
                         st.toast("Regenerating answer...")
 
                 # Suggested follow-ups
