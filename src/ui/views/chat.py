@@ -83,18 +83,12 @@ def render_chat_view(
                 if sources:
                     render_sources_section(sources)
 
-                # Feedback and Copy Actions Row
-                act_c1, act_c2, act_c3, act_c4, _ = st.columns([1, 1.1, 1, 1.1, 5.8])
+                # Assistant Actions Row (Only Copy & Retry Icons)
+                act_c1, act_c2, _ = st.columns([0.45, 0.45, 9.1])
                 with act_c1:
                     if st.button("Copy", key=f"copy_{idx}", help="Copy response"):
                         st.toast("Answer copied to clipboard!")
                 with act_c2:
-                    if st.button("Helpful", key=f"thumbup_{idx}", help="Good response"):
-                        st.toast("Feedback recorded!")
-                with act_c3:
-                    if st.button("Issue", key=f"thumbdown_{idx}", help="Needs improvement"):
-                        st.toast("Feedback recorded!")
-                with act_c4:
                     if st.button("Retry", key=f"refresh_{idx}", help="Regenerate response"):
                         st.toast("Regenerating answer...")
 

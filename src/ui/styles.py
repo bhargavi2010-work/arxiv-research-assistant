@@ -525,6 +525,73 @@ def get_custom_css() -> str:
     }
 
     /* ========================================================
+       CHAT ASSISTANT ACTION ICON BUTTONS (Copy & Retry Only)
+       Minimalist sleek icon aesthetics matching modern AI apps
+       ======================================================== */
+    button[aria-label="Copy response"],
+    button[aria-label="Regenerate response"],
+    button[title="Copy response"],
+    button[title="Regenerate response"] {
+        background-color: transparent !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: 6px !important;
+        width: 32px !important;
+        height: 30px !important;
+        min-height: 30px !important;
+        padding: 0 !important;
+        margin: 0 2px !important;
+        color: #64748b !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: none !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+    }
+
+    button[aria-label="Copy response"]:hover,
+    button[aria-label="Regenerate response"]:hover,
+    button[title="Copy response"]:hover,
+    button[title="Regenerate response"]:hover {
+        background-color: #f1f5f9 !important;
+        border-color: #e2e8f0 !important;
+        color: #0f172a !important;
+    }
+
+    /* Hide text labels inside action buttons */
+    button[aria-label="Copy response"] p,
+    button[aria-label="Regenerate response"] p,
+    button[title="Copy response"] p,
+    button[title="Regenerate response"] p {
+        display: none !important;
+    }
+
+    /* Copy Icon (clean document overlay SVG matching Image 2) */
+    button[aria-label="Copy response"]::after,
+    button[title="Copy response"]::after {
+        content: "" !important;
+        display: inline-block !important;
+        width: 15px !important;
+        height: 15px !important;
+        background-color: currentColor !important;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+    }
+
+    /* Retry Icon (clean reload circular loop SVG) */
+    button[aria-label="Regenerate response"]::after,
+    button[title="Regenerate response"]::after {
+        content: "" !important;
+        display: inline-block !important;
+        width: 15px !important;
+        height: 15px !important;
+        background-color: currentColor !important;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'%3E%3C/polyline%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'%3E%3C/polyline%3E%3Cpath d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain !important;
+    }
+
+    /* ========================================================
        BOTTOM BAR & CHAT INPUT STYLING
        Bottom Container: Crisp White (#ffffff)
        Input Box: Sleek Dark Mode (#0f172a / #1e293b)
