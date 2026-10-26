@@ -601,13 +601,20 @@ def get_custom_css() -> str:
         opacity: 0.9 !important;
     }
 
-    /* 5. Submit / Send Arrow Button */
+    /* 5. Submit / Send Arrow Button (Replaces square with crisp '➔' arrow) */
     [data-testid="stChatInput"] button {
         background-color: #1e293b !important;
         background: #1e293b !important;
         border: 1px solid #334155 !important;
         border-radius: 8px !important;
         color: #94a3b8 !important;
+        width: 32px !important;
+        height: 32px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        position: relative !important;
         transition: all 0.15s ease !important;
     }
 
@@ -616,12 +623,34 @@ def get_custom_css() -> str:
         background: #2563eb !important;
         border-color: #2563eb !important;
         color: #ffffff !important;
+        box-shadow: 0 0 8px rgba(37, 99, 235, 0.4) !important;
     }
 
-    [data-testid="stChatInput"] button svg,
-    [data-testid="stChatInput"] button svg path {
-        fill: currentColor !important;
+    [data-testid="stChatInput"] button:not(:disabled) {
+        background-color: #2563eb !important;
+        background: #2563eb !important;
+        border-color: #3b82f6 !important;
+        color: #ffffff !important;
+    }
+
+    /* Hide any default square or SVG icon */
+    [data-testid="stChatInput"] button svg {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    /* Render distinct forward sending arrow (--> / ➔) */
+    [data-testid="stChatInput"] button::after {
+        content: "➔" !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
         color: inherit !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
     }
     </style>
     """
