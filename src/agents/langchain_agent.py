@@ -20,13 +20,22 @@ from langchain_core.tools import tool
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
 from langsmith import traceable
 
-from config.config import (
-    LANGCHAIN_TRACING_V2,
-    LANGCHAIN_ENDPOINT,
-    LANGCHAIN_API_KEY,
-    LANGCHAIN_PROJECT,
-    DEFAULT_TOP_K
-)
+try:
+    from config.config import (
+        LANGCHAIN_TRACING_V2,
+        LANGCHAIN_ENDPOINT,
+        LANGCHAIN_API_KEY,
+        LANGCHAIN_PROJECT,
+        DEFAULT_TOP_K
+    )
+except ImportError:
+    import os
+    LANGCHAIN_TRACING_V2 = os.getenv("LANGCHAIN_TRACING_V2", "false").lower() in ("true", "1")
+    LANGCHAIN_ENDPOINT = os.getenv("LANGCHAIN_ENDPOINT", "https://api.smith.langchain.com")
+    LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY", "")
+    LANGCHAIN_PROJECT = os.getenv("LANGCHAIN_PROJECT", "arxiv-research-assistant")
+    DEFAULT_TOP_K = int(os.getenv("DEFAULT_TOP_K", "5"))
+
 from src.retrieval.search_engine import PaperSearchEngine
 from src.retrieval.context_builder import RAGContextBuilder
 from src.summarizer.paper_summarizer import PaperSummarizer

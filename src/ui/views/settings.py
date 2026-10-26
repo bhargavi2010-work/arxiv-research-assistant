@@ -5,7 +5,7 @@ and real-time knowledge base expansion capabilities.
 """
 
 import streamlit as st
-from typing import Optional
+from typing import Optional, Any
 from config.config import (
     CS_AI_CATEGORIES,
     DEFAULT_LLM_MODEL,
