@@ -12,13 +12,49 @@ from src.ui.components import render_page_header
 def render_summarizer_view(
     summarizer: PaperSummarizer,
     search_engine: PaperSearchEngine,
-    navigate_fn: Callable[[str], None]
+    navigate_fn: Callable[[str], None],
+    pdf_processor: Optional[Any] = None
 ):
     """Renders the Paper Summarizer view with 4-tab structured breakdown."""
     render_page_header(
         title="Paper Summarization",
         subtitle="Get concise and structured summaries of research papers."
     )
+
+    # Option to upload custom research paper PDF
+    with st.expander("Or Upload a Custom Research Paper PDF to Summarize", expanded=False):
+        uploaded_sum_pdf = st.file_uploader(
+            "Choose a PDF research paper",
+            type=["pdf"],
+            key="summarizer_pdf_uploader"
+        )
+        if uploaded_sum_pdf is not None:
+            sum_c1, sum_c2 = st.columns([3, 1])
+            with sum_c1:
+                st.caption(f"Uploaded: **{uploaded_sum_pdf.name}** ({round(uploaded_sum_pdf.size / 1024, 1)} KB)")
+            with sum_c2:
+                if st.button("Summarize Uploaded PDF", type="primary", use_container_width=True, key="btn_sum_pdf"):
+                    if pdf_processor:
+                        with st.spinner("Parsing PDF sections and abstract..."):
+                            try:
+                                pdf_data = pdf_processor.extract_pdf_data(uploaded_sum_pdf.getvalue(), uploaded_sum_pdf.name)
+                                custom_paper = {
+                                    "id": pdf_data["id"],
+                                    "title": pdf_data["title"],
+                                    "authors": pdf_data["authors"],
+                                    "abstract": pdf_data["abstract"],
+                                    "categories": "User Uploaded Paper",
+                                    "year": 2024,
+                                    "is_custom_upload": True
+                                }
+                                st.session_state["selected_paper"] = custom_paper
+                                st.session_state["summarizer_candidates"] = [custom_paper]
+                                st.toast(f"Loaded {pdf_data['title']}!")
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"Error reading PDF: {str(e)}")
+                    else:
+                        st.error("PDF processing service is unavailable.")
 
     # Search / Select Paper Bar
     col1, col2 = st.columns([5, 1])

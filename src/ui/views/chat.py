@@ -14,13 +14,64 @@ def render_chat_view(
     engine: ResearchChatbotEngine,
     conv_manager: ConversationManager,
     current_conv_id: str,
-    langchain_agent: Optional[Any] = None
+    langchain_agent: Optional[Any] = None,
+    pdf_processor: Optional[Any] = None,
+    chroma_manager: Optional[Any] = None,
+    embedder: Optional[Any] = None
 ):
     """Renders the main Research Chat interface."""
     render_page_header(
         title="Research Chat",
         subtitle="Ask anything about research papers, concepts, or get detailed explanations."
     )
+
+    # PDF Upload & Ingestion Drawer
+    with st.expander("Upload & Chat with your own Research Paper PDF", expanded=False):
+        uploaded_pdf = st.file_uploader(
+            "Upload a research paper in PDF format to chat with its contents",
+            type=["pdf"],
+            key="chat_pdf_uploader",
+            help="Drop any research paper PDF. The assistant will extract its text, chunk it with page citations, and index it into ChromaDB."
+        )
+        if uploaded_pdf is not None:
+            up_c1, up_c2 = st.columns([3, 1])
+            with up_c1:
+                st.caption(f"Selected: **{uploaded_pdf.name}** ({round(uploaded_pdf.size / 1024, 1)} KB)")
+            with up_c2:
+                if st.button("Index PDF for Chat", type="primary", use_container_width=True, key="btn_index_pdf"):
+                    if pdf_processor and chroma_manager and embedder:
+                        with st.spinner("Extracting sections, chunking & generating embeddings..."):
+                            try:
+                                pdf_data = pdf_processor.extract_pdf_data(uploaded_pdf.getvalue(), uploaded_pdf.name)
+                                res = pdf_processor.index_pdf_into_chromadb(pdf_data, chroma_manager, embedder)
+                                conv_manager.add_assistant_message(
+                                    conv_id=current_conv_id,
+                                    content=(
+                                        f"**Paper Uploaded & Indexed Successfully**\n\n"
+                                        f"**Title:** {pdf_data['title']}\n\n"
+                                        f"**Authors:** {pdf_data['authors']}\n\n"
+                                        f"**Pages:** {pdf_data['total_pages']} | **Indexed Chunks:** {res['chunks_indexed']}\n\n"
+                                        f"**Abstract:**\n{pdf_data['abstract']}\n\n"
+                                        f"---\n"
+                                        f"*You can now ask any question directly about this paper's methodology, architecture, equations, or experiments!*"
+                                    ),
+                                    sources=[{
+                                        "title": pdf_data["title"],
+                                        "id": pdf_data["id"],
+                                        "year": 2024,
+                                        "authors": pdf_data["authors"],
+                                        "categories": "User Uploaded Paper",
+                                        "similarity": 1.0,
+                                        "is_grounded": True
+                                    }]
+                                )
+                                st.toast(f"Indexed {pdf_data['title']}!")
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"Error indexing PDF: {str(e)}")
+                    else:
+                        st.error("PDF processing service is not initialized.")
+
 
     conv = conv_manager.get_conversation(current_conv_id)
     messages = conv["messages"] if conv else []

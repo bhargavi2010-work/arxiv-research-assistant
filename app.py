@@ -31,6 +31,7 @@ from src.concept_graph.concept_visualizer import ConceptVisualizer
 from src.storage.chat_memory import ConversationManager
 from src.storage.saved_papers import SavedPapersManager
 from src.agents.langchain_agent import ArXivLangChainAgent
+from src.data_pipeline.pdf_processor import PDFResearchPaperProcessor
 
 # Import UI Views
 from src.ui.views.home import render_home_view
@@ -72,11 +73,13 @@ def get_cached_services():
     visualizer = ConceptVisualizer(search_engine=search_engine, extractor=extractor)
     conv_manager = ConversationManager()
     saved_manager = SavedPapersManager()
+    pdf_processor = PDFResearchPaperProcessor()
     langchain_agent = ArXivLangChainAgent(
         search_engine=search_engine,
         summarizer=summarizer,
         visualizer=visualizer,
-        llm_client=llm_client
+        llm_client=llm_client,
+        pdf_processor=pdf_processor
     )
 
     return {
@@ -90,6 +93,7 @@ def get_cached_services():
         "visualizer": visualizer,
         "conv_manager": conv_manager,
         "saved_manager": saved_manager,
+        "pdf_processor": pdf_processor,
         "langchain_agent": langchain_agent
     }
 
@@ -188,7 +192,10 @@ elif current_view == "Research Chat":
         engine=services["rag_engine"],
         conv_manager=services["conv_manager"],
         current_conv_id=st.session_state["active_conversation_id"],
-        langchain_agent=services["langchain_agent"]
+        langchain_agent=services["langchain_agent"],
+        pdf_processor=services["pdf_processor"],
+        chroma_manager=services["chroma"],
+        embedder=services["embedder"]
     )
 elif current_view == "Paper Search":
     render_search_view(
@@ -209,7 +216,8 @@ elif current_view == "Paper Summarizer":
     render_summarizer_view(
         summarizer=services["summarizer"],
         search_engine=services["search_engine"],
-        navigate_fn=navigate_to
+        navigate_fn=navigate_to,
+        pdf_processor=services["pdf_processor"]
     )
 elif current_view == "Concept Explorer":
     render_concepts_view(

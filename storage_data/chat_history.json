@@ -497,5 +497,181 @@
         "timestamp": "2026-10-26 18:30:41"
       }
     ]
+  },
+  "5b19fac7": {
+    "id": "5b19fac7",
+    "title": "Retrieval-Augmented Generation And Why Is...",
+    "created_at": "2026-10-26 20:35:39",
+    "updated_at": "2026-10-26 20:40:20",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Retrieval-Augmented Generation and why is it important in LLMs?",
+        "timestamp": "2026-10-26 20:35:47"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nIn Computer Science and Artificial Intelligence research, **Retrieval-augmented generation and why is it important in llms** is a foundational concept investigated across contemporary literature. In [[1] *Retrieval-Augmented Generation for Large Language Models: A Survey* (2023)], the authors establish:\n> \"Large Language Models (LLMs) have substantially transformed natural language processing, displaying remarkable generative capability.\" [1]\n\n### Technical Context & Findings\n- **Evidence in [1] *Retrieval-Augmented Generation for Large Language Models: A Survey* (2023)**: However, LLMs face critical challenges including hallucination, outdated domain knowledge, and unexplainable inference processes. [1]\n- **Evidence in [1] *Retrieval-Augmented Generation for Large Language Models: A Survey* (2023)**: Retrieval-Augmented Generation (RAG) has emerged as an effective paradigm that retrieves external relevant documents to enhance the accuracy and reliability of LLMs. [1]\n\n### Grounded Mitigation & Architecture\n- **External Knowledge Retrieval**: Retrieval-Augmented Generation (RAG) has emerged as an effective paradigm that retrieves external relevant documents to enhance the accuracy and reliability of LLMs. [1]\n- **Parametric vs. Non-Parametric Memory**: Rather than relying exclusively on fixed internal weights (parametric memory), grounding model responses in an external verified knowledge base eliminates unconstrained guesswork and substantially mitigates hallucinations [1].\n\n### Summary\nIn summary, addressing **Retrieval-Augmented Generation and why is it important in LLMs** in generative models is the primary motivation behind the architectures described in [1], which substitute speculative generation with evidence-grounded document retrieval.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "2312.10997",
+            "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+            "authors": "Yunfan Gao, Yun Xiong, Haofen Wang",
+            "year": 2023,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.9567,
+            "arxiv_url": "https://arxiv.org/abs/2312.10997",
+            "pdf_url": "https://arxiv.org/pdf/2312.10997.pdf"
+          },
+          {
+            "source_index": 2,
+            "id": "2005.11401",
+            "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "authors": "Patrick Lewis, Ethan Perez, Aleksandara Piktus, Fabio Petroni",
+            "year": 2020,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.895,
+            "arxiv_url": "https://arxiv.org/abs/2005.11401",
+            "pdf_url": "https://arxiv.org/pdf/2005.11401.pdf"
+          },
+          {
+            "source_index": 3,
+            "id": "2609.38142v1",
+            "title": "AdviSD: Learning to Advise Frontier LLMs via Targeted Multi-Turn Self-Distillation",
+            "authors": "Rishabh Agrawal, Hejie Cui, Shasha Li, Shanchan Wu, Sercan Ö. Arık",
+            "year": 2026,
+            "category": "cs.AI",
+            "category_name": "Artificial Intelligence",
+            "retrieval_similarity": 0.4582,
+            "arxiv_url": "https://arxiv.org/abs/2609.38142v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38142v1.pdf"
+          },
+          {
+            "source_index": 4,
+            "id": "2609.38154v1",
+            "title": "LongLive-Plug: Once-for-All Distillation for Video Generation",
+            "authors": "Shuai Yang, Luozhou Wang, Wei Huang, ZhiFei Chen, Bohan Zhang, Xiao Fu, Qianli Ma, Chen-Hsuan Lin, Weian Mao, Bryan Chu, Song Han, Yukang Chen",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.4565,
+            "arxiv_url": "https://arxiv.org/abs/2609.38154v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38154v1.pdf"
+          },
+          {
+            "source_index": 5,
+            "id": "2609.38157v1",
+            "title": "EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation",
+            "authors": "Kuan-Po Huang, Haohe Liu, Puyuan Peng, Haibin Wu, Zhaoheng Ni, Hung-yi Lee, Jinwon Lee, Neha Chachra",
+            "year": 2026,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.4316,
+            "arxiv_url": "https://arxiv.org/abs/2609.38157v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38157v1.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "What is hallucination related to RAG?",
+          "How does dense vector search work?",
+          "Compare RAG with fine-tuning"
+        ],
+        "agent_metadata": {
+          "agent_framework": "LangChain ReAct Agent (Unit 1 & 2)",
+          "thought": "Analyzed user query 'What is Retrieval-Augmented Generation and why is it important in LLMs?'. Identified domain requirements and selected specialized tool 'search_arxiv_literature'.",
+          "action": "search_arxiv_literature",
+          "observation_snippet": "[1] Retrieval-Augmented Generation for Large Language Models: A Survey (arXiv:2312.10997, 2023)\nAuthors: Yunfan Gao, Yun Xiong, Haofen Wang\nAbstract: Large Language Models (LLMs) h...",
+          "langsmith_traced": false
+        },
+        "timestamp": "2026-10-26 20:35:50"
+      },
+      {
+        "role": "user",
+        "content": "How does dense vector search work?",
+        "timestamp": "2026-10-26 20:40:17"
+      },
+      {
+        "role": "assistant",
+        "content": "### Overview & Definition\nIn Computer Science and Artificial Intelligence research, **How does dense vector search work** is a foundational concept investigated across contemporary literature. In [[1] *EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation* (2026)], the authors establish:\n> \"We therefore study vector steering, a training-free approach that modifies the internal representations of a frozen model.\" [1]\n\n### Technical Context & Findings\n- **Evidence in [1] *EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation* (2026)**: CoCoEmo, a conventional vector steering method for emotion TTS, treats each emotion vector as an indivisible direction controlled by a single global strength, limiting adherence to the requested emotion. [1]\n- **Evidence in [1] *EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation* (2026)**: In this work, we first discover that an emotion vector can be decomposed into a shared component that moves speech away from neutral expression and a residual component that directs generation toward the requested emotion. [1]\n\n### Grounded Mitigation & Architecture\n- **External Knowledge Retrieval**: Building on this finding, we propose Emotion Residual-Enhanced Steering for TTS (EmoRES), a novel method that controls the two components without retraining the backbone. [1]\n- **Parametric vs. Non-Parametric Memory**: Rather than relying exclusively on fixed internal weights (parametric memory), grounding model responses in an external verified knowledge base eliminates unconstrained guesswork and substantially mitigates hallucinations [1].\n\n### Summary\nIn summary, addressing **How does dense vector search work** in generative models is the primary motivation behind the architectures described in [1], which substitute speculative generation with evidence-grounded document retrieval.",
+        "sources": [
+          {
+            "source_index": 1,
+            "id": "2609.38157v1",
+            "title": "EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation",
+            "authors": "Kuan-Po Huang, Haohe Liu, Puyuan Peng, Haibin Wu, Zhaoheng Ni, Hung-yi Lee, Jinwon Lee, Neha Chachra",
+            "year": 2026,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.5049,
+            "arxiv_url": "https://arxiv.org/abs/2609.38157v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38157v1.pdf"
+          },
+          {
+            "source_index": 2,
+            "id": "2005.11401",
+            "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "authors": "Patrick Lewis, Ethan Perez, Aleksandara Piktus, Fabio Petroni",
+            "year": 2020,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.4102,
+            "arxiv_url": "https://arxiv.org/abs/2005.11401",
+            "pdf_url": "https://arxiv.org/pdf/2005.11401.pdf"
+          },
+          {
+            "source_index": 3,
+            "id": "2609.38165v1",
+            "title": "Cropland PAtteRNS: Parallel Dimensional Attention Networks and Attention to Dataset Disparity for Crop Segmentation in Satellite Imagery Time Series Data",
+            "authors": "Joseph Metcalfe, Sara Sharifzadeh, Fabio Caraffini",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.3347,
+            "arxiv_url": "https://arxiv.org/abs/2609.38165v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38165v1.pdf"
+          },
+          {
+            "source_index": 4,
+            "id": "2609.38149v1",
+            "title": "Pretraining Latent Information Feedback Transformers with Teacher Supervision",
+            "authors": "Dor Tirosh, Ido Amos, Mor Geva",
+            "year": 2026,
+            "category": "cs.CL",
+            "category_name": "Computation and Language (NLP)",
+            "retrieval_similarity": 0.3311,
+            "arxiv_url": "https://arxiv.org/abs/2609.38149v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38149v1.pdf"
+          },
+          {
+            "source_index": 5,
+            "id": "2609.38136v1",
+            "title": "CLeaR: A Unified Framework for Resolving the Leakage-Degradation Dilemma in Style Transfer",
+            "authors": "Teng Zhou, Yunhao Chen",
+            "year": 2026,
+            "category": "cs.CV",
+            "category_name": "Computer Vision",
+            "retrieval_similarity": 0.3199,
+            "arxiv_url": "https://arxiv.org/abs/2609.38136v1",
+            "pdf_url": "https://arxiv.org/pdf/2609.38136v1.pdf"
+          }
+        ],
+        "suggested_follow_ups": [
+          "Explain the technical methodology",
+          "What are the benchmark results?",
+          "Compare with baseline models"
+        ],
+        "agent_metadata": {
+          "agent_framework": "LangChain ReAct Agent (Unit 1 & 2)",
+          "thought": "Analyzed user query 'How does dense vector search work?'. Identified domain requirements and selected specialized tool 'search_arxiv_literature'.",
+          "action": "search_arxiv_literature",
+          "observation_snippet": "[1] EmoRES-TTS: Residual-Enhanced Vector Steering for Emotional Speech Generation (arXiv:2609.38157v1, 2026)\nAuthors: Kuan-Po Huang, Haohe Liu, Puyuan Peng, Haibin Wu, Zhaoheng Ni,...",
+          "langsmith_traced": false
+        },
+        "timestamp": "2026-10-26 20:40:20"
+      }
+    ]
   }
 }

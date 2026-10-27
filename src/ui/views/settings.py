@@ -124,6 +124,7 @@ def render_settings_view(
                     <div>- <code>fetch_latest_arxiv_preprints</code>: Real-time query to live arXiv Atom API</div>
                     <div>- <code>generate_paper_summary</code>: Structured academic 4-part summarizer</div>
                     <div>- <code>explore_concept_graph</code>: Dynamic component & literature taxonomy</div>
+                    <div>- <code>parse_and_index_research_pdf</code>: PDF document extraction, chunking & live ChromaDB indexing</div>
                 </div>
             """, unsafe_allow_html=True)
 

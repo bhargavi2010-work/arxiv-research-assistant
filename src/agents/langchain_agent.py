@@ -42,6 +42,7 @@ from src.summarizer.paper_summarizer import PaperSummarizer
 from src.nlp.information_extractor import ScientificInfoExtractor
 from src.concept_graph.concept_visualizer import ConceptVisualizer
 from src.data_pipeline.expansion import fetch_and_index_arxiv_papers
+from src.data_pipeline.pdf_processor import PDFResearchPaperProcessor
 from src.llm.llm_client import LLMClient
 
 class ArXivLangChainAgent:
@@ -55,13 +56,15 @@ class ArXivLangChainAgent:
         search_engine: Optional[PaperSearchEngine] = None,
         summarizer: Optional[PaperSummarizer] = None,
         visualizer: Optional[ConceptVisualizer] = None,
-        llm_client: Optional[LLMClient] = None
+        llm_client: Optional[LLMClient] = None,
+        pdf_processor: Optional[PDFResearchPaperProcessor] = None
     ):
         self.search_engine = search_engine or PaperSearchEngine()
         self.extractor = ScientificInfoExtractor()
         self.summarizer = summarizer or PaperSummarizer(llm_client=llm_client, extractor=self.extractor)
         self.visualizer = visualizer or ConceptVisualizer(search_engine=self.search_engine, extractor=self.extractor)
         self.llm_client = llm_client or LLMClient()
+        self.pdf_processor = pdf_processor or PDFResearchPaperProcessor()
         self.context_builder = RAGContextBuilder()
 
         # Initialize LangSmith environment variables if configured
@@ -174,11 +177,34 @@ class ArXivLangChainAgent:
                 f"Linked Papers: {', '.join(data.get('paper_ids', []))}\n"
             )
 
+        @tool
+        def parse_and_index_research_pdf(file_path: str) -> str:
+            """
+            Extracts text, metadata, and sections from a research paper PDF file,
+            chunks it with page references, and indexes it into ChromaDB for instant Q&A.
+            """
+            import os
+            if not os.path.exists(file_path):
+                return f"PDF file not found at path: {file_path}"
+            with open(file_path, "rb") as f:
+                data = f.read()
+            pdf_data = self.pdf_processor.extract_pdf_data(data, os.path.basename(file_path))
+            res = self.pdf_processor.index_pdf_into_chromadb(
+                pdf_data=pdf_data,
+                chroma_manager=self.search_engine.chroma,
+                embedder=self.search_engine.embedder
+            )
+            return (
+                f"Successfully parsed '{pdf_data['title']}' ({pdf_data['total_pages']} pages, "
+                f"{res['chunks_indexed']} chunks). Indexed into ChromaDB memory with ID '{res['paper_id']}'."
+            )
+
         return [
             search_arxiv_literature,
             fetch_latest_arxiv_preprints,
             generate_paper_summary,
-            explore_concept_graph
+            explore_concept_graph,
+            parse_and_index_research_pdf
         ]
 
     @traceable(name="arxiv_langchain_agent_turn")

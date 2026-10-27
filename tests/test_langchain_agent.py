@@ -25,13 +25,14 @@ class TestArXivLangChainAgent(unittest.TestCase):
         cls.agent = ArXivLangChainAgent()
 
     def test_tools_registration(self):
-        """Verifies that all 4 LangChain scientific tools are registered."""
+        """Verifies that all 5 LangChain scientific tools are registered."""
         tool_names = [t.name for t in self.agent.tools]
-        self.assertEqual(len(self.agent.tools), 4)
+        self.assertEqual(len(self.agent.tools), 5)
         self.assertIn("search_arxiv_literature", tool_names)
         self.assertIn("fetch_latest_arxiv_preprints", tool_names)
         self.assertIn("generate_paper_summary", tool_names)
         self.assertIn("explore_concept_graph", tool_names)
+        self.assertIn("parse_and_index_research_pdf", tool_names)
 
     def test_langsmith_status_metadata(self):
         """Verifies LangSmith observability metadata generation (Unit 2)."""
