@@ -9,6 +9,7 @@ from src.retrieval.search_engine import PaperSearchEngine
 from src.storage.saved_papers import SavedPapersManager
 from src.ui.components import render_page_header
 from config.config import CS_AI_CATEGORIES, RESEARCH_DOMAINS
+from src.nlp.ui_localization import t
 
 def _render_publisher_badge(publisher: str, venue: str) -> str:
     """Returns styled HTML badge for publisher venue."""
@@ -49,19 +50,19 @@ def render_search_view(
         query = st.text_input(
             "Search Query",
             value=prefill,
-            placeholder="Search any published paper by title, DOI, or topic (e.g. 'Blockchain Smart voting system', 'AlphaFold')...",
+            placeholder=t("Search any published paper by title, DOI, or topic (e.g. 'Blockchain Smart voting system', 'AlphaFold')..."),
             label_visibility="collapsed",
             key="search_page_query_input"
         )
     with s_col2:
-        search_clicked = st.button("Search", type="primary", use_container_width=True, key="search_page_btn")
+        search_clicked = st.button(t("Search"), type="primary", use_container_width=True, key="search_page_btn")
 
     # Multi-Domain Filters Row
     f1, f2, f3, f4 = st.columns(4)
     with f1:
         domain_options = list(RESEARCH_DOMAINS.keys())
         domain_choice = st.selectbox(
-            "Domain",
+            t("Domain"),
             domain_options,
             index=0,
             key="search_domain_filter",
@@ -80,17 +81,17 @@ def render_search_view(
 
         cat_options = ["All Categories"] + list(cat_map.keys())
         cat_choice = st.selectbox(
-            "Category",
+            t("Category"),
             cat_options,
             format_func=lambda x: f"{x} - {cat_map[x]}" if x in cat_map else x,
             key="search_cat_filter"
         )
     with f3:
         year_options = ["All Years (Since 2000)", "2020 - 2026", "2015 - 2019", "2000 - 2014"]
-        year_choice = st.selectbox("Publication Year", year_options, key="search_year_filter")
+        year_choice = st.selectbox(t("Publication Year"), year_options, key="search_year_filter")
     with f4:
         sort_choice = st.selectbox(
-            "Sort by",
+            t("Sort by"),
             ["Sort by: Relevance", "Sort by: Year (Newest)", "Sort by: Year (Oldest)", "Sort by: Title (A-Z)"],
             key="search_sort_filter"
         )
@@ -207,18 +208,18 @@ def render_search_view(
             _, b_col1, b_col2, b_col3 = st.columns([3.8, 1.4, 1.4, 1.4])
 
         with b_col1:
-            if st.button("View Details", key=f"view_{paper_id}_{idx}", use_container_width=True):
+            if st.button(t("View Details"), key=f"view_{paper_id}_{idx}", use_container_width=True):
                 st.session_state["selected_paper"] = paper
                 navigate_fn("Paper Details")
                 st.rerun()
         with b_col2:
-            if st.button("Summarize", key=f"sum_{paper_id}_{idx}", type="primary", use_container_width=True):
+            if st.button(t("Summarize"), key=f"sum_{paper_id}_{idx}", type="primary", use_container_width=True):
                 st.session_state["selected_paper"] = paper
                 navigate_fn("Paper Summarizer")
                 st.rerun()
         with b_col3:
             is_saved = saved_manager.is_saved(paper_id)
-            save_label = "★ Saved" if is_saved else "☆ Bookmark"
+            save_label = t("★ Saved") if is_saved else t("☆ Bookmark")
             if st.button(save_label, key=f"save_{paper_id}_{idx}", use_container_width=True):
                 if is_saved:
                     saved_manager.remove_paper(paper_id)
@@ -229,7 +230,7 @@ def render_search_view(
                 st.rerun()
         if url:
             with b_col4:
-                btn_title = "Open DOI ↗" if doi else "Open Paper ↗"
+                btn_title = t("Open DOI ↗") if doi else t("Open Paper ↗")
                 st.link_button(btn_title, url, use_container_width=True)
 
         st.markdown("<div style='margin-bottom: 12px;'></div>", unsafe_allow_html=True)

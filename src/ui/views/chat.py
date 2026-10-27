@@ -22,51 +22,77 @@ def render_chat_view(
     guardrails: Optional[Any] = None
 ):
     """Renders the main Research Chat interface."""
+    from src.nlp.ui_localization import t, get_current_app_lang
+
     # Sticky Top Action Header (Heading + New Chat + Language Selector stay pinned when scrolling)
     with st.container(key="sticky_chat_header"):
         st.markdown('<div class="chat-sticky-marker" style="display:none;"></div>', unsafe_allow_html=True)
         head_c1, head_c2, head_c3 = st.columns([5.5, 2.0, 2.5], vertical_alignment="center")
         with head_c1:
-            st.markdown("""
+            st.markdown(f"""
                 <div style="margin: 0; padding: 2px 0;">
-                    <h1 style="color: #0f172a; font-size: 24px; font-weight: 700; letter-spacing: -0.3px; margin: 0 0 2px 0;">Research Chat</h1>
-                    <p style="color: #64748b; font-size: 13px; margin: 0;">Ask anything about research papers, concepts, or get detailed explanations.</p>
+                    <h1 style="color: #0f172a; font-size: 24px; font-weight: 700; letter-spacing: -0.3px; margin: 0 0 2px 0;">{t('Research Chat')}</h1>
+                    <p style="color: #64748b; font-size: 13px; margin: 0;">{t('Ask complex scientific questions grounded in peer-reviewed literature')}</p>
                 </div>
             """, unsafe_allow_html=True)
         with head_c2:
-            if st.button("New Chat", icon=":material/add:", key="btn_new_chat_top", use_container_width=True):
+            if st.button(t("+ New Chat"), icon=":material/add:", key="btn_new_chat_top", use_container_width=True):
                 new_id = conv_manager.create_conversation("New Research Chat")
                 st.session_state["active_conversation_id"] = new_id
                 st.toast("Started a new chat session!")
                 st.rerun()
         with head_c3:
+            lang_options = [
+                "Auto-Detect",
+                "English",
+                "Hindi (हिन्दी)",
+                "Gujarati (ગુજરાતી)",
+                "Marathi (मराठी)",
+                "Tamil (தமிழ்)",
+                "Telugu (తెలుగు)",
+                "Kannada (ಕನ್ನಡ)",
+                "Malayalam (മലയാളം)",
+                "Bengali (বাংলা)",
+                "Punjabi (ਪੰਜਾਬੀ)",
+                "Spanish (Español)",
+                "French (Français)",
+                "German (Deutsch)",
+                "Japanese (日本語)",
+                "Chinese (中文)",
+                "Russian (Русский)",
+                "Arabic (العربية)"
+            ]
+            current_app_lang = get_current_app_lang()
+            default_idx = 0
+            for idx, opt in enumerate(lang_options):
+                if current_app_lang == "gu" and "Gujarati" in opt:
+                    default_idx = idx
+                    break
+                elif current_app_lang == "hi" and "Hindi" in opt:
+                    default_idx = idx
+                    break
+                elif current_app_lang == "en" and opt == "English":
+                    default_idx = idx
+                    break
+
             target_lang = st.selectbox(
                 "Language",
-                [
-                    "Auto-Detect",
-                    "English",
-                    "Hindi (हिन्दी)",
-                    "Gujarati (ગુજરાતી)",
-                    "Marathi (मराठी)",
-                    "Tamil (தமிழ்)",
-                    "Telugu (తెలుగు)",
-                    "Kannada (ಕನ್ನಡ)",
-                    "Malayalam (മലയാളം)",
-                    "Bengali (বাংলা)",
-                    "Punjabi (ਪੰਜਾਬੀ)",
-                    "Spanish (Español)",
-                    "French (Français)",
-                    "German (Deutsch)",
-                    "Japanese (日本語)",
-                    "Chinese (中文)",
-                    "Russian (Русский)",
-                    "Arabic (العربية)"
-                ],
-                index=0,
+                lang_options,
+                index=default_idx,
                 key="chat_lang_selector",
                 help="Select response language or let the assistant auto-detect from your query.",
                 label_visibility="collapsed"
             )
+            # Sync global app language if user selected a specific language
+            if "Gujarati" in target_lang and st.session_state.get("app_language") != "gu":
+                st.session_state["app_language"] = "gu"
+                st.rerun()
+            elif "Hindi" in target_lang and st.session_state.get("app_language") != "hi":
+                st.session_state["app_language"] = "hi"
+                st.rerun()
+            elif target_lang == "English" and st.session_state.get("app_language") != "en":
+                st.session_state["app_language"] = "en"
+                st.rerun()
 
     # PDF Upload & Ingestion Drawer
     with st.expander("Upload & Chat with your own Research Paper PDF", expanded=False):
@@ -215,7 +241,7 @@ def render_chat_view(
     query_to_process = prefill_query or st.session_state.pop("pending_query", None)
 
     # Chat Input Box at bottom
-    user_input = st.chat_input("Ask a research question...")
+    user_input = st.chat_input(t("Ask a research question..."))
     
     active_query = query_to_process or user_input
 

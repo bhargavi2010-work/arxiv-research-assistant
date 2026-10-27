@@ -6,13 +6,16 @@ Matches Panel 9 of the reference UI design.
 
 import streamlit as st
 from typing import Dict, Any, List, Optional, Callable
+from src.nlp.ui_localization import t
 
 def render_page_header(title: str, subtitle: str):
-    """Renders a consistent, modern page header matching reference design."""
+    """Renders a consistent, modern page header matching reference design with full localization."""
+    loc_title = t(title)
+    loc_sub = t(subtitle)
     st.markdown(f"""
         <div style="margin-bottom: 22px;">
-            <h1 style="color: #0f172a; font-size: 26px; font-weight: 700; letter-spacing: -0.3px; margin: 0 0 5px 0;">{title}</h1>
-            <p style="color: #64748b; font-size: 14px; margin: 0;">{subtitle}</p>
+            <h1 style="color: #0f172a; font-size: 26px; font-weight: 700; letter-spacing: -0.3px; margin: 0 0 5px 0;">{loc_title}</h1>
+            <p style="color: #64748b; font-size: 14px; margin: 0;">{loc_sub}</p>
         </div>
     """, unsafe_allow_html=True)
 

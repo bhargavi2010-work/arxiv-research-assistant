@@ -8,6 +8,8 @@ from typing import Callable, Optional, Dict, Any
 from src.summarizer.paper_summarizer import PaperSummarizer
 from src.retrieval.search_engine import PaperSearchEngine
 from src.ui.components import render_page_header
+from src.nlp.ui_localization import t, get_current_app_lang
+from src.nlp.multilingual import MultilingualResearchEngine
 
 def render_summarizer_view(
     summarizer: PaperSummarizer,
@@ -123,17 +125,30 @@ def render_summarizer_view(
     with st.spinner("Synthesizing structured academic summary..."):
         summary_data = summarizer.summarize(current_paper)
 
+    # Localize summary content if target language is not English
+    app_lang = get_current_app_lang()
+    if app_lang != "en":
+        ml_engine = MultilingualResearchEngine()
+        summary_data["problem"] = ml_engine.translate_text(summary_data["problem"], app_lang)
+        summary_data["approach"] = ml_engine.translate_text(summary_data["approach"], app_lang)
+        summary_data["results"] = ml_engine.translate_text(summary_data["results"], app_lang)
+        if "limitations" in summary_data:
+            summary_data["limitations"] = ml_engine.translate_text(summary_data["limitations"], app_lang)
+        if "applications" in summary_data:
+            summary_data["applications"] = ml_engine.translate_text(summary_data["applications"], app_lang)
+        summary_data["key_contributions"] = [ml_engine.translate_text(c, app_lang) for c in summary_data["key_contributions"]]
+
     # Disclaimer Note
     st.info(f"ℹ️ {summary_data['disclaimer']}")
 
     # Tabs (Expanded to 6 parts: Summary, Key Points, Methodology, Results, Limitations, Applications)
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-        "Summary",
-        "Key Points",
-        "Methodology",
-        "Results",
-        "Limitations",
-        "Applications"
+        t("Summary") if t("Summary") != "Summary" else "Summary",
+        t("Key Takeaways") if t("Key Takeaways") != "Key Takeaways" else "Key Points",
+        t("Proposed Approach") if t("Proposed Approach") != "Proposed Approach" else "Methodology",
+        t("Experimental Results") if t("Experimental Results") != "Experimental Results" else "Results",
+        t("Limitations & Constraints") if t("Limitations & Constraints") != "Limitations & Constraints" else "Limitations",
+        t("Real-World Applications") if t("Real-World Applications") != "Real-World Applications" else "Applications"
     ])
 
     with tab1:

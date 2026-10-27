@@ -126,20 +126,43 @@ if "active_conversation_id" not in st.session_state:
         new_id = services["conv_manager"].create_conversation("New Research Chat")
         st.session_state["active_conversation_id"] = new_id
 
+from src.nlp.ui_localization import t, LANGUAGE_DISPLAY_NAMES, get_current_app_lang
+
 def navigate_to(view_name: str):
     st.session_state["nav_view"] = view_name
 
 # Sidebar Navigation
 with st.sidebar:
-    st.markdown("""
+    st.markdown(f"""
         <div class="sidebar-brand">
             <div class="sidebar-brand-icon">SM</div>
             <div>
                 <div class="sidebar-brand-title">ScholarMind AI</div>
-                <div class="sidebar-brand-subtitle">Universal Scientific Intelligence</div>
+                <div class="sidebar-brand-subtitle">{t('Universal Scientific Intelligence')}</div>
             </div>
         </div>
     """, unsafe_allow_html=True)
+
+    # Global Application Language Selector
+    lang_labels = list(LANGUAGE_DISPLAY_NAMES.values())
+    current_lang_code = get_current_app_lang()
+    current_lang_label = LANGUAGE_DISPLAY_NAMES.get(current_lang_code, "English")
+    curr_lang_idx = lang_labels.index(current_lang_label) if current_lang_label in lang_labels else 0
+
+    chosen_lang_label = st.selectbox(
+        t("App Language"),
+        lang_labels,
+        index=curr_lang_idx,
+        key="global_sidebar_app_lang"
+    )
+    for code, lbl in LANGUAGE_DISPLAY_NAMES.items():
+        if lbl == chosen_lang_label:
+            if st.session_state.get("app_language") != code:
+                st.session_state["app_language"] = code
+                st.rerun()
+            break
+
+    st.markdown("<div style='margin-bottom: 12px;'></div>", unsafe_allow_html=True)
 
     nav_options = [
         "Home",
@@ -152,17 +175,6 @@ with st.sidebar:
         "Settings"
     ]
 
-    nav_icons = {
-        "Home": "Home",
-        "Research Chat": "Research Chat",
-        "Paper Search": "Paper Search",
-        "Paper Summarizer": "Paper Summarizer",
-        "Concept Explorer": "Concept Explorer",
-        "Peer Review": "Peer Review",
-        "Chat History": "Chat History",
-        "Settings": "Settings"
-    }
-
     # Ensure current view is valid
     current_idx = nav_options.index(st.session_state["nav_view"]) if st.session_state["nav_view"] in nav_options else 0
 
@@ -170,7 +182,7 @@ with st.sidebar:
         "Navigation",
         options=nav_options,
         index=current_idx,
-        format_func=lambda x: nav_icons.get(x, x),
+        format_func=lambda x: t(x),
         label_visibility="collapsed"
     )
 
@@ -181,9 +193,9 @@ with st.sidebar:
     st.markdown("<div style='margin-top: 40px;'></div>", unsafe_allow_html=True)
     st.markdown(f"""
         <div style="font-size: 11px; color: #475569; padding: 12px 8px; border-top: 1px solid #1e293b;">
-            <b>Database:</b> {services['chroma'].count()} papers indexed<br>
-            <b>Domain:</b> Multi-Domain Universal Science<br>
-            <b>Version:</b> 2.0.0
+            <b>{t('Database')}:</b> {services['chroma'].count()} {t('papers indexed')}<br>
+            <b>{t('Domain')}:</b> {t('Multi-Domain Universal Science')}<br>
+            <b>{t('Version')}:</b> 2.0.0
         </div>
     """, unsafe_allow_html=True)
 
