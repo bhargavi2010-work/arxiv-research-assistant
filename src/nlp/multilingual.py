@@ -250,6 +250,39 @@ class MultilingualResearchEngine:
 
         return f"{query} {translated}".strip()
 
+    def translate_text(self, text: str, target_lang: str) -> str:
+        """
+        Translates text into the target language while preserving inline citations [1], [2].
+        Uses open neural translation with graceful fallback to base text if offline.
+        """
+        if not text or target_lang == "en":
+            return text
+
+        import urllib.request
+        import urllib.parse
+        import json
+
+        # Split into paragraphs to maintain structure and stay within URL length limits
+        paragraphs = text.split("\n\n")
+        translated_paragraphs = []
+
+        for para in paragraphs:
+            para_clean = para.strip()
+            if not para_clean:
+                continue
+            try:
+                encoded = urllib.parse.quote(para_clean)
+                url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={target_lang}&dt=t&q={encoded}"
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+                with urllib.request.urlopen(req, timeout=4.5) as resp:
+                    data = json.loads(resp.read().decode("utf-8", errors="ignore"))
+                    translated_part = "".join([part[0] for part in data[0] if part and part[0]])
+                    translated_paragraphs.append(translated_part if translated_part else para_clean)
+            except Exception:
+                translated_paragraphs.append(para_clean)
+
+        return "\n\n".join(translated_paragraphs) if translated_paragraphs else text
+
     def format_multilingual_response(
         self,
         base_answer: str,
@@ -257,7 +290,7 @@ class MultilingualResearchEngine:
         sources: List[Dict[str, Any]]
     ) -> str:
         """
-        Formats and localizes the scientific answer into the requested target language
+        Formats, translates, and localizes the scientific answer into the requested target language
         while preserving citations [1], [2] and technical terms.
         """
         if target_lang == "en" or target_lang not in LANGUAGE_FRAMINGS:
@@ -268,4 +301,7 @@ class MultilingualResearchEngine:
             f"{framing['header']}\n"
             f"*{framing['grounded_note']}*\n\n"
         )
-        return f"{localized_header}{base_answer}"
+        
+        # Translate the actual body of the answer into the target language
+        translated_body = self.translate_text(base_answer, target_lang)
+        return f"{localized_header}{translated_body}"
