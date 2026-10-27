@@ -695,5 +695,22 @@ def get_custom_css() -> str:
         justify-content: center !important;
         line-height: 1 !important;
     }
+
+    /* Sticky Research Chat Top Header */
+    div.st-key-sticky_chat_header,
+    div[data-testid="stVerticalBlock"]:has(> div > div > .chat-sticky-marker),
+    div[data-testid="stVerticalBlock"]:has(> div > .chat-sticky-marker),
+    div:has(> .chat-sticky-marker) {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 99 !important;
+        background-color: #f8fafc !important;
+        padding-top: 6px !important;
+        padding-bottom: 12px !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        margin-bottom: 16px !important;
+        backdrop-filter: blur(8px) !important;
+    }
     </style>
     """

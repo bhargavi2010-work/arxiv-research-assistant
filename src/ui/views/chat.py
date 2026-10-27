@@ -22,47 +22,51 @@ def render_chat_view(
     guardrails: Optional[Any] = None
 ):
     """Renders the main Research Chat interface."""
-    render_page_header(
-        title="Research Chat",
-        subtitle="Ask anything about research papers, concepts, or get detailed explanations."
-    )
-
-    # Top Controls Bar: New Chat Button + Language Selector
-    top_c1, top_c2, top_c3 = st.columns([5.5, 2.0, 2.5])
-    with top_c2:
-        if st.button("New Chat", icon=":material/add:", key="btn_new_chat_top", use_container_width=True):
-            new_id = conv_manager.create_conversation("New Research Chat")
-            st.session_state["active_conversation_id"] = new_id
-            st.toast("Started a new chat session!")
-            st.rerun()
-    with top_c3:
-        target_lang = st.selectbox(
-            "Language",
-            [
-                "Auto-Detect",
-                "English",
-                "Hindi (हिन्दी)",
-                "Gujarati (ગુજરાતી)",
-                "Marathi (मराठी)",
-                "Tamil (தமிழ்)",
-                "Telugu (తెలుగు)",
-                "Kannada (ಕನ್ನಡ)",
-                "Malayalam (മലയാളം)",
-                "Bengali (বাংলা)",
-                "Punjabi (ਪੰਜਾਬੀ)",
-                "Spanish (Español)",
-                "French (Français)",
-                "German (Deutsch)",
-                "Japanese (日本語)",
-                "Chinese (中文)",
-                "Russian (Русский)",
-                "Arabic (العربية)"
-            ],
-            index=0,
-            key="chat_lang_selector",
-            help="Select response language or let the assistant auto-detect from your query.",
-            label_visibility="collapsed"
-        )
+    # Sticky Top Action Header (Heading + New Chat + Language Selector stay pinned when scrolling)
+    with st.container(key="sticky_chat_header"):
+        st.markdown('<div class="chat-sticky-marker" style="display:none;"></div>', unsafe_allow_html=True)
+        head_c1, head_c2, head_c3 = st.columns([5.5, 2.0, 2.5], vertical_alignment="center")
+        with head_c1:
+            st.markdown("""
+                <div style="margin: 0; padding: 2px 0;">
+                    <h1 style="color: #0f172a; font-size: 24px; font-weight: 700; letter-spacing: -0.3px; margin: 0 0 2px 0;">Research Chat</h1>
+                    <p style="color: #64748b; font-size: 13px; margin: 0;">Ask anything about research papers, concepts, or get detailed explanations.</p>
+                </div>
+            """, unsafe_allow_html=True)
+        with head_c2:
+            if st.button("New Chat", icon=":material/add:", key="btn_new_chat_top", use_container_width=True):
+                new_id = conv_manager.create_conversation("New Research Chat")
+                st.session_state["active_conversation_id"] = new_id
+                st.toast("Started a new chat session!")
+                st.rerun()
+        with head_c3:
+            target_lang = st.selectbox(
+                "Language",
+                [
+                    "Auto-Detect",
+                    "English",
+                    "Hindi (हिन्दी)",
+                    "Gujarati (ગુજરાતી)",
+                    "Marathi (मराठी)",
+                    "Tamil (தமிழ்)",
+                    "Telugu (తెలుగు)",
+                    "Kannada (ಕನ್ನಡ)",
+                    "Malayalam (മലയാളം)",
+                    "Bengali (বাংলা)",
+                    "Punjabi (ਪੰਜਾਬੀ)",
+                    "Spanish (Español)",
+                    "French (Français)",
+                    "German (Deutsch)",
+                    "Japanese (日本語)",
+                    "Chinese (中文)",
+                    "Russian (Русский)",
+                    "Arabic (العربية)"
+                ],
+                index=0,
+                key="chat_lang_selector",
+                help="Select response language or let the assistant auto-detect from your query.",
+                label_visibility="collapsed"
+            )
 
     # PDF Upload & Ingestion Drawer
     with st.expander("Upload & Chat with your own Research Paper PDF", expanded=False):
