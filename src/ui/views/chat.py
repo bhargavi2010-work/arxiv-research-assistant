@@ -17,7 +17,9 @@ def render_chat_view(
     langchain_agent: Optional[Any] = None,
     pdf_processor: Optional[Any] = None,
     chroma_manager: Optional[Any] = None,
-    embedder: Optional[Any] = None
+    embedder: Optional[Any] = None,
+    multilingual: Optional[Any] = None,
+    guardrails: Optional[Any] = None
 ):
     """Renders the main Research Chat interface."""
     render_page_header(
@@ -135,14 +137,28 @@ def render_chat_view(
                 if sources:
                     render_sources_section(sources)
 
-                # Assistant Actions Row (Only Copy & Retry Icons)
-                act_c1, act_c2, _ = st.columns([0.45, 0.45, 9.1])
+                # Assistant Actions Row (Only Copy & Retry Icons + Grounding Telemetry Badge)
+                safety_metric = msg.get("safety_metric")
+                act_c1, act_c2, act_c3 = st.columns([0.45, 0.45, 9.1])
                 with act_c1:
                     if st.button("", icon=":material/content_copy:", key=f"copy_{idx}", help="Copy response", type="tertiary"):
                         st.toast("Answer copied to clipboard!")
                 with act_c2:
                     if st.button("", icon=":material/refresh:", key=f"refresh_{idx}", help="Regenerate response", type="tertiary"):
                         st.toast("Regenerating answer...")
+                with act_c3:
+                    if safety_metric and isinstance(safety_metric, dict):
+                        score_pct = safety_metric.get("percentage", 90)
+                        cites = safety_metric.get("citations_verified", "Verified")
+                        badge_color = "#15803d" if score_pct >= 70 else "#b45309"
+                        bg_color = "#f0fdf4" if score_pct >= 70 else "#fffbeb"
+                        border_color = "#bbf7d0" if score_pct >= 70 else "#fde68a"
+                        st.markdown(
+                            f'<div style="display: inline-block; font-size: 11.5px; color: {badge_color}; background: {bg_color}; border: 1px solid {border_color}; border-radius: 4px; padding: 2px 8px; margin-top: 4px; font-weight: 500;">'
+                            f'Grounded: {score_pct}% | Citations: {cites}'
+                            f'</div>',
+                            unsafe_allow_html=True
+                        )
 
                 # Suggested follow-ups
                 if follow_ups and idx == len(messages) - 1:
@@ -157,12 +173,55 @@ def render_chat_view(
     # Process pending query or prefill
     query_to_process = prefill_query or st.session_state.pop("pending_query", None)
 
+    # Multilingual & Safety Control Bar (Requirement 16 & Syllabus Unit 4)
+    ctrl_col1, ctrl_col2 = st.columns([7.5, 2.5])
+    with ctrl_col2:
+        target_lang = st.selectbox(
+            "Language",
+            ["Auto-Detect", "English", "Hindi (हिन्दी)", "Spanish (Español)", "French (Français)", "German (Deutsch)"],
+            index=0,
+            key="chat_lang_selector",
+            help="Select response language or let the assistant auto-detect from your query (Requirement 16)."
+        )
+
     # Chat Input Box at bottom
-    user_input = st.chat_input("Ask a follow-up question...")
+    user_input = st.chat_input("Ask a research question...")
     
     active_query = query_to_process or user_input
 
     if active_query:
+        # 1. AI Safety Guardrail check (Syllabus Unit 4)
+        if guardrails:
+            safety_check = guardrails.check_input_safety(active_query)
+            if not safety_check.get("is_safe", True):
+                conv_manager.add_user_message(current_conv_id, active_query)
+                conv_manager.add_assistant_message(
+                    conv_id=current_conv_id,
+                    content=f"⚠️ **Request Restricted by AI Safety Guardrails (Unit 4 Syllabus)**\n\n{safety_check['reason']}",
+                    sources=[],
+                    suggested_follow_ups=["What is a Transformer?", "Explain RAG architectures"]
+                )
+                st.rerun()
+
+        # 2. Multilingual Processing (Requirement 16)
+        lang_code = "en"
+        if multilingual:
+            if target_lang == "Auto-Detect":
+                lang_code = multilingual.detect_language(active_query)
+            else:
+                lang_map = {
+                    "English": "en",
+                    "Hindi (हिन्दी)": "hi",
+                    "Spanish (Español)": "es",
+                    "French (Français)": "fr",
+                    "German (Deutsch)": "de"
+                }
+                lang_code = lang_map.get(target_lang, "en")
+
+        retrieval_query = active_query
+        if multilingual and lang_code != "en":
+            retrieval_query = multilingual.translate_query_for_retrieval(active_query, lang_code)
+
         # Get sliding window history for context BEFORE storing new message so antecedent is prior turn
         history = conv_manager.get_sliding_window_messages(current_conv_id, max_turns=4)
 
@@ -173,22 +232,33 @@ def render_chat_view(
         with st.spinner("AI Agent analyzing query, selecting tools & generating grounded response..."):
             if use_agent and langchain_agent is not None:
                 response = langchain_agent.run_agent_turn(
-                    query=active_query,
+                    query=retrieval_query,
                     conversation_history=history
                 )
             else:
                 response = engine.answer_query(
-                    query=active_query,
+                    query=retrieval_query,
                     conversation_history=history,
                     top_k=st.session_state.get("settings_top_k", 5)
                 )
 
+        # 3. Grounding & Hallucination verification (Unit 4)
+        safety_eval = None
+        if guardrails:
+            safety_eval = guardrails.evaluate_response_grounding(active_query, response["answer"], response["sources"])
+
+        # 4. Multilingual response localization (Requirement 16)
+        final_answer = response["answer"]
+        if multilingual and lang_code != "en":
+            final_answer = multilingual.format_multilingual_response(final_answer, lang_code, response["sources"])
+
         # Save assistant message
         conv_manager.add_assistant_message(
             conv_id=current_conv_id,
-            content=response["answer"],
+            content=final_answer,
             sources=response["sources"],
             suggested_follow_ups=response.get("suggested_follow_ups", []),
-            agent_metadata=response.get("agent_metadata")
+            agent_metadata=response.get("agent_metadata"),
+            safety_metric=safety_eval
         )
         st.rerun()

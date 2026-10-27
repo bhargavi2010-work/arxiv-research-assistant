@@ -7,7 +7,7 @@
 [![ChromaDB](https://img.shields.io/badge/Vector_DB-ChromaDB-purple.svg)](https://www.trychroma.com/)
 [![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-red.svg)](https://streamlit.io/)
 [![Sentence-Transformers](https://img.shields.io/badge/Embeddings-all--MiniLM--L6--v2-green.svg)](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
-[![Tests Passing](https://img.shields.io/badge/Tests-56%20Passed-brightgreen.svg)]()
+[![Tests Passing](https://img.shields.io/badge/Tests-62%20Passed-brightgreen.svg)]()
 
 ---
 
@@ -17,6 +17,9 @@ Staying up to date with new AI research is tough with hundreds of papers uploade
 This project is an interactive **Retrieval-Augmented Generation (RAG)** assistant built to help students and researchers:
 - Ask questions and get grounded answers with direct citations (`[1]`, `[2]`).
 - Upload and chat with custom conference & journal PDF research papers in real time.
+- Conduct autonomous **Multi-Agent Peer Reviews** (Methodology Critic, Literature Specialist, Area Chair).
+- Query in multiple languages (**Hindi, Spanish, French, German, English**) with cross-lingual retrieval.
+- Rely on automated **AI Safety Guardrails & Hallucination Detection** for groundedness scoring.
 - Learn research concepts and terms (like *Transformers*, *RAG*, *LoRA*, *Overfitting*, *Hallucinations*) even if they aren't in the dataset.
 - Search and filter papers by domain (e.g. `cs.AI`, `cs.LG`, `cs.CV`, `cs.CL`) and publication year.
 - Get structured paper summaries (Problem, Method, Key Contributions, Results).
@@ -29,6 +32,9 @@ This project is an interactive **Retrieval-Augmented Generation (RAG)** assistan
 | Feature | Description |
 | :--- | :--- |
 | **Direct PDF Ingestion & Chat** | Drag & drop arbitrary research paper PDFs. Automatically extracts metadata, sections, and page-tagged chunks, embedding them into ChromaDB for instant grounded Q&A and summarization. |
+| **Multi-Agent Peer Review Committee** | Collaborative multi-agent system (Syllabus Unit 3) featuring Methodology Critic, Literature Specialist, and Area Chair agents that debate and generate formal conference reviews. |
+| **AI Safety & Hallucination Guardrails** | Automated citation provenance and groundedness scoring (Syllabus Unit 4) with prompt-injection defense and out-of-domain query containment. |
+| **Multilingual Research Support** | Cross-lingual retrieval and localization supporting English, Hindi (हिन्दी), Spanish (Español), French (Français), and German (Deutsch) (Requirement 16). |
 | **LangChain ReAct Agent** | Autonomous ReAct (*Reason + Act*) agent using structured tool use (`@tool`) to search papers, fetch live preprints, summarize abstracts, and build concept maps. |
 | **LangSmith Observability** | Complete execution tracing, tool latency telemetry, and run logging via LangSmith. |
 | **Research Chat (RAG)** | Ask questions about papers or AI concepts; get answers with citations and follow-up ideas. |

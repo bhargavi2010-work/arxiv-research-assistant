@@ -32,6 +32,9 @@ from src.storage.chat_memory import ConversationManager
 from src.storage.saved_papers import SavedPapersManager
 from src.agents.langchain_agent import ArXivLangChainAgent
 from src.data_pipeline.pdf_processor import PDFResearchPaperProcessor
+from src.nlp.multilingual import MultilingualResearchEngine
+from src.safety.guardrails import ResearchSafetyGuardrails
+from src.agents.peer_review_agents import AreaChairSynthesizerAgent
 
 # Import UI Views
 from src.ui.views.home import render_home_view
@@ -40,6 +43,7 @@ from src.ui.views.search import render_search_view
 from src.ui.views.details import render_details_view
 from src.ui.views.summarizer import render_summarizer_view
 from src.ui.views.concepts import render_concepts_view
+from src.ui.views.peer_review import render_peer_review_view
 from src.ui.views.history import render_history_view
 from src.ui.views.saved import render_saved_papers_view
 from src.ui.views.settings import render_settings_view
@@ -74,6 +78,9 @@ def get_cached_services():
     conv_manager = ConversationManager()
     saved_manager = SavedPapersManager()
     pdf_processor = PDFResearchPaperProcessor()
+    multilingual = MultilingualResearchEngine()
+    guardrails = ResearchSafetyGuardrails()
+    peer_review_agent = AreaChairSynthesizerAgent()
     langchain_agent = ArXivLangChainAgent(
         search_engine=search_engine,
         summarizer=summarizer,
@@ -94,6 +101,9 @@ def get_cached_services():
         "conv_manager": conv_manager,
         "saved_manager": saved_manager,
         "pdf_processor": pdf_processor,
+        "multilingual": multilingual,
+        "guardrails": guardrails,
+        "peer_review_agent": peer_review_agent,
         "langchain_agent": langchain_agent
     }
 
@@ -132,6 +142,7 @@ with st.sidebar:
         "Paper Search",
         "Paper Summarizer",
         "Concept Explorer",
+        "Peer Review",
         "Chat History",
         "Settings"
     ]
@@ -142,6 +153,7 @@ with st.sidebar:
         "Paper Search": "Paper Search",
         "Paper Summarizer": "Paper Summarizer",
         "Concept Explorer": "Concept Explorer",
+        "Peer Review": "Peer Review (Unit 3)",
         "Chat History": "Chat History",
         "Settings": "Settings"
     }
@@ -195,7 +207,9 @@ elif current_view == "Research Chat":
         langchain_agent=services["langchain_agent"],
         pdf_processor=services["pdf_processor"],
         chroma_manager=services["chroma"],
-        embedder=services["embedder"]
+        embedder=services["embedder"],
+        multilingual=services["multilingual"],
+        guardrails=services["guardrails"]
     )
 elif current_view == "Paper Search":
     render_search_view(
@@ -224,6 +238,13 @@ elif current_view == "Concept Explorer":
         visualizer=services["visualizer"],
         search_engine=services["search_engine"],
         navigate_fn=navigate_to
+    )
+elif current_view == "Peer Review":
+    render_peer_review_view(
+        peer_review_agent=services["peer_review_agent"],
+        search_engine=services["search_engine"],
+        navigate_fn=navigate_to,
+        pdf_processor=services["pdf_processor"]
     )
 elif current_view == "Chat History":
     render_history_view(
