@@ -21,7 +21,46 @@ PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
 CHROMA_DB_DIR.mkdir(parents=True, exist_ok=True)
 STORAGE_DIR.mkdir(parents=True, exist_ok=True)
 
-# Domain & Category Taxonomy for Computer Science / AI / ML
+# Multi-Domain Taxonomy across all scientific and commerce fields
+RESEARCH_DOMAINS: Dict[str, Dict[str, str]] = {
+    "All Domains": {},
+    "Computer Science & AI": {
+        "cs.AI": "Artificial Intelligence",
+        "cs.LG": "Machine Learning",
+        "cs.CL": "Computation and Language (NLP)",
+        "cs.CV": "Computer Vision",
+        "cs.NE": "Neural & Evolutionary Computing"
+    },
+    "Robotics & Autonomous Systems": {
+        "cs.RO": "Robotics & Perception",
+        "cs.SY": "Systems and Control"
+    },
+    "Medicine & Quantitative Biology": {
+        "q-bio.BM": "Biomolecules & Structural Biology",
+        "q-bio.GN": "Genomics & Bioinformatics",
+        "q-bio.NC": "Neurons and Cognition",
+        "q-bio.QM": "Quantitative Methods in Healthcare"
+    },
+    "Commerce, Economics & Finance": {
+        "econ.EM": "Econometrics",
+        "q-fin.PM": "Portfolio Management & Markets",
+        "q-fin.RM": "Risk Management & Banking",
+        "q-fin.ST": "Statistical Finance & FinTech"
+    },
+    "Astrophysics & Space Physics": {
+        "astro-ph.CO": "Cosmology & Deep Space",
+        "astro-ph.GA": "Galaxy Astrophysics",
+        "astro-ph.HE": "High Energy Astrophysics",
+        "astro-ph.EP": "Earth and Planetary Astrophysics"
+    },
+    "Mathematics & Statistics": {
+        "math.ST": "Mathematical Statistics",
+        "stat.ML": "Machine Learning (Statistics)",
+        "stat.ME": "Methodology & Applied Statistics"
+    }
+}
+
+# Domain & Category Taxonomy for Computer Science / AI / ML (backward compatible)
 CS_AI_CATEGORIES: Dict[str, str] = {
     "cs.AI": "Artificial Intelligence",
     "cs.LG": "Machine Learning",

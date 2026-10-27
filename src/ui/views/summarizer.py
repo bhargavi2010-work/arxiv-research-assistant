@@ -126,18 +126,25 @@ def render_summarizer_view(
     # Disclaimer Note
     st.info(f"ℹ️ {summary_data['disclaimer']}")
 
-    # Tabs (matching Panel 5: Summary, Key Points, Methodology, Results)
-    tab1, tab2, tab3, tab4 = st.tabs(["Summary", "Key Points", "Methodology", "Results"])
+    # Tabs (Expanded to 6 parts: Summary, Key Points, Methodology, Results, Limitations, Applications)
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "Summary",
+        "Key Points",
+        "Methodology",
+        "Results",
+        "Limitations",
+        "Applications"
+    ])
 
     with tab1:
         st.markdown(f"""
             <div class="summary-card">
-                <div class="summary-card-header">1. Problem</div>
+                <div class="summary-card-header">1. Problem & Motivation</div>
                 <div style="color: #334155; font-size: 14.5px; line-height: 1.6;">{summary_data['problem']}</div>
             </div>
 
             <div class="summary-card">
-                <div class="summary-card-header">2. Approach</div>
+                <div class="summary-card-header">2. Proposed Approach</div>
                 <div style="color: #334155; font-size: 14.5px; line-height: 1.6;">{summary_data['approach']}</div>
             </div>
 
@@ -149,8 +156,18 @@ def render_summarizer_view(
             </div>
 
             <div class="summary-card">
-                <div class="summary-card-header">4. Results</div>
+                <div class="summary-card-header">4. Experimental Results</div>
                 <div style="color: #334155; font-size: 14.5px; line-height: 1.6;">{summary_data['results']}</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-header">5. Limitations & Constraints</div>
+                <div style="color: #334155; font-size: 14.5px; line-height: 1.6;">{summary_data.get('limitations', 'Standard computational constraints.')}</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-card-header">6. Real-World Applications</div>
+                <div style="color: #334155; font-size: 14.5px; line-height: 1.6;">{summary_data.get('applications', 'Direct enterprise deployment.')}</div>
             </div>
         """, unsafe_allow_html=True)
 
@@ -186,6 +203,28 @@ def render_summarizer_view(
                 <p>{summary_data['results']}</p>
                 <p style="color: #64748b; font-size: 13px; margin-top: 16px;">
                     <i>Note: Detailed numerical tables and hyperparameters are documented in the full publication PDF on arXiv.</i>
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+
+    with tab5:
+        st.markdown("### Limitations & Constraints")
+        st.markdown(f"""
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; font-size: 14.5px; line-height: 1.6;">
+                <p>{summary_data.get('limitations', 'Standard empirical and computational bounds apply.')}</p>
+                <p style="color: #64748b; font-size: 13px; margin-top: 14px;">
+                    <i>Scientific rigor requires evaluating assumptions, hardware scaling, and dataset biases.</i>
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+
+    with tab6:
+        st.markdown("### Real-World Applications & Industry Deployment")
+        st.markdown(f"""
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; font-size: 14.5px; line-height: 1.6;">
+                <p>{summary_data.get('applications', 'Directly applicable to production scientific pipelines and downstream domain tasks.')}</p>
+                <p style="color: #64748b; font-size: 13px; margin-top: 14px;">
+                    <i>Identifies concrete deployment opportunities in industry, enterprise tooling, and academic research.</i>
                 </p>
             </div>
         """, unsafe_allow_html=True)

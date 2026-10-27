@@ -8,7 +8,7 @@ from typing import Callable, Optional
 from src.retrieval.search_engine import PaperSearchEngine
 from src.storage.saved_papers import SavedPapersManager
 from src.ui.components import render_page_header
-from config.config import CS_AI_CATEGORIES
+from config.config import CS_AI_CATEGORIES, RESEARCH_DOMAINS
 
 def render_search_view(
     search_engine: PaperSearchEngine,
@@ -18,7 +18,7 @@ def render_search_view(
     """Renders the Paper Search page."""
     render_page_header(
         title="Search Research Papers",
-        subtitle="Find relevant papers from arXiv with advanced filters."
+        subtitle="Find relevant papers from arXiv with advanced multi-domain filters."
     )
 
     # Check prefill from home
@@ -37,16 +37,32 @@ def render_search_view(
     with s_col2:
         search_clicked = st.button("Search", type="primary", use_container_width=True, key="search_page_btn")
 
-    # Filters Row
+    # Multi-Domain Filters Row
     f1, f2, f3, f4 = st.columns(4)
     with f1:
-        domain_choice = st.selectbox("Domain", ["Computer Science"], disabled=True)
+        domain_options = list(RESEARCH_DOMAINS.keys())
+        domain_choice = st.selectbox(
+            "Domain",
+            domain_options,
+            index=0,
+            key="search_domain_filter",
+            help="Filter across Computer Science, Medicine, Commerce/Finance, Astrophysics, Robotics, and Mathematics."
+        )
     with f2:
-        cat_options = ["All Categories"] + list(CS_AI_CATEGORIES.keys())
+        if domain_choice == "All Domains":
+            # Combine all domain categories
+            all_cats: dict = {}
+            for d_cats in RESEARCH_DOMAINS.values():
+                all_cats.update(d_cats)
+            cat_map = all_cats if all_cats else CS_AI_CATEGORIES
+        else:
+            cat_map = RESEARCH_DOMAINS.get(domain_choice, CS_AI_CATEGORIES)
+
+        cat_options = ["All Categories"] + list(cat_map.keys())
         cat_choice = st.selectbox(
             "Category",
             cat_options,
-            format_func=lambda x: f"{x} - {CS_AI_CATEGORIES[x]}" if x in CS_AI_CATEGORIES else x,
+            format_func=lambda x: f"{x} - {cat_map[x]}" if x in cat_map else x,
             key="search_cat_filter"
         )
     with f3:

@@ -158,6 +158,26 @@ JSON:"""
             else:
                 results_text = "Specific quantitative experimental results or benchmark metrics are not detailed in the abstract text."
 
+        # Synthesize Limitations & Constraints (Part 5)
+        limitation_keywords = ["quadratic", "computation", "memory", "resource", "expensive", "data-hungry", "latency", "scale", "complexity"]
+        matched_limits = [s for s in sentences if any(k in s.lower() for k in limitation_keywords)]
+        if matched_limits:
+            limitations_text = " ".join(matched_limits)
+        elif extracted_info["models"]:
+            limitations_text = f"Scaling {', '.join(extracted_info['models'])} typically requires substantial compute resources and specialized training hyperparameter calibration."
+        else:
+            limitations_text = "Empirical performance may be sensitive to pretraining corpus distribution, compute budget, and hyperparameter tuning."
+
+        # Synthesize Real-World Applications (Part 6)
+        if extracted_info["tasks"]:
+            applications_text = f"Directly deployable to production systems for {', '.join(extracted_info['tasks'])}, as well as downstream enterprise scientific pipelines."
+        elif "cs.CV" in primary_cat or "Vision" in primary_cat:
+            applications_text = "Robotics perception, autonomous navigation, medical imaging segmentation, and industrial visual inspection."
+        elif "cs.CL" in primary_cat or "Language" in primary_cat or "NLP" in primary_cat:
+            applications_text = "Enterprise knowledge management, automated code generation, machine translation, and biomedical text synthesis."
+        else:
+            applications_text = f"Production machine learning systems, automated decision intelligence, and scalable {primary_cat.lower()} workflows."
+
         # Executive overview (1-2 sentences)
         primary_model = extracted_info['models'][0] if extracted_info['models'] else 'a novel framework'
         exec_summary = f"{title} ({year}) addresses key challenges in {primary_cat.lower()} by proposing {primary_model}. The paper details architectural formulations and empirical findings on target benchmarks."
@@ -173,6 +193,8 @@ JSON:"""
             "approach": approach_text,
             "key_contributions": contributions,
             "results": results_text,
+            "limitations": limitations_text,
+            "applications": applications_text,
             "extracted_models": extracted_info["models"],
             "extracted_methods": extracted_info["methods"],
             "extracted_tasks": extracted_info["tasks"],

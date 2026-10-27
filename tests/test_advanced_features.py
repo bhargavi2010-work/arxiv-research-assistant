@@ -19,14 +19,26 @@ class TestAdvancedIndustryFeatures(unittest.TestCase):
     # 1. Multilingual Tests (Req 16)
     def test_multilingual_language_detection(self):
         self.assertEqual(self.multilingual.detect_language("ट्रांसफॉर्मर क्या है?"), "hi")
+        self.assertEqual(self.multilingual.detect_language("ડીપ લર્નિંગ શું છે?"), "gu")
+        self.assertEqual(self.multilingual.detect_language("இயந்திர கற்றல் என்றால் என்ன?"), "ta")
+        self.assertEqual(self.multilingual.detect_language("డీప్ లెర్నింగ్ అంటే ఏమిటి?"), "te")
+        self.assertEqual(self.multilingual.detect_language("ಕೃತಕ ಬುದ್ಧಿಮತ್ತೆ ಎಂದರೇನು?"), "kn")
+        self.assertEqual(self.multilingual.detect_language("ডিপ লার্নিং কি?"), "bn")
+        self.assertEqual(self.multilingual.detect_language("ਨਕਲੀ ਬੁੱਧੀ ਕੀ ਹੈ?"), "pa")
         self.assertEqual(self.multilingual.detect_language("¿Cómo funciona el aprendizaje profundo?"), "es")
         self.assertEqual(self.multilingual.detect_language("Qu'est-ce que l'apprentissage automatique?"), "fr")
         self.assertEqual(self.multilingual.detect_language("Was ist maschinelles Lernen?"), "de")
+        self.assertEqual(self.multilingual.detect_language("機械学習とは何ですか？"), "ja")
+        self.assertEqual(self.multilingual.detect_language("Что такое глубокое обучение?"), "ru")
+        self.assertEqual(self.multilingual.detect_language("ما هو التعلم العميق؟"), "ar")
         self.assertEqual(self.multilingual.detect_language("What is attention mechanism?"), "en")
 
     def test_multilingual_query_translation(self):
         hi_trans = self.multilingual.translate_query_for_retrieval("ट्रांसफॉर्मर मॉडल", "hi")
         self.assertIn("transformer", hi_trans.lower())
+
+        gu_trans = self.multilingual.translate_query_for_retrieval("ટ્રાન્સફોર્મર મોડેલ", "gu")
+        self.assertIn("transformer", gu_trans.lower())
 
         es_trans = self.multilingual.translate_query_for_retrieval("aprendizaje profundo", "es")
         self.assertIn("deep learning", es_trans.lower())

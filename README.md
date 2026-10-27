@@ -34,14 +34,14 @@ This project is an interactive **Retrieval-Augmented Generation (RAG)** assistan
 | **Direct PDF Ingestion & Chat** | Drag & drop arbitrary research paper PDFs. Automatically extracts metadata, sections, and page-tagged chunks, embedding them into ChromaDB for instant grounded Q&A and summarization. |
 | **Multi-Agent Peer Review Committee** | Collaborative multi-agent system (Syllabus Unit 3) featuring Methodology Critic, Literature Specialist, and Area Chair agents that debate and generate formal conference reviews. |
 | **AI Safety & Hallucination Guardrails** | Automated citation provenance and groundedness scoring (Syllabus Unit 4) with prompt-injection defense and out-of-domain query containment. |
-| **Multilingual Research Support** | Cross-lingual retrieval and localization supporting English, Hindi (हिन्दी), Spanish (Español), French (Français), and German (Deutsch) (Requirement 16). |
+| **Multilingual Research Support** | Cross-lingual retrieval and localization supporting 17 languages: Indian state languages (Hindi, Gujarati, Marathi, Tamil, Telugu, Kannada, Malayalam, Bengali, Punjabi) and global languages (Spanish, French, German, Japanese, Chinese, Russian, Arabic, English) (Requirement 16). |
 | **LangChain ReAct Agent** | Autonomous ReAct (*Reason + Act*) agent using structured tool use (`@tool`) to search papers, fetch live preprints, summarize abstracts, and build concept maps. |
 | **LangSmith Observability** | Complete execution tracing, tool latency telemetry, and run logging via LangSmith. |
 | **Research Chat (RAG)** | Ask questions about papers or AI concepts; get answers with citations and follow-up ideas. |
 | **Universal Knowledge Base** | Ask about research methodology (*"How to start research?"*, *"What is an ablation study?"*) or any ML/DL terms. |
 | **Dynamic Knowledge Expansion** | One-click sync with live arXiv Atom API preprints into ChromaDB vector store. |
-| **Paper Search & Filtering** | Semantic and keyword search across arXiv categories and publication years. |
-| **Structured Summarizer** | Breaks down any paper abstract into 4 key sections: Problem, Approach, Contributions, and Results. |
+| **Multi-Domain Paper Search** | Semantic and keyword search across 6 academic fields: Computer Science & AI, Medicine & Biology (`q-bio`), Commerce & Finance (`q-fin`, `econ`), Astrophysics (`astro-ph`), Robotics (`cs.RO`), and Mathematics (`math`, `stat`). |
+| **6-Part Structured Summarizer** | Comprehensive academic breakdown: 1. Problem, 2. Approach, 3. Contributions, 4. Results, 5. Limitations & Constraints, 6. Real-World Applications. |
 | **Concept Graph Explorer** | Interactive NetworkX + Plotly relationship graphs for visual learning. |
 | **Chat History & Saved Papers** | Save important papers and revisit previous conversation threads. |
 

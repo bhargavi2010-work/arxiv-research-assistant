@@ -174,11 +174,30 @@ def render_chat_view(
     query_to_process = prefill_query or st.session_state.pop("pending_query", None)
 
     # Multilingual & Safety Control Bar (Requirement 16 & Syllabus Unit 4)
-    ctrl_col1, ctrl_col2 = st.columns([7.5, 2.5])
+    ctrl_col1, ctrl_col2 = st.columns([7.0, 3.0])
     with ctrl_col2:
         target_lang = st.selectbox(
             "Language",
-            ["Auto-Detect", "English", "Hindi (हिन्दी)", "Spanish (Español)", "French (Français)", "German (Deutsch)"],
+            [
+                "Auto-Detect",
+                "English",
+                "Hindi (हिन्दी)",
+                "Gujarati (ગુજરાતી)",
+                "Marathi (मराठी)",
+                "Tamil (தமிழ்)",
+                "Telugu (తెలుగు)",
+                "Kannada (ಕನ್ನಡ)",
+                "Malayalam (മലയാളം)",
+                "Bengali (বাংলা)",
+                "Punjabi (ਪੰਜਾਬੀ)",
+                "Spanish (Español)",
+                "French (Français)",
+                "German (Deutsch)",
+                "Japanese (日本語)",
+                "Chinese (中文)",
+                "Russian (Русский)",
+                "Arabic (العربية)"
+            ],
             index=0,
             key="chat_lang_selector",
             help="Select response language or let the assistant auto-detect from your query (Requirement 16)."
@@ -212,9 +231,21 @@ def render_chat_view(
                 lang_map = {
                     "English": "en",
                     "Hindi (हिन्दी)": "hi",
+                    "Gujarati (ગુજરાતી)": "gu",
+                    "Marathi (मराठी)": "mr",
+                    "Tamil (தமிழ்)": "ta",
+                    "Telugu (తెలుగు)": "te",
+                    "Kannada (ಕನ್ನಡ)": "kn",
+                    "Malayalam (മലയാളം)": "ml",
+                    "Bengali (বাংলা)": "bn",
+                    "Punjabi (ਪੰਜਾਬੀ)": "pa",
                     "Spanish (Español)": "es",
                     "French (Français)": "fr",
-                    "German (Deutsch)": "de"
+                    "German (Deutsch)": "de",
+                    "Japanese (日本語)": "ja",
+                    "Chinese (中文)": "zh",
+                    "Russian (Русский)": "ru",
+                    "Arabic (العربية)": "ar"
                 }
                 lang_code = lang_map.get(target_lang, "en")
 
