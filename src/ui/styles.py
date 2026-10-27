@@ -312,6 +312,45 @@ def get_custom_css() -> str:
         padding: 3px 9px;
         border-radius: 9999px;
     }
+    .badge-publisher {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .badge-ieee {
+        background: #e0f2fe;
+        color: #0284c7;
+        border: 1px solid #bae6fd;
+    }
+    .badge-springer {
+        background: #fef3c7;
+        color: #b45309;
+        border: 1px solid #fde68a;
+    }
+    .badge-elsevier {
+        background: #ffedd5;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+    }
+    .badge-acm {
+        background: #f3e8ff;
+        color: #7e22ce;
+        border: 1px solid #e9d5ff;
+    }
+    .badge-arxiv {
+        background: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+    }
+    .badge-global {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+    }
     .paper-badges {
         display: flex;
         gap: 6px;

@@ -304,3 +304,4 @@ def render_chat_view(
             safety_metric=safety_eval
         )
         st.rerun()
+

@@ -1,6 +1,6 @@
 """
-Paper Search View for ArXiv Research Assistant.
-Matches Panel 3 (Search Research Papers) of the reference UI design.
+Paper Search View for ScholarMind AI.
+Discovers research publications across IEEE, Springer, ACM, Elsevier, and arXiv.
 """
 
 import streamlit as st
@@ -10,6 +10,25 @@ from src.storage.saved_papers import SavedPapersManager
 from src.ui.components import render_page_header
 from config.config import CS_AI_CATEGORIES, RESEARCH_DOMAINS
 
+def _render_publisher_badge(publisher: str, venue: str) -> str:
+    """Returns styled HTML badge for publisher venue."""
+    pub_lower = (publisher or "").lower()
+    ven_lower = (venue or "").lower()
+    if "ieee" in pub_lower or "ieee" in ven_lower:
+        return '<span class="badge-publisher badge-ieee">IEEE Xplore</span>'
+    elif "springer" in pub_lower or "nature" in pub_lower or "springer" in ven_lower:
+        return '<span class="badge-publisher badge-springer">Springer Nature</span>'
+    elif "elsevier" in pub_lower or "sciencedirect" in pub_lower or "elsevier" in ven_lower:
+        return '<span class="badge-publisher badge-elsevier">Elsevier</span>'
+    elif "acm" in pub_lower or "acm" in ven_lower:
+        return '<span class="badge-publisher badge-acm">ACM DL</span>'
+    elif "arxiv" in pub_lower or "arxiv" in ven_lower:
+        return '<span class="badge-publisher badge-arxiv">arXiv.org</span>'
+    else:
+        label = venue if venue and venue != publisher and len(venue) < 24 else publisher
+        label = label if label else "Peer-Reviewed"
+        return f'<span class="badge-publisher badge-global">{label[:24]}</span>'
+
 def render_search_view(
     search_engine: PaperSearchEngine,
     saved_manager: SavedPapersManager,
@@ -18,7 +37,7 @@ def render_search_view(
     """Renders the Paper Search page."""
     render_page_header(
         title="Search Research Papers",
-        subtitle="Find relevant papers from arXiv with advanced multi-domain filters."
+        subtitle="Discover published literature across IEEE, Springer, Elsevier, ACM, and arXiv with multi-domain filters."
     )
 
     # Check prefill from home
@@ -30,7 +49,7 @@ def render_search_view(
         query = st.text_input(
             "Search Query",
             value=prefill,
-            placeholder="Search papers by topic, methodology, keywords, or title (e.g. 'large language models')...",
+            placeholder="Search any published paper by title, DOI, or topic (e.g. 'Blockchain Smart voting system', 'LLM Agents')...",
             label_visibility="collapsed",
             key="search_page_query_input"
         )
@@ -66,7 +85,7 @@ def render_search_view(
             key="search_cat_filter"
         )
     with f3:
-        year_options = ["All Years", "2020 - 2025", "2015 - 2019", "Before 2015"]
+        year_options = ["All Years (Since 2000)", "2024 - 2026", "2020 - 2023", "2015 - 2019", "2000 - 2014"]
         year_choice = st.selectbox("Publication Year", year_options, key="search_year_filter")
     with f4:
         sort_choice = st.selectbox(
@@ -76,20 +95,22 @@ def render_search_view(
         )
 
     # Parse Year Range
-    year_min, year_max = None, None
-    if year_choice == "2020 - 2025":
-        year_min, year_max = 2020, 2025
+    year_min, year_max = 2000, None
+    if year_choice == "2024 - 2026":
+        year_min, year_max = 2024, 2026
+    elif year_choice == "2020 - 2023":
+        year_min, year_max = 2020, 2023
     elif year_choice == "2015 - 2019":
         year_min, year_max = 2015, 2019
-    elif year_choice == "Before 2015":
-        year_min, year_max = 1990, 2014
+    elif year_choice == "2000 - 2014":
+        year_min, year_max = 2000, 2014
 
     sort_clean = sort_choice.replace("Sort by: ", "")
 
     # Perform Search
     category_arg = None if cat_choice == "All Categories" else cat_choice
     
-    with st.spinner("Searching arXiv papers..."):
+    with st.spinner("Searching global scientific literature (IEEE, Springer, Elsevier, arXiv)..."):
         search_results = search_engine.search(
             query=query,
             category=category_arg,
@@ -106,7 +127,7 @@ def render_search_view(
     query_display = f" for '{query}'" if query else ""
     st.markdown(f"""
         <div style="color: #64748b; font-size: 14px; margin: 16px 0 20px 0;">
-            Showing <b>{len(papers)}</b> of <b>{total_count}</b> results{query_display}
+            Showing <b>{len(papers)}</b> of <b>{total_count}</b> publications{query_display}
         </div>
     """, unsafe_allow_html=True)
 
@@ -133,16 +154,23 @@ def render_search_view(
         cat_name = paper.get("primary_category_name", "")
         abstract = paper.get("abstract", "")
         sim = paper.get("retrieval_similarity", 0.0)
+        publisher = paper.get("publisher", "Academic Publisher")
+        venue = paper.get("venue", "")
+        doi = paper.get("doi", "")
+        url = paper.get("url") or (f"https://doi.org/{doi}" if doi else "")
 
-        # Relevance label matching Panel 3
-        if sim >= 0.45 or idx == 0:
-            rel_label = "● Highly Relevant"
-        elif sim >= 0.35:
-            rel_label = "● High Relevance"
+        # Relevance label
+        if sim >= 0.85:
+            rel_label = f"● Top Match ({int(sim*100)}%)"
+        elif sim >= 0.60:
+            rel_label = f"● Highly Relevant ({int(sim*100)}%)"
+        elif sim >= 0.45 or idx == 0:
+            rel_label = "● Relevant Match"
         else:
-            rel_label = f"● Relevant ({sim:.2f})"
+            rel_label = f"● Related ({int(sim*100)}%)"
 
-        snippet = abstract[:260] + "..." if len(abstract) > 260 else abstract
+        pub_badge = _render_publisher_badge(publisher, venue)
+        snippet = abstract[:280] + "..." if len(abstract) > 280 else abstract
 
         st.markdown(f"""
             <div class="paper-card">
@@ -152,6 +180,7 @@ def render_search_view(
                 </div>
                 <div class="paper-authors">{authors}</div>
                 <div class="paper-badges">
+                    {pub_badge}
                     <span class="badge-category">{cat}</span>
                     <span class="badge-year">{year}</span>
                 </div>
@@ -159,10 +188,14 @@ def render_search_view(
             </div>
         """, unsafe_allow_html=True)
 
-        # Action Buttons row aligned to the right (matching Panel 3)
-        _, b_col1, b_col2, b_col3 = st.columns([3.8, 1.3, 1.3, 1.2])
+        # Action Buttons row aligned to the right
+        if url:
+            _, b_col1, b_col2, b_col3, b_col4 = st.columns([2.6, 1.4, 1.4, 1.2, 1.4])
+        else:
+            _, b_col1, b_col2, b_col3 = st.columns([3.8, 1.4, 1.4, 1.4])
+
         with b_col1:
-            if st.button("View Paper", key=f"view_{paper_id}_{idx}", use_container_width=True):
+            if st.button("View Details", key=f"view_{paper_id}_{idx}", use_container_width=True):
                 st.session_state["selected_paper"] = paper
                 navigate_fn("Paper Details")
                 st.rerun()
@@ -182,5 +215,9 @@ def render_search_view(
                     saved_manager.save_paper(paper)
                     st.toast(f"Saved '{title[:30]}...' to bookmarks!")
                 st.rerun()
+        if url:
+            with b_col4:
+                btn_title = "Open DOI ↗" if doi else "Open Paper ↗"
+                st.link_button(btn_title, url, use_container_width=True)
 
         st.markdown("<div style='margin-bottom: 12px;'></div>", unsafe_allow_html=True)
