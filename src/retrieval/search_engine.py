@@ -70,10 +70,10 @@ class PaperSearchEngine:
                 year_max=year_max,
                 limit=max(limit * 2, 20)
             )
-            # If user is browsing a specific category or domain, enrich with live global papers too
-            if include_global and (active_cat or domain_categories) and len(results) < limit:
+            # If user is browsing a specific category, domain, or year range, enrich with live global papers too
+            if include_global and len(results) < limit:
                 topic_cat = active_cat or (domain_categories[0] if domain_categories else "")
-                topic_label = ALL_CATEGORY_LABELS.get(topic_cat, topic_cat)
+                topic_label = ALL_CATEGORY_LABELS.get(topic_cat, "Artificial Intelligence Machine Learning")
                 if topic_label:
                     try:
                         global_browse = self.global_engine.search_global_literature(
@@ -290,7 +290,7 @@ class PaperSearchEngine:
             )
 
             # If strict year + category filter had 0 local hits, fallback to category/domain without year restriction
-            if (not res or not res.get("ids")) and (category or domain_categories):
+            if not res or not res.get("ids"):
                 cat_clause = (
                     {"primary_category": {"$eq": category}}
                     if (category and category != "All Categories")
