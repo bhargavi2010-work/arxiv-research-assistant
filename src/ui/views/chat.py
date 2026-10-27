@@ -27,6 +27,43 @@ def render_chat_view(
         subtitle="Ask anything about research papers, concepts, or get detailed explanations."
     )
 
+    # Top Controls Bar: New Chat Button + Language Selector
+    top_c1, top_c2, top_c3 = st.columns([5.5, 2.0, 2.5])
+    with top_c2:
+        if st.button("New Chat", icon=":material/add:", key="btn_new_chat_top", use_container_width=True):
+            new_id = conv_manager.create_conversation("New Research Chat")
+            st.session_state["active_conversation_id"] = new_id
+            st.toast("Started a new chat session!")
+            st.rerun()
+    with top_c3:
+        target_lang = st.selectbox(
+            "Language",
+            [
+                "Auto-Detect",
+                "English",
+                "Hindi (हिन्दी)",
+                "Gujarati (ગુજરાતી)",
+                "Marathi (मराठी)",
+                "Tamil (தமிழ்)",
+                "Telugu (తెలుగు)",
+                "Kannada (ಕನ್ನಡ)",
+                "Malayalam (മലയാളം)",
+                "Bengali (বাংলা)",
+                "Punjabi (ਪੰਜਾਬੀ)",
+                "Spanish (Español)",
+                "French (Français)",
+                "German (Deutsch)",
+                "Japanese (日本語)",
+                "Chinese (中文)",
+                "Russian (Русский)",
+                "Arabic (العربية)"
+            ],
+            index=0,
+            key="chat_lang_selector",
+            help="Select response language or let the assistant auto-detect from your query.",
+            label_visibility="collapsed"
+        )
+
     # PDF Upload & Ingestion Drawer
     with st.expander("Upload & Chat with your own Research Paper PDF", expanded=False):
         uploaded_pdf = st.file_uploader(
@@ -172,36 +209,6 @@ def render_chat_view(
 
     # Process pending query or prefill
     query_to_process = prefill_query or st.session_state.pop("pending_query", None)
-
-    # Multilingual & Safety Control Bar (Requirement 16 & Syllabus Unit 4)
-    ctrl_col1, ctrl_col2 = st.columns([7.0, 3.0])
-    with ctrl_col2:
-        target_lang = st.selectbox(
-            "Language",
-            [
-                "Auto-Detect",
-                "English",
-                "Hindi (हिन्दी)",
-                "Gujarati (ગુજરાતી)",
-                "Marathi (मराठी)",
-                "Tamil (தமிழ்)",
-                "Telugu (తెలుగు)",
-                "Kannada (ಕನ್ನಡ)",
-                "Malayalam (മലയാളം)",
-                "Bengali (বাংলা)",
-                "Punjabi (ਪੰਜਾਬੀ)",
-                "Spanish (Español)",
-                "French (Français)",
-                "German (Deutsch)",
-                "Japanese (日本語)",
-                "Chinese (中文)",
-                "Russian (Русский)",
-                "Arabic (العربية)"
-            ],
-            index=0,
-            key="chat_lang_selector",
-            help="Select response language or let the assistant auto-detect from your query (Requirement 16)."
-        )
 
     # Chat Input Box at bottom
     user_input = st.chat_input("Ask a research question...")
