@@ -167,8 +167,8 @@ def render_chat_view(
                 assistant_card_html = (
                     '<div class="assistant-message-card">'
                     '<div class="assistant-header">'
-                    '<div class="assistant-avatar">AI</div>'
-                    '<span style="font-weight: 600; color: #0f172a; font-size: 14.5px;">ArXiv Research Assistant</span>'
+                    '<div class="assistant-avatar">SM</div>'
+                    '<span style="font-weight: 600; color: #0f172a; font-size: 14.5px;">ScholarMind AI</span>'
                     '</div>'
                     f'<div style="font-size: 14.5px; line-height: 1.6; color: #1e293b;">\n\n{content}\n\n</div>'
                     '</div>'

@@ -1,7 +1,6 @@
 """
-ArXiv Research Assistant — AI-Powered Domain-Specific Scientific Research Chatbot
+ScholarMind AI — Universal Multi-Domain Research Assistant & Peer Review System
 Main Streamlit Application Entry Point.
-Updated for LangChain ReAct & LangSmith Observability.
 """
 
 import streamlit as st
@@ -50,7 +49,7 @@ from src.ui.views.settings import render_settings_view
 
 # Page Configuration
 st.set_page_config(
-    page_title="ArXiv Research Assistant",
+    page_title="ScholarMind AI — Universal Research Platform",
     page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
@@ -128,10 +127,10 @@ def navigate_to(view_name: str):
 with st.sidebar:
     st.markdown("""
         <div class="sidebar-brand">
-            <div class="sidebar-brand-icon">AI</div>
+            <div class="sidebar-brand-icon">SM</div>
             <div>
-                <div class="sidebar-brand-title">arXiv Research Assistant</div>
-                <div class="sidebar-brand-subtitle">AI for Scientific Discovery</div>
+                <div class="sidebar-brand-title">ScholarMind AI</div>
+                <div class="sidebar-brand-subtitle">Universal Scientific Intelligence</div>
             </div>
         </div>
     """, unsafe_allow_html=True)
@@ -177,8 +176,8 @@ with st.sidebar:
     st.markdown(f"""
         <div style="font-size: 11px; color: #475569; padding: 12px 8px; border-top: 1px solid #1e293b;">
             <b>Database:</b> {services['chroma'].count()} papers indexed<br>
-            <b>Domain:</b> Computer Science / AI<br>
-            <b>Version:</b> 1.0.0
+            <b>Domain:</b> Multi-Domain Universal Science<br>
+            <b>Version:</b> 2.0.0
         </div>
     """, unsafe_allow_html=True)
 

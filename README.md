@@ -1,5 +1,5 @@
-# 📚 ArXiv Research Assistant
-> An AI-powered research assistant for exploring, summarizing, and chatting with Computer Science and AI research papers from arXiv.
+# 🔬 ScholarMind AI
+> Universal Multi-Domain Scientific Research Assistant & Autonomous Peer Review System.
 
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![LangChain](https://img.shields.io/badge/Agent-LangChain_ReAct-orange.svg)](https://www.langchain.com/)

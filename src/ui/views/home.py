@@ -18,8 +18,8 @@ def render_home_view(navigate_fn: Callable[[str], None]):
                     <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                 </svg>
             </div>
-            <div class="hero-title">Welcome to ArXiv Research Assistant</div>
-            <div class="hero-subtitle">Your AI-powered research companion for computer science & AI papers.</div>
+            <div class="hero-title">Welcome to ScholarMind AI</div>
+            <div class="hero-subtitle">Universal Multi-Domain Scientific Research Assistant & Autonomous Peer Review System.</div>
         </div>
     """, unsafe_allow_html=True)
 
