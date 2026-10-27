@@ -153,7 +153,7 @@ with st.sidebar:
         "Paper Search": "Paper Search",
         "Paper Summarizer": "Paper Summarizer",
         "Concept Explorer": "Concept Explorer",
-        "Peer Review": "Peer Review (Unit 3)",
+        "Peer Review": "Peer Review",
         "Chat History": "Chat History",
         "Settings": "Settings"
     }

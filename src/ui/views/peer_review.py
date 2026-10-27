@@ -19,7 +19,7 @@ def render_peer_review_view(
     """Renders the Multi-Agent Peer Review Committee interface."""
     render_page_header(
         title="Multi-Agent Peer Review Committee",
-        subtitle="Autonomous review committee featuring Methodology Critic, Literature Specialist, and Area Chair agents (Unit 3 Syllabus)."
+        subtitle="Autonomous review committee featuring Methodology Critic, Literature Specialist, and Area Chair agents."
     )
 
     # 1. Paper Selection or Upload
