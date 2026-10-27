@@ -107,32 +107,36 @@ def render_peer_review_view(
 
         with col_critic:
             critic_data = report["methodology_critique"]
+            strengths_html = "".join([f"<div style='margin-left: 8px;'>• {s}</div>" for s in critic_data.get("strengths", [])])
+            weaknesses_html = "".join([f"<div style='margin-left: 8px;'>• {w}</div>" for w in critic_data.get("weaknesses", [])])
             st.markdown(f"""
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; min-height: 280px; font-size: 13px; line-height: 1.6;">
                     <div style="font-weight: 700; color: #1e293b; font-size: 14.5px; margin-bottom: 8px;">Methodology Critic Agent</div>
                     <div style="color: #16a34a; font-weight: 600; margin-top: 6px;">Key Strengths:</div>
-                    {''.join([f'<div style=\"margin-left: 8px;\">• {s}</div>' for s in critic_data.get('strengths', [])])}
+                    {strengths_html}
                     <div style="color: #dc2626; font-weight: 600; margin-top: 10px;">Methodological Vulnerabilities:</div>
-                    {''.join([f'<div style=\"margin-left: 8px;\">• {w}</div>' for w in critic_data.get('weaknesses', [])])}
+                    {weaknesses_html}
                 </div>
             """, unsafe_allow_html=True)
 
         with col_lit:
             lit_data = report["literature_critique"]
+            prior_art_html = "".join([f"<div style='margin-left: 8px;'>• {p}</div>" for p in lit_data.get("prior_art_context", [])])
             st.markdown(f"""
                 <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; min-height: 280px; font-size: 13px; line-height: 1.6;">
                     <div style="font-weight: 700; color: #1e293b; font-size: 14.5px; margin-bottom: 8px;">Literature & Novelty Specialist Agent</div>
                     <div style="color: #2563eb; font-weight: 600; margin-top: 6px;">Novelty Assessment:</div>
                     <div style="margin-left: 8px; color: #334155;">{lit_data.get('novelty_verdict')}</div>
                     <div style="color: #475569; font-weight: 600; margin-top: 10px;">Prior Art Considered:</div>
-                    {''.join([f'<div style=\"margin-left: 8px;\">• {p}</div>' for p in lit_data.get('prior_art_context', [])])}
+                    {prior_art_html}
                 </div>
             """, unsafe_allow_html=True)
 
         # Questions for Authors Card
+        questions_html = "".join([f"<div style='margin-bottom: 6px;'><b>Q{i+1}:</b> {q}</div>" for i, q in enumerate(report.get("questions_for_authors", []))])
         st.markdown(f"""
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-top: 16px; font-size: 13px; line-height: 1.6;">
                 <div style="font-weight: 700; color: #0f172a; font-size: 14px; margin-bottom: 8px;">Committee Questions for Authors:</div>
-                {''.join([f'<div style=\"margin-bottom: 6px;\"><b>Q{i+1}:</b> {q}</div>' for i, q in enumerate(report.get('questions_for_authors', []))])}
+                {questions_html}
             </div>
         """, unsafe_allow_html=True)
