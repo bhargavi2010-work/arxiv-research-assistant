@@ -1,6 +1,6 @@
 """
 Paper Search View for ScholarMind AI.
-Discovers research publications across IEEE, Springer, ACM, Elsevier, and arXiv.
+Discovers research publications across IEEE, Springer, ACM, Elsevier, Nature, and arXiv.
 """
 
 import streamlit as st
@@ -16,10 +16,10 @@ def _render_publisher_badge(publisher: str, venue: str) -> str:
     ven_lower = (venue or "").lower()
     if "ieee" in pub_lower or "ieee" in ven_lower:
         return '<span class="badge-publisher badge-ieee">IEEE Xplore</span>'
-    elif "springer" in pub_lower or "nature" in pub_lower or "springer" in ven_lower:
+    elif "springer" in pub_lower or "nature" in pub_lower or "springer" in ven_lower or "nature" in ven_lower:
         return '<span class="badge-publisher badge-springer">Springer Nature</span>'
-    elif "elsevier" in pub_lower or "sciencedirect" in pub_lower or "elsevier" in ven_lower:
-        return '<span class="badge-publisher badge-elsevier">Elsevier</span>'
+    elif "elsevier" in pub_lower or "sciencedirect" in pub_lower or "elsevier" in ven_lower or "science" in pub_lower:
+        return '<span class="badge-publisher badge-elsevier">Science / Elsevier</span>'
     elif "acm" in pub_lower or "acm" in ven_lower:
         return '<span class="badge-publisher badge-acm">ACM DL</span>'
     elif "arxiv" in pub_lower or "arxiv" in ven_lower:
@@ -37,7 +37,7 @@ def render_search_view(
     """Renders the Paper Search page."""
     render_page_header(
         title="Search Research Papers",
-        subtitle="Discover published literature across IEEE, Springer, Elsevier, ACM, and arXiv with multi-domain filters."
+        subtitle="Discover published literature across IEEE, Springer, Elsevier, ACM, Nature, and arXiv with multi-domain filters."
     )
 
     # Check prefill from home
@@ -49,7 +49,7 @@ def render_search_view(
         query = st.text_input(
             "Search Query",
             value=prefill,
-            placeholder="Search any published paper by title, DOI, or topic (e.g. 'Blockchain Smart voting system', 'LLM Agents')...",
+            placeholder="Search any published paper by title, DOI, or topic (e.g. 'Blockchain Smart voting system', 'AlphaFold')...",
             label_visibility="collapsed",
             key="search_page_query_input"
         )
@@ -69,13 +69,14 @@ def render_search_view(
         )
     with f2:
         if domain_choice == "All Domains":
-            # Combine all domain categories
             all_cats: dict = {}
             for d_cats in RESEARCH_DOMAINS.values():
                 all_cats.update(d_cats)
             cat_map = all_cats if all_cats else CS_AI_CATEGORIES
+            domain_cat_list = None
         else:
             cat_map = RESEARCH_DOMAINS.get(domain_choice, CS_AI_CATEGORIES)
+            domain_cat_list = list(cat_map.keys())
 
         cat_options = ["All Categories"] + list(cat_map.keys())
         cat_choice = st.selectbox(
@@ -85,7 +86,7 @@ def render_search_view(
             key="search_cat_filter"
         )
     with f3:
-        year_options = ["All Years (Since 2000)", "2024 - 2026", "2020 - 2023", "2015 - 2019", "2000 - 2014"]
+        year_options = ["All Years (Since 2000)", "2020 - 2026", "2015 - 2019", "2000 - 2014"]
         year_choice = st.selectbox("Publication Year", year_options, key="search_year_filter")
     with f4:
         sort_choice = st.selectbox(
@@ -96,10 +97,8 @@ def render_search_view(
 
     # Parse Year Range
     year_min, year_max = 2000, None
-    if year_choice == "2024 - 2026":
-        year_min, year_max = 2024, 2026
-    elif year_choice == "2020 - 2023":
-        year_min, year_max = 2020, 2023
+    if year_choice == "2020 - 2026":
+        year_min, year_max = 2020, 2026
     elif year_choice == "2015 - 2019":
         year_min, year_max = 2015, 2019
     elif year_choice == "2000 - 2014":
@@ -110,15 +109,27 @@ def render_search_view(
     # Perform Search
     category_arg = None if cat_choice == "All Categories" else cat_choice
     
-    with st.spinner("Searching global scientific literature (IEEE, Springer, Elsevier, arXiv)..."):
-        search_results = search_engine.search(
-            query=query,
-            category=category_arg,
-            year_min=year_min,
-            year_max=year_max,
-            sort_by=sort_clean,
-            limit=st.session_state.get("settings_search_limit", 15)
-        )
+    with st.spinner("Searching global scientific literature & multi-domain index..."):
+        try:
+            search_results = search_engine.search(
+                query=query,
+                category=category_arg,
+                year_min=year_min,
+                year_max=year_max,
+                sort_by=sort_clean,
+                limit=st.session_state.get("settings_search_limit", 15),
+                domain_categories=domain_cat_list
+            )
+        except TypeError:
+            # Backward compatibility if an older cached instance is called
+            search_results = search_engine.search(
+                query=query,
+                category=category_arg,
+                year_min=year_min,
+                year_max=year_max,
+                sort_by=sort_clean,
+                limit=st.session_state.get("settings_search_limit", 15)
+            )
 
     papers = search_results.get("results", [])
     total_count = search_results.get("total_matches", 0)
@@ -171,6 +182,7 @@ def render_search_view(
 
         pub_badge = _render_publisher_badge(publisher, venue)
         snippet = abstract[:280] + "..." if len(abstract) > 280 else abstract
+        cat_display = f"{cat} · {cat_name}" if (cat_name and cat_name != cat and len(cat_name) < 35) else cat
 
         st.markdown(f"""
             <div class="paper-card">
@@ -181,7 +193,7 @@ def render_search_view(
                 <div class="paper-authors">{authors}</div>
                 <div class="paper-badges">
                     {pub_badge}
-                    <span class="badge-category">{cat}</span>
+                    <span class="badge-category">{cat_display}</span>
                     <span class="badge-year">{year}</span>
                 </div>
                 <div class="paper-abstract-snippet">{snippet}</div>

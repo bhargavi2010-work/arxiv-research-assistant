@@ -14,8 +14,14 @@ sys.path.append(str(PROJECT_ROOT))
 import importlib
 import src.ui.styles as ui_styles
 import src.ui.components as ui_components
+import src.retrieval.global_paper_search as global_search_mod
+import src.retrieval.search_engine as search_engine_mod
+import src.ui.views.search as search_view_mod
 importlib.reload(ui_styles)
 importlib.reload(ui_components)
+importlib.reload(global_search_mod)
+importlib.reload(search_engine_mod)
+importlib.reload(search_view_mod)
 
 from src.ui.styles import get_custom_css
 from src.vector_store.chroma_manager import ChromaManager
@@ -60,7 +66,7 @@ st.markdown(get_custom_css(), unsafe_allow_html=True)
 
 # Cache Heavy Pipeline Resources
 @st.cache_resource(show_spinner=False)
-def get_cached_services():
+def get_cached_services(version: str = "2.2"):
     chroma_mgr = ChromaManager()
     embedder = EmbeddingGenerator()
     search_engine = PaperSearchEngine(chroma_manager=chroma_mgr, embedder=embedder)

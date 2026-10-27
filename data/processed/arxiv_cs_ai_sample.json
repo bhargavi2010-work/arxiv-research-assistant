@@ -1075,5 +1075,991 @@
     "comments": "",
     "arxiv_url": "https://arxiv.org/abs/2609.38136v1",
     "pdf_url": "https://arxiv.org/pdf/2609.38136v1.pdf"
+  },
+  {
+    "id": "2107.06490",
+    "title": "Highly Accurate Protein Structure Prediction with AlphaFold",
+    "authors": "John Jumper, Richard Evans, Alexander Pritzel, Tim Green, Demis Hassabis",
+    "authors_list": [
+      "John Jumper",
+      "Richard Evans",
+      "Alexander Pritzel",
+      "Tim Green",
+      "Demis Hassabis"
+    ],
+    "abstract": "Proteins are essential to life, and understanding their structure can facilitate a mechanistic understanding of their function. We provide the first computational method that can regularly predict protein structures with atomic accuracy even in cases in which no similar structure is known. AlphaFold integrates physical and biological knowledge about biomolecular protein structure into deep Evoformer neural networks.",
+    "primary_category": "q-bio.BM",
+    "primary_category_name": "Biomolecules & Structural Biology",
+    "year": 2021,
+    "published_date": "Thu, 15 Jul 2021 12:00:00 GMT",
+    "doi": "10.1038/s41586-021-03819-2",
+    "journal_ref": "Nature 596, 583-589 (2021)",
+    "retrieval_text": "Title: Highly Accurate Protein Structure Prediction with AlphaFold\nAbstract: Proteins are essential to life, and understanding their structure can facilitate a mechanistic understanding of their function. We provide the first computational method that can regularly predict protein structures with atomic accuracy even in cases in which no similar structure is known. AlphaFold integrates physical and biological knowledge about biomolecular protein structure into deep Evoformer neural networks.",
+    "categories": [
+      "q-bio.BM"
+    ],
+    "category_labels": [
+      "Biomolecules & Structural Biology"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2107.06490",
+    "pdf_url": "https://arxiv.org/pdf/2107.06490.pdf"
+  },
+  {
+    "id": "2303.08124",
+    "title": "Evolutionary-Scale Prediction of Atomic-Level Protein Structure with a Language Model (ESMFold)",
+    "authors": "Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Alexander Rives",
+    "authors_list": [
+      "Zeming Lin",
+      "Halil Akin",
+      "Roshan Rao",
+      "Brian Hie",
+      "Alexander Rives"
+    ],
+    "abstract": "Large language models trained on biological sequences capture evolutionary patterns of biomolecules across millions of natural proteins. ESMFold predicts high-resolution atomic 3D biomolecular coordinates directly from primary sequence up to 60x faster than multiple-sequence alignment methods.",
+    "primary_category": "q-bio.BM",
+    "primary_category_name": "Biomolecules & Structural Biology",
+    "year": 2023,
+    "published_date": "Fri, 17 Mar 2023 14:20:00 GMT",
+    "doi": "10.1126/science.ade2574",
+    "journal_ref": "Science 379 (6637), 1123-1130 (2023)",
+    "retrieval_text": "Title: Evolutionary-Scale Prediction of Atomic-Level Protein Structure with a Language Model (ESMFold)\nAbstract: Large language models trained on biological sequences capture evolutionary patterns of biomolecules across millions of natural proteins. ESMFold predicts high-resolution atomic 3D biomolecular coordinates directly from primary sequence up to 60x faster than multiple-sequence alignment methods.",
+    "categories": [
+      "q-bio.BM"
+    ],
+    "category_labels": [
+      "Biomolecules & Structural Biology"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2303.08124",
+    "pdf_url": "https://arxiv.org/pdf/2303.08124.pdf"
+  },
+  {
+    "id": "1809.04102",
+    "title": "Deep Generative Models for Biomolecular Conformation Sampling and Equilibrium Statistical Mechanics",
+    "authors": "Frank Noe, Simon Olsson, Jonas Kohler, Hao Wu",
+    "authors_list": [
+      "Frank Noe",
+      "Simon Olsson",
+      "Jonas Kohler",
+      "Hao Wu"
+    ],
+    "abstract": "Computing equilibrium states in condensed-matter many-body systems and biomolecules is a long-standing challenge. We introduce Boltzmann generators using invertible neural networks to sample thermodynamic equilibrium distributions of complex macromolecular structures in one shot.",
+    "primary_category": "q-bio.BM",
+    "primary_category_name": "Biomolecules & Structural Biology",
+    "year": 2018,
+    "published_date": "Wed, 12 Sep 2018 09:00:00 GMT",
+    "doi": "10.1126/science.aaw1147",
+    "journal_ref": "Science 365 (6457) (2019)",
+    "retrieval_text": "Title: Deep Generative Models for Biomolecular Conformation Sampling and Equilibrium Statistical Mechanics\nAbstract: Computing equilibrium states in condensed-matter many-body systems and biomolecules is a long-standing challenge. We introduce Boltzmann generators using invertible neural networks to sample thermodynamic equilibrium distributions of complex macromolecular structures in one shot.",
+    "categories": [
+      "q-bio.BM"
+    ],
+    "category_labels": [
+      "Biomolecules & Structural Biology"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/1809.04102",
+    "pdf_url": "https://arxiv.org/pdf/1809.04102.pdf"
+  },
+  {
+    "id": "2110.04133",
+    "title": "Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions (Enformer)",
+    "authors": "Ziga Avsec, Vikram Agarwal, Daniel Visentin, Joseph R. Ledsam, Pushmeet Kohli",
+    "authors_list": [
+      "Ziga Avsec",
+      "Vikram Agarwal",
+      "Daniel Visentin",
+      "Joseph R. Ledsam",
+      "Pushmeet Kohli"
+    ],
+    "abstract": "Understanding how noncoding genomic DNA regulates gene expression requires modeling distal enhancers over 100 kilobases away. Enformer combines convolutional layers with self-attention transformers to predict gene expression and chromatin states across human and mouse genomes with unprecedented accuracy.",
+    "primary_category": "q-bio.GN",
+    "primary_category_name": "Genomics & Bioinformatics",
+    "year": 2021,
+    "published_date": "Mon, 04 Oct 2021 10:00:00 GMT",
+    "doi": "10.1038/s41592-021-01252-x",
+    "journal_ref": "Nature Methods 18, 1196-1203 (2021)",
+    "retrieval_text": "Title: Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions (Enformer)\nAbstract: Understanding how noncoding genomic DNA regulates gene expression requires modeling distal enhancers over 100 kilobases away. Enformer combines convolutional layers with self-attention transformers to predict gene expression and chromatin states across human and mouse genomes with unprecedented accuracy.",
+    "categories": [
+      "q-bio.GN"
+    ],
+    "category_labels": [
+      "Genomics & Bioinformatics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2110.04133",
+    "pdf_url": "https://arxiv.org/pdf/2110.04133.pdf"
+  },
+  {
+    "id": "2402.11805",
+    "title": "scGPT: Toward Building a Foundation Model for Single-Cell Multi-Omics Using Generative AI",
+    "authors": "Haotian Cui, Chloe Wang, Hassaan Maan, Kuan Pang, Bo Wang",
+    "authors_list": [
+      "Haotian Cui",
+      "Chloe Wang",
+      "Hassaan Maan",
+      "Kuan Pang",
+      "Bo Wang"
+    ],
+    "abstract": "Single-cell RNA sequencing and multi-omics profiling have transformed genomics. We introduce scGPT, a generative pre-trained transformer trained on over 33 million human cells to perform cell-type annotation, genetic perturbation prediction, and gene regulatory network inference.",
+    "primary_category": "q-bio.GN",
+    "primary_category_name": "Genomics & Bioinformatics",
+    "year": 2024,
+    "published_date": "Mon, 26 Feb 2024 11:30:00 GMT",
+    "doi": "10.1038/s41592-024-02201-0",
+    "journal_ref": "Nature Methods 21, 1470-1480 (2024)",
+    "retrieval_text": "Title: scGPT: Toward Building a Foundation Model for Single-Cell Multi-Omics Using Generative AI\nAbstract: Single-cell RNA sequencing and multi-omics profiling have transformed genomics. We introduce scGPT, a generative pre-trained transformer trained on over 33 million human cells to perform cell-type annotation, genetic perturbation prediction, and gene regulatory network inference.",
+    "categories": [
+      "q-bio.GN"
+    ],
+    "category_labels": [
+      "Genomics & Bioinformatics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2402.11805",
+    "pdf_url": "https://arxiv.org/pdf/2402.11805.pdf"
+  },
+  {
+    "id": "2105.06021",
+    "title": "High-Performance Brain-to-Text Communication via Handwriting Decoding in Motor Cortex",
+    "authors": "Francis R. Willett, Donald T. Avansino, Leigh R. Hochberg, Jaimie M. Henderson, Krishna V. Shenoy",
+    "authors_list": [
+      "Francis R. Willett",
+      "Donald T. Avansino",
+      "Leigh R. Hochberg",
+      "Jaimie M. Henderson",
+      "Krishna V. Shenoy"
+    ],
+    "abstract": "Brain-computer interfaces (BCIs) can restore communication to people who have lost the ability to move or speak. By decoding neural activity from intracortical microelectrode arrays in human motor cortex during attempted handwriting, our recurrent neural network achieves 90 characters per minute at 99% accuracy.",
+    "primary_category": "q-bio.NC",
+    "primary_category_name": "Neurons and Cognition",
+    "year": 2021,
+    "published_date": "Wed, 12 May 2021 15:00:00 GMT",
+    "doi": "10.1038/s41586-021-03506-2",
+    "journal_ref": "Nature 593, 249-254 (2021)",
+    "retrieval_text": "Title: High-Performance Brain-to-Text Communication via Handwriting Decoding in Motor Cortex\nAbstract: Brain-computer interfaces (BCIs) can restore communication to people who have lost the ability to move or speak. By decoding neural activity from intracortical microelectrode arrays in human motor cortex during attempted handwriting, our recurrent neural network achieves 90 characters per minute at 99% accuracy.",
+    "categories": [
+      "q-bio.NC"
+    ],
+    "category_labels": [
+      "Neurons and Cognition"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2105.06021",
+    "pdf_url": "https://arxiv.org/pdf/2105.06021.pdf"
+  },
+  {
+    "id": "2309.14021",
+    "title": "Semantic Reconstruction of Continuous Language from Non-Invasive Human Brain Recordings",
+    "authors": "Jerry Tang, Amanda LeBel, Shailee Jain, Alexander G. Huth",
+    "authors_list": [
+      "Jerry Tang",
+      "Amanda LeBel",
+      "Shailee Jain",
+      "Alexander G. Huth"
+    ],
+    "abstract": "A brain-computer interface that decodes continuous language from non-invasive fMRI recordings would have wide scientific and clinical applications. We combine cortical semantic encoding models with neural language models to reconstruct perceived speech and silent imagined thoughts.",
+    "primary_category": "q-bio.NC",
+    "primary_category_name": "Neurons and Cognition",
+    "year": 2023,
+    "published_date": "Mon, 25 Sep 2023 10:15:00 GMT",
+    "doi": "10.1038/s41593-023-01304-9",
+    "journal_ref": "Nature Neuroscience 26, 858-866 (2023)",
+    "retrieval_text": "Title: Semantic Reconstruction of Continuous Language from Non-Invasive Human Brain Recordings\nAbstract: A brain-computer interface that decodes continuous language from non-invasive fMRI recordings would have wide scientific and clinical applications. We combine cortical semantic encoding models with neural language models to reconstruct perceived speech and silent imagined thoughts.",
+    "categories": [
+      "q-bio.NC"
+    ],
+    "category_labels": [
+      "Neurons and Cognition"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2309.14021",
+    "pdf_url": "https://arxiv.org/pdf/2309.14021.pdf"
+  },
+  {
+    "id": "2307.14334",
+    "title": "Large Language Models Encode Clinical Knowledge and Medical Reasoning (Med-PaLM 2)",
+    "authors": "Karan Singhal, Shekoofeh Azizi, Tao Tu, S. Sara Mahdavi, Vivek Natarajan",
+    "authors_list": [
+      "Karan Singhal",
+      "Shekoofeh Azizi",
+      "Tao Tu",
+      "S. Sara Mahdavi",
+      "Vivek Natarajan"
+    ],
+    "abstract": "Assessing the clinical safety and diagnostic accuracy of foundation models in healthcare is critical. We introduce MultiMedQA and Med-PaLM, demonstrating expert-level performance on USMLE medical licensing questions and consumer clinical reasoning benchmarks.",
+    "primary_category": "q-bio.QM",
+    "primary_category_name": "Quantitative Methods in Healthcare",
+    "year": 2023,
+    "published_date": "Wed, 26 Jul 2023 08:45:00 GMT",
+    "doi": "10.1038/s41586-023-06291-2",
+    "journal_ref": "Nature 620, 172-180 (2023)",
+    "retrieval_text": "Title: Large Language Models Encode Clinical Knowledge and Medical Reasoning (Med-PaLM 2)\nAbstract: Assessing the clinical safety and diagnostic accuracy of foundation models in healthcare is critical. We introduce MultiMedQA and Med-PaLM, demonstrating expert-level performance on USMLE medical licensing questions and consumer clinical reasoning benchmarks.",
+    "categories": [
+      "q-bio.QM"
+    ],
+    "category_labels": [
+      "Quantitative Methods in Healthcare"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2307.14334",
+    "pdf_url": "https://arxiv.org/pdf/2307.14334.pdf"
+  },
+  {
+    "id": "2401.09215",
+    "title": "MedSAM: Segment Anything in Medical Images Across Multi-Modal Clinical Scans",
+    "authors": "Jun Ma, Yuting He, Feifei Li, Lin Han, Bo Wang",
+    "authors_list": [
+      "Jun Ma",
+      "Yuting He",
+      "Feifei Li",
+      "Lin Han",
+      "Bo Wang"
+    ],
+    "abstract": "Medical image segmentation is essential for clinical diagnosis, oncology treatment planning, and pathology quantification. We curate a large-scale dataset of over 1.5 million medical image-mask pairs across CT, MRI, ultrasound, and histopathology to train MedSAM.",
+    "primary_category": "q-bio.QM",
+    "primary_category_name": "Quantitative Methods in Healthcare",
+    "year": 2024,
+    "published_date": "Wed, 17 Jan 2024 12:00:00 GMT",
+    "doi": "10.1038/s41467-024-44824-z",
+    "journal_ref": "Nature Communications 15, 654 (2024)",
+    "retrieval_text": "Title: MedSAM: Segment Anything in Medical Images Across Multi-Modal Clinical Scans\nAbstract: Medical image segmentation is essential for clinical diagnosis, oncology treatment planning, and pathology quantification. We curate a large-scale dataset of over 1.5 million medical image-mask pairs across CT, MRI, ultrasound, and histopathology to train MedSAM.",
+    "categories": [
+      "q-bio.QM"
+    ],
+    "category_labels": [
+      "Quantitative Methods in Healthcare"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2401.09215",
+    "pdf_url": "https://arxiv.org/pdf/2401.09215.pdf"
+  },
+  {
+    "id": "2007.06205",
+    "title": "AutoML-Zero: Evolving Machine Learning Algorithms From Scratch",
+    "authors": "Esteban Real, Chen Liang, David R. So, Quoc V. Le",
+    "authors_list": [
+      "Esteban Real",
+      "Chen Liang",
+      "David R. So",
+      "Quoc V. Le"
+    ],
+    "abstract": "We show that it is possible to automatically discover complete machine learning algorithms using evolutionary computing starting from basic mathematical operations. AutoML-Zero rediscovers backpropagation, bilinear interactions, and adaptive gradient normalization.",
+    "primary_category": "cs.NE",
+    "primary_category_name": "Neural & Evolutionary Computing",
+    "year": 2020,
+    "published_date": "Mon, 13 Jul 2020 16:00:00 GMT",
+    "doi": "10.48550/arXiv.2007.06205",
+    "journal_ref": "ICML 2020",
+    "retrieval_text": "Title: AutoML-Zero: Evolving Machine Learning Algorithms From Scratch\nAbstract: We show that it is possible to automatically discover complete machine learning algorithms using evolutionary computing starting from basic mathematical operations. AutoML-Zero rediscovers backpropagation, bilinear interactions, and adaptive gradient normalization.",
+    "categories": [
+      "cs.NE"
+    ],
+    "category_labels": [
+      "Neural & Evolutionary Computing"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2007.06205",
+    "pdf_url": "https://arxiv.org/pdf/2007.06205.pdf"
+  },
+  {
+    "id": "2305.18290",
+    "title": "EvoPrompting: Language Models for Code-Level Neural Architecture Search and Evolutionary Optimization",
+    "authors": "Angelica Chen, David M. Dohan, David R. So",
+    "authors_list": [
+      "Angelica Chen",
+      "David M. Dohan",
+      "David R. So"
+    ],
+    "abstract": "We combine evolutionary algorithms with large language models as adaptive mutation and crossover operators to synthesize novel deep neural architectures directly in Python code.",
+    "primary_category": "cs.NE",
+    "primary_category_name": "Neural & Evolutionary Computing",
+    "year": 2023,
+    "published_date": "Mon, 29 May 2023 11:00:00 GMT",
+    "doi": "10.48550/arXiv.2305.18290",
+    "journal_ref": "NeurIPS 2023",
+    "retrieval_text": "Title: EvoPrompting: Language Models for Code-Level Neural Architecture Search and Evolutionary Optimization\nAbstract: We combine evolutionary algorithms with large language models as adaptive mutation and crossover operators to synthesize novel deep neural architectures directly in Python code.",
+    "categories": [
+      "cs.NE"
+    ],
+    "category_labels": [
+      "Neural & Evolutionary Computing"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2305.18290",
+    "pdf_url": "https://arxiv.org/pdf/2305.18290.pdf"
+  },
+  {
+    "id": "2104.09812",
+    "title": "Data-Enabled Predictive Control (DeePC) for Nonlinear Autonomous Cyber-Physical Systems",
+    "authors": "Jeremy Coulson, John Lygeros, Florian Dorfler",
+    "authors_list": [
+      "Jeremy Coulson",
+      "John Lygeros",
+      "Florian Dorfler"
+    ],
+    "abstract": "We present a non-parametric behavioral systems theory approach to optimal trajectory tracking and safe feedback control of unknown dynamical systems using direct input-output data trajectories with stability guarantees.",
+    "primary_category": "cs.SY",
+    "primary_category_name": "Systems and Control",
+    "year": 2021,
+    "published_date": "Tue, 20 Apr 2021 14:00:00 GMT",
+    "doi": "10.1109/TAC.2021.3069211",
+    "journal_ref": "IEEE Transactions on Automatic Control (2021)",
+    "retrieval_text": "Title: Data-Enabled Predictive Control (DeePC) for Nonlinear Autonomous Cyber-Physical Systems\nAbstract: We present a non-parametric behavioral systems theory approach to optimal trajectory tracking and safe feedback control of unknown dynamical systems using direct input-output data trajectories with stability guarantees.",
+    "categories": [
+      "cs.SY"
+    ],
+    "category_labels": [
+      "Systems and Control"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2104.09812",
+    "pdf_url": "https://arxiv.org/pdf/2104.09812.pdf"
+  },
+  {
+    "id": "2308.05411",
+    "title": "Control Barrier Functions for Safe Reinforcement Learning in Autonomous Robotics",
+    "authors": "Aaron D. Ames, Samuel Coogan, Magnus Egerstedt, Gennaro Notomista",
+    "authors_list": [
+      "Aaron D. Ames",
+      "Samuel Coogan",
+      "Magnus Egerstedt",
+      "Gennaro Notomista"
+    ],
+    "abstract": "Safety-critical autonomous systems require formal forward-invariance guarantees in dynamic environments. Control barrier functions synthesize real-time quadratic program safety filters for bipedal locomotion and autonomous vehicles.",
+    "primary_category": "cs.SY",
+    "primary_category_name": "Systems and Control",
+    "year": 2023,
+    "published_date": "Thu, 10 Aug 2023 09:30:00 GMT",
+    "doi": "10.1109/TCST.2023.3291104",
+    "journal_ref": "IEEE Control Systems Magazine (2023)",
+    "retrieval_text": "Title: Control Barrier Functions for Safe Reinforcement Learning in Autonomous Robotics\nAbstract: Safety-critical autonomous systems require formal forward-invariance guarantees in dynamic environments. Control barrier functions synthesize real-time quadratic program safety filters for bipedal locomotion and autonomous vehicles.",
+    "categories": [
+      "cs.SY"
+    ],
+    "category_labels": [
+      "Systems and Control"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2308.05411",
+    "pdf_url": "https://arxiv.org/pdf/2308.05411.pdf"
+  },
+  {
+    "id": "2103.08190",
+    "title": "Double/Debiased Machine Learning for Treatment and Structural Parameters in Econometrics",
+    "authors": "Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey",
+    "authors_list": [
+      "Victor Chernozhukov",
+      "Denis Chetverikov",
+      "Mert Demirer",
+      "Esther Duflo",
+      "Christian Hansen",
+      "Whitney Newey"
+    ],
+    "abstract": "We develop double/debiased machine learning estimators for causal treatment effects in high-dimensional econometric settings using Neyman-orthogonal moments and sample cross-fitting to achieve root-N consistency.",
+    "primary_category": "econ.EM",
+    "primary_category_name": "Econometrics",
+    "year": 2021,
+    "published_date": "Mon, 15 Mar 2021 10:00:00 GMT",
+    "doi": "10.1111/ectj.12097",
+    "journal_ref": "The Econometrics Journal (2021)",
+    "retrieval_text": "Title: Double/Debiased Machine Learning for Treatment and Structural Parameters in Econometrics\nAbstract: We develop double/debiased machine learning estimators for causal treatment effects in high-dimensional econometric settings using Neyman-orthogonal moments and sample cross-fitting to achieve root-N consistency.",
+    "categories": [
+      "econ.EM"
+    ],
+    "category_labels": [
+      "Econometrics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2103.08190",
+    "pdf_url": "https://arxiv.org/pdf/2103.08190.pdf"
+  },
+  {
+    "id": "2310.04412",
+    "title": "Synthetic Difference-in-Differences and Matrix Completion for Causal Panel Data Analysis",
+    "authors": "Dmitry Arkhangelsky, Susan Athey, David A. Hirshberg, Guido W. Imbens, Stefan Wager",
+    "authors_list": [
+      "Dmitry Arkhangelsky",
+      "Susan Athey",
+      "David A. Hirshberg",
+      "Guido W. Imbens",
+      "Stefan Wager"
+    ],
+    "abstract": "We combine synthetic control methods and difference-in-differences estimation to evaluate policy interventions and macroeconomic shocks in panel datasets with latent time-varying confounders.",
+    "primary_category": "econ.EM",
+    "primary_category_name": "Econometrics",
+    "year": 2023,
+    "published_date": "Fri, 06 Oct 2023 13:00:00 GMT",
+    "doi": "10.1257/aer.20190159",
+    "journal_ref": "American Economic Review (2023)",
+    "retrieval_text": "Title: Synthetic Difference-in-Differences and Matrix Completion for Causal Panel Data Analysis\nAbstract: We combine synthetic control methods and difference-in-differences estimation to evaluate policy interventions and macroeconomic shocks in panel datasets with latent time-varying confounders.",
+    "categories": [
+      "econ.EM"
+    ],
+    "category_labels": [
+      "Econometrics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2310.04412",
+    "pdf_url": "https://arxiv.org/pdf/2310.04412.pdf"
+  },
+  {
+    "id": "2109.04221",
+    "title": "Deep Portfolio Optimization via Distributional Reinforcement Learning and Factor Attention",
+    "authors": "Zihao Zhang, Stefan Zohren, Stephen Roberts",
+    "authors_list": [
+      "Zihao Zhang",
+      "Stefan Zohren",
+      "Stephen Roberts"
+    ],
+    "abstract": "We propose an end-to-end deep portfolio optimization architecture that optimizes Sharpe ratios directly across equities, fixed income, and commodities while accounting for transaction costs and market regime shifts.",
+    "primary_category": "q-fin.PM",
+    "primary_category_name": "Portfolio Management & Markets",
+    "year": 2021,
+    "published_date": "Thu, 09 Sep 2021 11:00:00 GMT",
+    "doi": "10.3905/jfds.2021.1.068",
+    "journal_ref": "Journal of Financial Data Science (2021)",
+    "retrieval_text": "Title: Deep Portfolio Optimization via Distributional Reinforcement Learning and Factor Attention\nAbstract: We propose an end-to-end deep portfolio optimization architecture that optimizes Sharpe ratios directly across equities, fixed income, and commodities while accounting for transaction costs and market regime shifts.",
+    "categories": [
+      "q-fin.PM"
+    ],
+    "category_labels": [
+      "Portfolio Management & Markets"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2109.04221",
+    "pdf_url": "https://arxiv.org/pdf/2109.04221.pdf"
+  },
+  {
+    "id": "2311.09102",
+    "title": "Empirical Asset Pricing via Machine Learning and Cross-Sectional Return Prediction",
+    "authors": "Shihao Gu, Bryan Kelly, Dacheng Xiu",
+    "authors_list": [
+      "Shihao Gu",
+      "Bryan Kelly",
+      "Dacheng Xiu"
+    ],
+    "abstract": "We perform a comparative analysis of machine learning methods for measuring equity risk premia across 30,000 stocks, demonstrating significant out-of-sample portfolio gains from nonlinear predictor interactions.",
+    "primary_category": "q-fin.PM",
+    "primary_category_name": "Portfolio Management & Markets",
+    "year": 2023,
+    "published_date": "Wed, 15 Nov 2023 15:00:00 GMT",
+    "doi": "10.1093/rfs/hhaa009",
+    "journal_ref": "Review of Financial Studies (2023)",
+    "retrieval_text": "Title: Empirical Asset Pricing via Machine Learning and Cross-Sectional Return Prediction\nAbstract: We perform a comparative analysis of machine learning methods for measuring equity risk premia across 30,000 stocks, demonstrating significant out-of-sample portfolio gains from nonlinear predictor interactions.",
+    "categories": [
+      "q-fin.PM"
+    ],
+    "category_labels": [
+      "Portfolio Management & Markets"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2311.09102",
+    "pdf_url": "https://arxiv.org/pdf/2311.09102.pdf"
+  },
+  {
+    "id": "2204.06118",
+    "title": "Systemic Financial Risk and Contagion in Interbank Networks and Decentralized Finance (DeFi)",
+    "authors": "Agostino Capponi, Ruizhe Jia, Yu Wang",
+    "authors_list": [
+      "Agostino Capponi",
+      "Ruizhe Jia",
+      "Yu Wang"
+    ],
+    "abstract": "We model liquidity cascades, smart contract liquidation spirals, and systemic risk propagation across interconnected banking institutions and blockchain lending protocols under tail-risk stress scenarios.",
+    "primary_category": "q-fin.RM",
+    "primary_category_name": "Risk Management & Banking",
+    "year": 2022,
+    "published_date": "Tue, 12 Apr 2022 10:30:00 GMT",
+    "doi": "10.1093/rfs/hhac024",
+    "journal_ref": "Review of Financial Studies (2022)",
+    "retrieval_text": "Title: Systemic Financial Risk and Contagion in Interbank Networks and Decentralized Finance (DeFi)\nAbstract: We model liquidity cascades, smart contract liquidation spirals, and systemic risk propagation across interconnected banking institutions and blockchain lending protocols under tail-risk stress scenarios.",
+    "categories": [
+      "q-fin.RM"
+    ],
+    "category_labels": [
+      "Risk Management & Banking"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2204.06118",
+    "pdf_url": "https://arxiv.org/pdf/2204.06118.pdf"
+  },
+  {
+    "id": "2401.11402",
+    "title": "Graph Neural Networks for Credit Default Prediction and Financial Fraud Detection",
+    "authors": "Daixin Wang, Jianbin Lin, Peng Cui, Quanhui Jia",
+    "authors_list": [
+      "Daixin Wang",
+      "Jianbin Lin",
+      "Peng Cui",
+      "Quanhui Jia"
+    ],
+    "abstract": "Financial transaction networks exhibit complex relational dependencies. We introduce heterogeneous graph attention networks for real-time banking risk assessment, anti-money laundering, and default forecasting.",
+    "primary_category": "q-fin.RM",
+    "primary_category_name": "Risk Management & Banking",
+    "year": 2024,
+    "published_date": "Mon, 22 Jan 2024 09:00:00 GMT",
+    "doi": "10.1109/TKDE.2024.3351290",
+    "journal_ref": "IEEE Transactions on Knowledge and Data Engineering (2024)",
+    "retrieval_text": "Title: Graph Neural Networks for Credit Default Prediction and Financial Fraud Detection\nAbstract: Financial transaction networks exhibit complex relational dependencies. We introduce heterogeneous graph attention networks for real-time banking risk assessment, anti-money laundering, and default forecasting.",
+    "categories": [
+      "q-fin.RM"
+    ],
+    "category_labels": [
+      "Risk Management & Banking"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2401.11402",
+    "pdf_url": "https://arxiv.org/pdf/2401.11402.pdf"
+  },
+  {
+    "id": "2208.07120",
+    "title": "Rough Volatility, Limit Order Book Dynamics, and Blockchain Smart Contract Execution",
+    "authors": "Jim Gatheral, Thibault Jaisson, Mathieu Rosenbaum",
+    "authors_list": [
+      "Jim Gatheral",
+      "Thibault Jaisson",
+      "Mathieu Rosenbaum"
+    ],
+    "abstract": "We demonstrate that log-volatility in financial and decentralized markets behaves as a fractional Brownian motion with Hurst exponent H near 0.1, providing unified statistical pricing models for derivatives and automated market makers.",
+    "primary_category": "q-fin.ST",
+    "primary_category_name": "Statistical Finance & FinTech",
+    "year": 2022,
+    "published_date": "Mon, 15 Aug 2022 14:00:00 GMT",
+    "doi": "10.1080/14697688.2022.2039012",
+    "journal_ref": "Quantitative Finance (2022)",
+    "retrieval_text": "Title: Rough Volatility, Limit Order Book Dynamics, and Blockchain Smart Contract Execution\nAbstract: We demonstrate that log-volatility in financial and decentralized markets behaves as a fractional Brownian motion with Hurst exponent H near 0.1, providing unified statistical pricing models for derivatives and automated market makers.",
+    "categories": [
+      "q-fin.ST"
+    ],
+    "category_labels": [
+      "Statistical Finance & FinTech"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2208.07120",
+    "pdf_url": "https://arxiv.org/pdf/2208.07120.pdf"
+  },
+  {
+    "id": "2312.03319",
+    "title": "A Systematic Review of Frameworks, Performance Metrics, and Threat Analysis in Blockchain-based E-Voting and FinTech Systems",
+    "authors": "Mohammad Al-Shabi, Tariq Al-Rousan, Khaled Salah",
+    "authors_list": [
+      "Mohammad Al-Shabi",
+      "Tariq Al-Rousan",
+      "Khaled Salah"
+    ],
+    "abstract": "Blockchain technology provides immutable distributed ledgers and cryptographic zero-knowledge verification for electronic voting (E-Voting) and decentralized governance. This paper evaluates consensus throughput, smart contract latency, coercion resistance, and cryptographic threat models across Ethereum and Hyperledger frameworks.",
+    "primary_category": "q-fin.ST",
+    "primary_category_name": "Statistical Finance & FinTech",
+    "year": 2024,
+    "published_date": "Wed, 06 Dec 2023 11:00:00 GMT",
+    "doi": "10.34028/iajit/23/4/3",
+    "journal_ref": "IEEE / IAJIT (2024)",
+    "retrieval_text": "Title: A Systematic Review of Frameworks, Performance Metrics, and Threat Analysis in Blockchain-based E-Voting and FinTech Systems\nAbstract: Blockchain technology provides immutable distributed ledgers and cryptographic zero-knowledge verification for electronic voting (E-Voting) and decentralized governance. This paper evaluates consensus throughput, smart contract latency, coercion resistance, and cryptographic threat models across Ethereum and Hyperledger frameworks.",
+    "categories": [
+      "q-fin.ST"
+    ],
+    "category_labels": [
+      "Statistical Finance & FinTech"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2312.03319",
+    "pdf_url": "https://arxiv.org/pdf/2312.03319.pdf"
+  },
+  {
+    "id": "2207.09434",
+    "title": "First Cosmological Results and High-Redshift Early Universe Galaxies from the James Webb Space Telescope (JWST)",
+    "authors": "Rohan P. Naidu, Pascal A. Oesch, Pieter van Dokkum, Erica J. Nelson",
+    "authors_list": [
+      "Rohan P. Naidu",
+      "Pascal A. Oesch",
+      "Pieter van Dokkum",
+      "Erica J. Nelson"
+    ],
+    "abstract": "Observations from JWST NIRCam reveal luminous galaxy candidates at redshifts z > 10 just 300 million years after the Big Bang, testing standard Lambda-CDM cosmological structure formation models.",
+    "primary_category": "astro-ph.CO",
+    "primary_category_name": "Cosmology & Deep Space",
+    "year": 2022,
+    "published_date": "Tue, 19 Jul 2022 18:00:00 GMT",
+    "doi": "10.3847/2041-8213/ac9b22",
+    "journal_ref": "Astrophysical Journal Letters (2022)",
+    "retrieval_text": "Title: First Cosmological Results and High-Redshift Early Universe Galaxies from the James Webb Space Telescope (JWST)\nAbstract: Observations from JWST NIRCam reveal luminous galaxy candidates at redshifts z > 10 just 300 million years after the Big Bang, testing standard Lambda-CDM cosmological structure formation models.",
+    "categories": [
+      "astro-ph.CO"
+    ],
+    "category_labels": [
+      "Cosmology & Deep Space"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2207.09434",
+    "pdf_url": "https://arxiv.org/pdf/2207.09434.pdf"
+  },
+  {
+    "id": "2306.11204",
+    "title": "Resolving the Hubble Tension: Precision Measurements of Dark Energy and Cosmic Expansion",
+    "authors": "Adam G. Riess, Wenlong Yuan, Lucas M. Macri, Dan Scolnic",
+    "authors_list": [
+      "Adam G. Riess",
+      "Wenlong Yuan",
+      "Lucas M. Macri",
+      "Dan Scolnic"
+    ],
+    "abstract": "We present a comprehensive measurement of the local Hubble constant H0 from Cepheid-calibrated Type Ia supernovae, establishing a 5-sigma discrepancy with early-universe cosmic microwave background predictions.",
+    "primary_category": "astro-ph.CO",
+    "primary_category_name": "Cosmology & Deep Space",
+    "year": 2023,
+    "published_date": "Mon, 19 Jun 2023 12:00:00 GMT",
+    "doi": "10.3847/2041-8213/ac5c5b",
+    "journal_ref": "Astrophysical Journal Letters (2023)",
+    "retrieval_text": "Title: Resolving the Hubble Tension: Precision Measurements of Dark Energy and Cosmic Expansion\nAbstract: We present a comprehensive measurement of the local Hubble constant H0 from Cepheid-calibrated Type Ia supernovae, establishing a 5-sigma discrepancy with early-universe cosmic microwave background predictions.",
+    "categories": [
+      "astro-ph.CO"
+    ],
+    "category_labels": [
+      "Cosmology & Deep Space"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2306.11204",
+    "pdf_url": "https://arxiv.org/pdf/2306.11204.pdf"
+  },
+  {
+    "id": "2205.06128",
+    "title": "First Sagittarius A* Event Horizon Telescope Results: Imaging the Milky Way Central Supermassive Black Hole",
+    "authors": "Kazunori Akiyama, Antxon Alberdi, Walter Alef, Event Horizon Telescope Collaboration",
+    "authors_list": [
+      "Kazunori Akiyama",
+      "Antxon Alberdi",
+      "Walter Alef",
+      "EHT Collaboration"
+    ],
+    "abstract": "We present the first horizon-scale radio interferometric image of Sagittarius A*, the supermassive black hole at the center of the Milky Way galaxy, confirming general relativistic shadow predictions across four orders of magnitude in mass.",
+    "primary_category": "astro-ph.GA",
+    "primary_category_name": "Galaxy Astrophysics",
+    "year": 2022,
+    "published_date": "Thu, 12 May 2022 13:00:00 GMT",
+    "doi": "10.3847/2041-8213/ac6674",
+    "journal_ref": "Astrophysical Journal Letters 930, L12 (2022)",
+    "retrieval_text": "Title: First Sagittarius A* Event Horizon Telescope Results: Imaging the Milky Way Central Supermassive Black Hole\nAbstract: We present the first horizon-scale radio interferometric image of Sagittarius A*, the supermassive black hole at the center of the Milky Way galaxy, confirming general relativistic shadow predictions across four orders of magnitude in mass.",
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "category_labels": [
+      "Galaxy Astrophysics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2205.06128",
+    "pdf_url": "https://arxiv.org/pdf/2205.06128.pdf"
+  },
+  {
+    "id": "2309.08812",
+    "title": "Galactic Chemical Evolution and Star Formation Histories from Gaia DR3 Spectroscopy",
+    "authors": "Anthony G. A. Brown, A. Vallenari, T. Prusti, Gaia Collaboration",
+    "authors_list": [
+      "Anthony G. A. Brown",
+      "A. Vallenari",
+      "T. Prusti",
+      "Gaia Collaboration"
+    ],
+    "abstract": "Using astrometric and spectroscopic data for over 1.8 billion stars in Gaia Data Release 3, we reconstruct the dynamical assembly, spiral arm kinematics, and merger history of the Milky Way disk and halo.",
+    "primary_category": "astro-ph.GA",
+    "primary_category_name": "Galaxy Astrophysics",
+    "year": 2023,
+    "published_date": "Fri, 15 Sep 2023 10:00:00 GMT",
+    "doi": "10.1051/0004-6361/202243940",
+    "journal_ref": "Astronomy & Astrophysics (2023)",
+    "retrieval_text": "Title: Galactic Chemical Evolution and Star Formation Histories from Gaia DR3 Spectroscopy\nAbstract: Using astrometric and spectroscopic data for over 1.8 billion stars in Gaia Data Release 3, we reconstruct the dynamical assembly, spiral arm kinematics, and merger history of the Milky Way disk and halo.",
+    "categories": [
+      "astro-ph.GA"
+    ],
+    "category_labels": [
+      "Galaxy Astrophysics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2309.08812",
+    "pdf_url": "https://arxiv.org/pdf/2309.08812.pdf"
+  },
+  {
+    "id": "2111.03606",
+    "title": "GWTC-3: Compact Binary Coalescences Observed by LIGO and Virgo During the Third Observing Run",
+    "authors": "R. Abbott, T. D. Abbott, F. Acernese, LIGO Scientific and Virgo Collaborations",
+    "authors_list": [
+      "R. Abbott",
+      "T. D. Abbott",
+      "F. Acernese",
+      "LIGO-Virgo Collaboration"
+    ],
+    "abstract": "We report gravitational-wave transients from binary black hole and neutron star-black hole mergers detected by LIGO, Virgo, and KAGRA, constraining relativistic strong-field gravity and compact object populations.",
+    "primary_category": "astro-ph.HE",
+    "primary_category_name": "High Energy Astrophysics",
+    "year": 2021,
+    "published_date": "Fri, 05 Nov 2021 17:00:00 GMT",
+    "doi": "10.1103/PhysRevX.13.041039",
+    "journal_ref": "Physical Review X 13, 041039 (2023)",
+    "retrieval_text": "Title: GWTC-3: Compact Binary Coalescences Observed by LIGO and Virgo During the Third Observing Run\nAbstract: We report gravitational-wave transients from binary black hole and neutron star-black hole mergers detected by LIGO, Virgo, and KAGRA, constraining relativistic strong-field gravity and compact object populations.",
+    "categories": [
+      "astro-ph.HE"
+    ],
+    "category_labels": [
+      "High Energy Astrophysics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2111.03606",
+    "pdf_url": "https://arxiv.org/pdf/2111.03606.pdf"
+  },
+  {
+    "id": "2306.16213",
+    "title": "NANOGrav 15-Year Data Set: Evidence for a Stochastic Gravitational-Wave Background from Pulsar Timing Arrays",
+    "authors": "Gabriella Agazie, Akash Anumarlapudi, Anne M. Archibald, NANOGrav Collaboration",
+    "authors_list": [
+      "Gabriella Agazie",
+      "Akash Anumarlapudi",
+      "Anne M. Archibald",
+      "NANOGrav Collaboration"
+    ],
+    "abstract": "We report compelling evidence for a nanohertz stochastic gravitational-wave background exhibiting Hellings-Downs spatial correlations across 68 millisecond pulsars, consistent with supermassive black hole binary inspirals.",
+    "primary_category": "astro-ph.HE",
+    "primary_category_name": "High Energy Astrophysics",
+    "year": 2023,
+    "published_date": "Wed, 28 Jun 2023 20:00:00 GMT",
+    "doi": "10.3847/2041-8213/acdac6",
+    "journal_ref": "Astrophysical Journal Letters 951, L8 (2023)",
+    "retrieval_text": "Title: NANOGrav 15-Year Data Set: Evidence for a Stochastic Gravitational-Wave Background from Pulsar Timing Arrays\nAbstract: We report compelling evidence for a nanohertz stochastic gravitational-wave background exhibiting Hellings-Downs spatial correlations across 68 millisecond pulsars, consistent with supermassive black hole binary inspirals.",
+    "categories": [
+      "astro-ph.HE"
+    ],
+    "category_labels": [
+      "High Energy Astrophysics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2306.16213",
+    "pdf_url": "https://arxiv.org/pdf/2306.16213.pdf"
+  },
+  {
+    "id": "2208.11692",
+    "title": "Identification of Carbon Dioxide in an Exoplanet Atmosphere Using JWST Transmission Spectroscopy",
+    "authors": "Natalie M. Batalha, Jacob L. Bean, Kevin B. Stevenson",
+    "authors_list": [
+      "Natalie M. Batalha",
+      "Jacob L. Bean",
+      "Kevin B. Stevenson"
+    ],
+    "abstract": "We present transmission spectra of the gas giant exoplanet WASP-39b from 3 to 5.5 microns captured by JWST NIRSpec, revealing an unambiguous 26-sigma absorption feature of atmospheric carbon dioxide.",
+    "primary_category": "astro-ph.EP",
+    "primary_category_name": "Earth and Planetary Astrophysics",
+    "year": 2022,
+    "published_date": "Wed, 24 Aug 2022 14:00:00 GMT",
+    "doi": "10.1038/s41586-022-05269-w",
+    "journal_ref": "Nature 614, 649-652 (2023)",
+    "retrieval_text": "Title: Identification of Carbon Dioxide in an Exoplanet Atmosphere Using JWST Transmission Spectroscopy\nAbstract: We present transmission spectra of the gas giant exoplanet WASP-39b from 3 to 5.5 microns captured by JWST NIRSpec, revealing an unambiguous 26-sigma absorption feature of atmospheric carbon dioxide.",
+    "categories": [
+      "astro-ph.EP"
+    ],
+    "category_labels": [
+      "Earth and Planetary Astrophysics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2208.11692",
+    "pdf_url": "https://arxiv.org/pdf/2208.11692.pdf"
+  },
+  {
+    "id": "2309.05566",
+    "title": "Carbon-Bearing Molecules in a Possible Hycean Atmosphere of the Sub-Neptune Exoplanet K2-18 b",
+    "authors": "Nikku Madhusudhan, Subhajit Sarkar, Savvas Constantinou, Mans Holmberg",
+    "authors_list": [
+      "Nikku Madhusudhan",
+      "Subhajit Sarkar",
+      "Savvas Constantinou",
+      "Mans Holmberg"
+    ],
+    "abstract": "Transmission spectroscopy of the habitable-zone exoplanet K2-18 b reveals abundant methane and carbon dioxide alongside a scarcity of ammonia, supporting the presence of a hydrogen-rich atmosphere above a liquid water ocean.",
+    "primary_category": "astro-ph.EP",
+    "primary_category_name": "Earth and Planetary Astrophysics",
+    "year": 2023,
+    "published_date": "Mon, 11 Sep 2023 16:00:00 GMT",
+    "doi": "10.3847/2041-8213/acf577",
+    "journal_ref": "Astrophysical Journal Letters (2023)",
+    "retrieval_text": "Title: Carbon-Bearing Molecules in a Possible Hycean Atmosphere of the Sub-Neptune Exoplanet K2-18 b\nAbstract: Transmission spectroscopy of the habitable-zone exoplanet K2-18 b reveals abundant methane and carbon dioxide alongside a scarcity of ammonia, supporting the presence of a hydrogen-rich atmosphere above a liquid water ocean.",
+    "categories": [
+      "astro-ph.EP"
+    ],
+    "category_labels": [
+      "Earth and Planetary Astrophysics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2309.05566",
+    "pdf_url": "https://arxiv.org/pdf/2309.05566.pdf"
+  },
+  {
+    "id": "2107.07511",
+    "title": "Theoretical Foundations of Conformal Prediction and Distribution-Free Uncertainty Quantification",
+    "authors": "Anastasios N. Angelopoulos, Stephen Bates, Emmanuel J. Candes, Michael I. Jordan, Lihua Lei",
+    "authors_list": [
+      "Anastasios N. Angelopoulos",
+      "Stephen Bates",
+      "Emmanuel J. Candes",
+      "Michael I. Jordan",
+      "Lihua Lei"
+    ],
+    "abstract": "We establish finite-sample, distribution-free coverage guarantees for predictive uncertainty sets and risk-controlling prediction calibration across arbitrary black-box statistical estimators.",
+    "primary_category": "math.ST",
+    "primary_category_name": "Mathematical Statistics",
+    "year": 2021,
+    "published_date": "Thu, 15 Jul 2021 15:00:00 GMT",
+    "doi": "10.1145/3616865",
+    "journal_ref": "Journal of the ACM / Annals of Statistics (2022)",
+    "retrieval_text": "Title: Theoretical Foundations of Conformal Prediction and Distribution-Free Uncertainty Quantification\nAbstract: We establish finite-sample, distribution-free coverage guarantees for predictive uncertainty sets and risk-controlling prediction calibration across arbitrary black-box statistical estimators.",
+    "categories": [
+      "math.ST"
+    ],
+    "category_labels": [
+      "Mathematical Statistics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2107.07511",
+    "pdf_url": "https://arxiv.org/pdf/2107.07511.pdf"
+  },
+  {
+    "id": "2304.09112",
+    "title": "Minimax Optimal Nonparametric Estimation and Benign Overfitting in High-Dimensional Regression",
+    "authors": "Peter L. Bartlett, Philip M. Long, Gabor Lugosi, Alexander Tsigler",
+    "authors_list": [
+      "Peter L. Bartlett",
+      "Philip M. Long",
+      "Gabor Lugosi",
+      "Alexander Tsigler"
+    ],
+    "abstract": "We characterize exact spectral conditions on the covariance operator under which minimum-norm interpolating estimators in overparameterized statistical models achieve optimal generalization error.",
+    "primary_category": "math.ST",
+    "primary_category_name": "Mathematical Statistics",
+    "year": 2023,
+    "published_date": "Tue, 18 Apr 2023 11:00:00 GMT",
+    "doi": "10.1073/pnas.1907378117",
+    "journal_ref": "PNAS / Annals of Statistics (2023)",
+    "retrieval_text": "Title: Minimax Optimal Nonparametric Estimation and Benign Overfitting in High-Dimensional Regression\nAbstract: We characterize exact spectral conditions on the covariance operator under which minimum-norm interpolating estimators in overparameterized statistical models achieve optimal generalization error.",
+    "categories": [
+      "math.ST"
+    ],
+    "category_labels": [
+      "Mathematical Statistics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2304.09112",
+    "pdf_url": "https://arxiv.org/pdf/2304.09112.pdf"
+  },
+  {
+    "id": "2011.13456",
+    "title": "Score-Based Generative Modeling through Stochastic Differential Equations",
+    "authors": "Yang Song, Jascha Sohl-Dickstein, Diederik P. Kingma, Abhishek Kumar, Stefano Ermon, Ben Poole",
+    "authors_list": [
+      "Yang Song",
+      "Jascha Sohl-Dickstein",
+      "Diederik P. Kingma",
+      "Abhishek Kumar",
+      "Stefano Ermon",
+      "Ben Poole"
+    ],
+    "abstract": "We unify score matching with Langevin dynamics and denoising diffusion probabilistic models into a continuous-time stochastic differential equation framework with exact log-likelihood computation via probability flow ODEs.",
+    "primary_category": "stat.ML",
+    "primary_category_name": "Machine Learning (Statistics)",
+    "year": 2021,
+    "published_date": "Thu, 26 Nov 2020 18:00:00 GMT",
+    "doi": "10.48550/arXiv.2011.13456",
+    "journal_ref": "ICLR 2021 (Outstanding Paper Award)",
+    "retrieval_text": "Title: Score-Based Generative Modeling through Stochastic Differential Equations\nAbstract: We unify score matching with Langevin dynamics and denoising diffusion probabilistic models into a continuous-time stochastic differential equation framework with exact log-likelihood computation via probability flow ODEs.",
+    "categories": [
+      "stat.ML"
+    ],
+    "category_labels": [
+      "Machine Learning (Statistics)"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2011.13456",
+    "pdf_url": "https://arxiv.org/pdf/2011.13456.pdf"
+  },
+  {
+    "id": "2302.09914",
+    "title": "Flow Matching for Generative Modeling and Optimal Transport Probability Paths",
+    "authors": "Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, Matt Le",
+    "authors_list": [
+      "Yaron Lipman",
+      "Ricky T. Q. Chen",
+      "Heli Ben-Hamu",
+      "Maximilian Nickel",
+      "Matt Le"
+    ],
+    "abstract": "We introduce Flow Matching, a simulation-free paradigm for training continuous normalizing flows based on conditional optimal transport vector fields, enabling fast straight-line sampling.",
+    "primary_category": "stat.ML",
+    "primary_category_name": "Machine Learning (Statistics)",
+    "year": 2023,
+    "published_date": "Mon, 20 Feb 2023 12:00:00 GMT",
+    "doi": "10.48550/arXiv.2210.02747",
+    "journal_ref": "ICLR 2023",
+    "retrieval_text": "Title: Flow Matching for Generative Modeling and Optimal Transport Probability Paths\nAbstract: We introduce Flow Matching, a simulation-free paradigm for training continuous normalizing flows based on conditional optimal transport vector fields, enabling fast straight-line sampling.",
+    "categories": [
+      "stat.ML"
+    ],
+    "category_labels": [
+      "Machine Learning (Statistics)"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2302.09914",
+    "pdf_url": "https://arxiv.org/pdf/2302.09914.pdf"
+  },
+  {
+    "id": "2106.05419",
+    "title": "Bayesian Workflow: Model Checking, Prior Predictive Simulation, and Leave-One-Out Cross-Validation",
+    "authors": "Andrew Gelman, Aki Vehtari, Daniel Simpson, Charles C. Margossian, Bob Carpenter",
+    "authors_list": [
+      "Andrew Gelman",
+      "Aki Vehtari",
+      "Daniel Simpson",
+      "Charles C. Margossian",
+      "Bob Carpenter"
+    ],
+    "abstract": "We formulate a principled statistical workflow for applied Bayesian data analysis using Hamiltonian Monte Carlo, Pareto-smoothed importance sampling, and posterior predictive diagnostics.",
+    "primary_category": "stat.ME",
+    "primary_category_name": "Methodology & Applied Statistics",
+    "year": 2021,
+    "published_date": "Thu, 10 Jun 2021 10:00:00 GMT",
+    "doi": "10.48550/arXiv.2011.01808",
+    "journal_ref": "Journal of the Royal Statistical Society (2021)",
+    "retrieval_text": "Title: Bayesian Workflow: Model Checking, Prior Predictive Simulation, and Leave-One-Out Cross-Validation\nAbstract: We formulate a principled statistical workflow for applied Bayesian data analysis using Hamiltonian Monte Carlo, Pareto-smoothed importance sampling, and posterior predictive diagnostics.",
+    "categories": [
+      "stat.ME"
+    ],
+    "category_labels": [
+      "Methodology & Applied Statistics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2106.05419",
+    "pdf_url": "https://arxiv.org/pdf/2106.05419.pdf"
+  },
+  {
+    "id": "2307.08192",
+    "title": "Simulation-Based Inference and Amortized Neural Posterior Estimation for Complex Scientific Models",
+    "authors": "Kyle Cranmer, Johann Brehmer, Gilles Louppe",
+    "authors_list": [
+      "Kyle Cranmer",
+      "Johann Brehmer",
+      "Gilles Louppe"
+    ],
+    "abstract": "Many mechanistic simulators in epidemiology, climate science, and particle physics have intractable likelihood functions. We synthesize normalizing flows and neural likelihood-ratio estimation for scalable statistical inference.",
+    "primary_category": "stat.ME",
+    "primary_category_name": "Methodology & Applied Statistics",
+    "year": 2023,
+    "published_date": "Mon, 17 Jul 2023 14:00:00 GMT",
+    "doi": "10.1073/pnas.1912789117",
+    "journal_ref": "PNAS (2023)",
+    "retrieval_text": "Title: Simulation-Based Inference and Amortized Neural Posterior Estimation for Complex Scientific Models\nAbstract: Many mechanistic simulators in epidemiology, climate science, and particle physics have intractable likelihood functions. We synthesize normalizing flows and neural likelihood-ratio estimation for scalable statistical inference.",
+    "categories": [
+      "stat.ME"
+    ],
+    "category_labels": [
+      "Methodology & Applied Statistics"
+    ],
+    "comments": "Peer-Reviewed Publication",
+    "arxiv_url": "https://arxiv.org/abs/2307.08192",
+    "pdf_url": "https://arxiv.org/pdf/2307.08192.pdf"
   }
 ]
